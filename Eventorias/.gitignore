@@ -1,0 +1,11 @@
+# Fichiers temporaires
+*.swp
+*.tmp
+
+# Dossiers Xcode
+build/
+DerivedData/
+
+# Keychain et certificats
+*.xcuserstate
+*.xcworkspace
