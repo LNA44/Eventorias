@@ -8,6 +8,12 @@ DerivedData/
 
 # Keychain et certificats
 *.xcuserstate
+*.xcworkspace
 Eventorias.xcodeproj/xcshareddata/
 Eventorias.xcodeproj/xcuserdata/
 .DS_Store
+
+# Swift Package Manager
+Packages/
+Package.resolved
+
