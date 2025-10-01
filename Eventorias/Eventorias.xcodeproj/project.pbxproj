@@ -6,6 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		190D6E2A5AF15FB8B1404068 /* Pods_EventoriasUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EA88B4E7092A02905BF3A78 /* Pods_EventoriasUITests.framework */; };
+		8D54F8D8AAAD69DA76F9396E /* Pods_Eventorias.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E23BB4720346E70D3F78A3D0 /* Pods_Eventorias.framework */; };
+		CA67E926CDC49C6ABB7BC4B3 /* Pods_EventoriasTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E37722A457DD17EB7C5472C4 /* Pods_EventoriasTests.framework */; };
+		F39B0EE72E8D645C00416D67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */; };
+		F39B0EE82E8D645C00416D67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */; };
+		F39B0EE92E8D645C00416D67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		F37172B22E8C1CF700FF8C0F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -23,10 +32,33 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		F39B0E3D2E8D113900416D67 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		22C7999F3371112245CC3A42 /* Pods-EventoriasTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventoriasTests.debug.xcconfig"; path = "Target Support Files/Pods-EventoriasTests/Pods-EventoriasTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4EA88B4E7092A02905BF3A78 /* Pods_EventoriasUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EventoriasUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		547F983189D49D4FC5C55462 /* Pods-Eventorias.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eventorias.release.xcconfig"; path = "Target Support Files/Pods-Eventorias/Pods-Eventorias.release.xcconfig"; sourceTree = "<group>"; };
+		6246285F9313B611AEC52D8D /* Pods-EventoriasUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventoriasUITests.debug.xcconfig"; path = "Target Support Files/Pods-EventoriasUITests/Pods-EventoriasUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		69010017D1D393E438DEE17A /* Pods-EventoriasTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventoriasTests.release.xcconfig"; path = "Target Support Files/Pods-EventoriasTests/Pods-EventoriasTests.release.xcconfig"; sourceTree = "<group>"; };
+		C632A9EE7217CE8903B7AB51 /* Pods-Eventorias.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eventorias.debug.xcconfig"; path = "Target Support Files/Pods-Eventorias/Pods-Eventorias.debug.xcconfig"; sourceTree = "<group>"; };
+		D4DF4A139C356C31329BD272 /* Pods-EventoriasUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EventoriasUITests.release.xcconfig"; path = "Target Support Files/Pods-EventoriasUITests/Pods-EventoriasUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E23BB4720346E70D3F78A3D0 /* Pods_Eventorias.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eventorias.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E37722A457DD17EB7C5472C4 /* Pods_EventoriasTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EventoriasTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F37172A42E8C1CF600FF8C0F /* Eventorias.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eventorias.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F37172B12E8C1CF700FF8C0F /* EventoriasTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EventoriasTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F37172BB2E8C1CF700FF8C0F /* EventoriasUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EventoriasUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -52,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8D54F8D8AAAD69DA76F9396E /* Pods_Eventorias.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA67E926CDC49C6ABB7BC4B3 /* Pods_EventoriasTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,19 +100,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				190D6E2A5AF15FB8B1404068 /* Pods_EventoriasUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2651D72EB7D5B50D9E1B7176 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C632A9EE7217CE8903B7AB51 /* Pods-Eventorias.debug.xcconfig */,
+				547F983189D49D4FC5C55462 /* Pods-Eventorias.release.xcconfig */,
+				22C7999F3371112245CC3A42 /* Pods-EventoriasTests.debug.xcconfig */,
+				69010017D1D393E438DEE17A /* Pods-EventoriasTests.release.xcconfig */,
+				6246285F9313B611AEC52D8D /* Pods-EventoriasUITests.debug.xcconfig */,
+				D4DF4A139C356C31329BD272 /* Pods-EventoriasUITests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		F371729B2E8C1CF600FF8C0F = {
 			isa = PBXGroup;
 			children = (
+				F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */,
 				F37172A62E8C1CF600FF8C0F /* Eventorias */,
 				F37172B42E8C1CF700FF8C0F /* EventoriasTests */,
 				F37172BE2E8C1CF700FF8C0F /* EventoriasUITests */,
 				F37172A52E8C1CF600FF8C0F /* Products */,
+				2651D72EB7D5B50D9E1B7176 /* Pods */,
+				FDED3525F16F2B291448A3B0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,6 +143,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		FDED3525F16F2B291448A3B0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E23BB4720346E70D3F78A3D0 /* Pods_Eventorias.framework */,
+				E37722A457DD17EB7C5472C4 /* Pods_EventoriasTests.framework */,
+				4EA88B4E7092A02905BF3A78 /* Pods_EventoriasUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -99,9 +160,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F37172C52E8C1CF700FF8C0F /* Build configuration list for PBXNativeTarget "Eventorias" */;
 			buildPhases = (
+				2246060C113F0046F14AE264 /* [CP] Check Pods Manifest.lock */,
 				F37172A02E8C1CF600FF8C0F /* Sources */,
 				F37172A12E8C1CF600FF8C0F /* Frameworks */,
 				F37172A22E8C1CF600FF8C0F /* Resources */,
+				F39B0E3D2E8D113900416D67 /* Embed Frameworks */,
+				376F3CB99363E24467E0B81F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -111,8 +175,6 @@
 				F37172A62E8C1CF600FF8C0F /* Eventorias */,
 			);
 			name = Eventorias;
-			packageProductDependencies = (
-			);
 			productName = Eventorias;
 			productReference = F37172A42E8C1CF600FF8C0F /* Eventorias.app */;
 			productType = "com.apple.product-type.application";
@@ -121,6 +183,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F37172C82E8C1CF700FF8C0F /* Build configuration list for PBXNativeTarget "EventoriasTests" */;
 			buildPhases = (
+				E42549CFFB4525BDCD555E9E /* [CP] Check Pods Manifest.lock */,
 				F37172AD2E8C1CF700FF8C0F /* Sources */,
 				F37172AE2E8C1CF700FF8C0F /* Frameworks */,
 				F37172AF2E8C1CF700FF8C0F /* Resources */,
@@ -134,8 +197,6 @@
 				F37172B42E8C1CF700FF8C0F /* EventoriasTests */,
 			);
 			name = EventoriasTests;
-			packageProductDependencies = (
-			);
 			productName = EventoriasTests;
 			productReference = F37172B12E8C1CF700FF8C0F /* EventoriasTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -144,6 +205,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F37172CB2E8C1CF700FF8C0F /* Build configuration list for PBXNativeTarget "EventoriasUITests" */;
 			buildPhases = (
+				194E6191B28DFA3068820FFB /* [CP] Check Pods Manifest.lock */,
 				F37172B72E8C1CF700FF8C0F /* Sources */,
 				F37172B82E8C1CF700FF8C0F /* Frameworks */,
 				F37172B92E8C1CF700FF8C0F /* Resources */,
@@ -157,8 +219,6 @@
 				F37172BE2E8C1CF700FF8C0F /* EventoriasUITests */,
 			);
 			name = EventoriasUITests;
-			packageProductDependencies = (
-			);
 			productName = EventoriasUITests;
 			productReference = F37172BB2E8C1CF700FF8C0F /* EventoriasUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -212,6 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F39B0EE72E8D645C00416D67 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +280,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F39B0EE82E8D645C00416D67 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,10 +288,101 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F39B0EE92E8D645C00416D67 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		194E6191B28DFA3068820FFB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EventoriasUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2246060C113F0046F14AE264 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Eventorias-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		376F3CB99363E24467E0B81F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Eventorias/Pods-Eventorias-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Eventorias/Pods-Eventorias-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Eventorias/Pods-Eventorias-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E42549CFFB4525BDCD555E9E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EventoriasTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F37172A02E8C1CF600FF8C0F /* Sources */ = {
@@ -392,6 +545,7 @@
 		};
 		F37172C62E8C1CF700FF8C0F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C632A9EE7217CE8903B7AB51 /* Pods-Eventorias.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -399,18 +553,21 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 64KCF3XZ6R;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bougaranhelena.Eventorias;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bougaranhelena.Eventorias2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -424,6 +581,7 @@
 		};
 		F37172C72E8C1CF700FF8C0F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 547F983189D49D4FC5C55462 /* Pods-Eventorias.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -431,18 +589,21 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 64KCF3XZ6R;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bougaranhelena.Eventorias;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bougaranhelena.Eventorias2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -456,6 +617,7 @@
 		};
 		F37172C92E8C1CF700FF8C0F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22C7999F3371112245CC3A42 /* Pods-EventoriasTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -478,6 +640,7 @@
 		};
 		F37172CA2E8C1CF700FF8C0F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 69010017D1D393E438DEE17A /* Pods-EventoriasTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -500,6 +663,7 @@
 		};
 		F37172CC2E8C1CF700FF8C0F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6246285F9313B611AEC52D8D /* Pods-EventoriasUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -520,6 +684,7 @@
 		};
 		F37172CD2E8C1CF700FF8C0F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D4DF4A139C356C31329BD272 /* Pods-EventoriasUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

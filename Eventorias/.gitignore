@@ -8,4 +8,6 @@ DerivedData/
 
 # Keychain et certificats
 *.xcuserstate
-*.xcworkspace
+Eventorias.xcodeproj/xcshareddata/
+Eventorias.xcodeproj/xcuserdata/
+.DS_Store
