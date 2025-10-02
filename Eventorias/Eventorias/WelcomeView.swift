@@ -11,28 +11,28 @@ import FirebaseAuth
 
 struct WelcomeView: View {
 	var body: some View {
-        VStack(spacing: 50) {
-			Image("Logo Eventorias")
-			
-			Button(action: {
-				print("Sign in with email tapped")
-			}) {
-				HStack {
-					Image(systemName: "envelope.fill")
-						.foregroundColor(.white)
-					Text("sign in with email")
-						.foregroundColor(.white)
-						.bold()
-				}
-				.padding()
-				.frame(width: 250)
-				.background(Color("ButtonColor"))
-				.cornerRadius(4)
-			}
-			.padding(.horizontal)
-		}
-		.frame(maxWidth: .infinity, maxHeight: .infinity)
-		.background(Color.black)
+        NavigationStack {
+            VStack(spacing: 50) {
+                Image("Logo Eventorias")
+                
+                NavigationLink(destination: AuthenticationView()
+                    ) {
+                    HStack {
+                        Image(systemName: "envelope.fill")
+                            .foregroundColor(.white)
+                        Text("Sign in with email")
+                            .foregroundColor(.white)
+                            .bold()
+                    }
+                    .padding()
+                    .frame(width: 250)
+                    .background(Color("ButtonColor"))
+                    .cornerRadius(4)
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.black)
+        }
 	}
 }
 #Preview {

@@ -25,7 +25,7 @@ struct EventoriasApp: App {
 	var body: some Scene {
 		WindowGroup {
 			WelcomeView()
-				//.environmentObject(authViewModel)
+				.environmentObject(authViewModel)
 		}
 	}
 }
