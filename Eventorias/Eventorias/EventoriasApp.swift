@@ -20,10 +20,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct EventoriasApp: App {
 	@UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-
+	@StateObject private var authViewModel = AuthenticationViewModel()
+	
 	var body: some Scene {
 		WindowGroup {
 			WelcomeView()
+				//.environmentObject(authViewModel)
 		}
 	}
 }

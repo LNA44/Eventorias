@@ -11,7 +11,7 @@ import FirebaseAuth
 
 struct WelcomeView: View {
 	var body: some View {
-		VStack {
+        VStack(spacing: 50) {
 			Image("Logo Eventorias")
 			
 			Button(action: {
@@ -25,12 +25,13 @@ struct WelcomeView: View {
 						.bold()
 				}
 				.padding()
-				.frame(maxWidth: .infinity)
-				.background(Color("RedColor"))
-				.cornerRadius(10)
+				.frame(width: 250)
+				.background(Color("ButtonColor"))
+				.cornerRadius(4)
 			}
 			.padding(.horizontal)
 		}
+		.frame(maxWidth: .infinity, maxHeight: .infinity)
 		.background(Color.black)
 	}
 }
