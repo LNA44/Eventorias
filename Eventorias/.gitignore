@@ -18,3 +18,9 @@ Packages/
 Package.resolved
 
 GoogleService-Info.plist
+
+# Firebase emulator logs
+firestore-debug.log
+
+# Autres fichiers de logs
+*.log

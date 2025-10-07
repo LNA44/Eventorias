@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct AuthenticationView: View {
-	@EnvironmentObject var authViewModel: AuthenticationViewModel
+    @Bindable var authVM: AuthenticationViewModel
+    //var eventsVM: EventsViewModel
+    @State private var isSignedIn = false
+    let onAuthSuccess: () -> Void
 	
     var body: some View {
         VStack(spacing: 100) {
@@ -21,11 +24,11 @@ struct AuthenticationView: View {
                             .padding(.leading, 15)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        CustomTextField(placeholder: "email@example.com", text: $authViewModel.email)
+                        CustomTextField(placeholder: "email@example.com", text: $authVM.email)
                             .padding(.bottom, 5)
                     }
                     .background(Color("TextfieldColor"))
-                    if authViewModel.email.isEmpty {
+                    if authVM.email.isEmpty {
                         Text("Email is required")
                             .foregroundColor(Color("ButtonColor"))
                             .font(.caption)
@@ -42,13 +45,13 @@ struct AuthenticationView: View {
                         
                         VStack {
                             ZStack(alignment: .leading) {
-                                if authViewModel.password.isEmpty {
-                                    Text("Mot de passe")
+                                if authVM.password.isEmpty {
+                                    Text("Password")
                                         .foregroundColor(.gray)
                                         .padding(.leading, 15)
                                 }
                                 
-                                SecureField("", text: $authViewModel.password)
+                                SecureField("", text: $authVM.password)
                                     .padding(.leading, 15)
                                     .frame(height: 20)
                                 
@@ -60,13 +63,13 @@ struct AuthenticationView: View {
                         .padding(.bottom, 10)
                     }
                     .background(Color("TextfieldColor"))
-                    if authViewModel.password.isEmpty {
+                    if authVM.password.isEmpty {
                         Text("Password is required")
                             .foregroundColor(Color("ButtonColor"))
                             .font(.caption)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    if !authViewModel.isValidPassword() && !authViewModel.password.isEmpty {
+                    if !authVM.isValidPassword() && !authVM.password.isEmpty {
                         Text("Password must contain 8 characters, 1 uppercase letter, 1 number, 1 special character")
                             .foregroundColor(Color("ButtonColor"))
                             .font(.caption)
@@ -77,7 +80,12 @@ struct AuthenticationView: View {
             .padding(.horizontal, 10)
             
             Button(action: {
-                authViewModel.signUp()
+                onAuthSuccess()
+                /*authVM.signIn { success in
+                    if success {
+                        isSignedIn = true
+                    }
+                }*/
             }) {
                 HStack {
                     Text("Sign in")
@@ -91,12 +99,15 @@ struct AuthenticationView: View {
             }
             .padding(.horizontal)
         }
+       /* .navigationDestination(isPresented: $isSignedIn) {
+            ListView(eventsVM: eventsVM)
+        }*/
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
-        .alert(isPresented: $authViewModel.isShowingAlert) {
+        .alert(isPresented: $authVM.isShowingAlert) {
             Alert(
                 title: Text("Error"),
-                message: Text(authViewModel.errorMessage ?? ""),
+                message: Text(authVM.errorMessage ?? ""),
                 dismissButton: .default(Text("OK"))
             )
         }
@@ -104,6 +115,5 @@ struct AuthenticationView: View {
 }
 
 #Preview {
-    AuthenticationView()
-        .environmentObject(AuthenticationViewModel())
+    AuthenticationView(authVM: AuthenticationViewModel(), onAuthSuccess: {})
 }

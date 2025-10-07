@@ -10,13 +10,19 @@ import FirebaseCore
 import FirebaseAuth
 
 struct WelcomeView: View {
+    //var authVM: AuthenticationViewModel
+    //var eventsVM: EventsViewModel
+    let onNext: () -> Void
+    
 	var body: some View {
         NavigationStack {
             VStack(spacing: 50) {
                 Image("Logo Eventorias")
                 
-                NavigationLink(destination: AuthenticationView()
-                    ) {
+                Button(action: {
+                    // Appelle le callback pour passer à l'étape suivante
+                    onNext()
+                }) {
                     HStack {
                         Image(systemName: "envelope.fill")
                             .foregroundColor(.white)
@@ -35,6 +41,7 @@ struct WelcomeView: View {
         }
 	}
 }
+
 #Preview {
-	WelcomeView()
+    WelcomeView(onNext: {})
 }

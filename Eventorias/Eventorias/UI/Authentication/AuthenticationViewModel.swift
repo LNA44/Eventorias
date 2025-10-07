@@ -4,35 +4,38 @@
 //
 //  Created by Ordinateur elena on 02/10/2025.
 //
-
-import Foundation
-import Combine
+import SwiftUI
 import FirebaseAuth
 
-class AuthenticationViewModel: ObservableObject {
-	@Published var email: String = ""
-	@Published var password: String = ""
-    @Published var errorMessage: String? = nil
-    @Published var isShowingAlert: Bool = false
-	
-    func signUp() {
+@Observable class AuthenticationViewModel {
+    var email: String = ""
+    var password: String = ""
+    var errorMessage: String? = nil
+    var isShowingAlert: Bool = false
+    
+    func signIn(completion: @escaping (Bool) -> Void) {
         guard !email.isEmpty, !password.isEmpty else {
+            completion(false)
             return
         }
         guard isValidEmail() else {
+            completion(false)
             return
         }
         guard isValidPassword() else {
+            completion(false)
             return
         }
-        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
             DispatchQueue.main.async {
                 if let error = error {
-                    self.isShowingAlert = true
                     self.errorMessage = error.localizedDescription
+                    self.isShowingAlert = true
+                    completion(false)
                 } else {
-                    self.isShowingAlert = false
                     self.errorMessage = ""
+                    self.isShowingAlert = false
+                    completion(true)
                 }
             }
         }
