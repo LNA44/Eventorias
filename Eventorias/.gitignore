@@ -18,6 +18,7 @@ Packages/
 Package.resolved
 
 GoogleService-Info.plist
+Key.plist
 
 # Firebase emulator logs
 firestore-debug.log

@@ -18,31 +18,19 @@ struct RowView: View {
     
     var body: some View {
         HStack {
-            if let url = URL(string: event.userProfileImageURL) {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                            .frame(width: 30, height: 30)
-                    case .success(let image):
-                        image.resizable()
-                            .frame(width: 40, height: 40)
-                            .clipShape(Circle())
-                    case .failure:
-                        Image(systemName: "person.circle.fill")
-                            .frame(width: 40, height: 40)
-                    @unknown default:
-                        EmptyView()
-                    }
-                }
-            }
-            
-            VStack {
-                Text(event.name)
+            HStack(spacing: 15) {
+                Image(event.userProfileImage)
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .clipShape(Circle())
                 
-                Text(formatter.string(from: event.date))
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(event.name)
+                    
+                    Text(formatter.string(from: event.date))
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
                         
             if let imageURL = event.imageURL, let url = URL(string: imageURL) {
                 AsyncImage(url: url) { phase in
@@ -77,5 +65,15 @@ struct RowView: View {
 }
 
 #Preview {
-    RowView(event: Event(id: "2", name: "MusicFestival", date: Date(), imageURL: "https://via.placeholder.com/150", userProfileImageURL: "https://via.placeholder.com/50"))
+    RowView(event: Event(
+            id: "2",
+            name: "MusicFestival",
+            description: "Un super festival de musique",
+            date: Date(),
+            location: "Paris",
+            category: "Musique",
+            guests: ["alice@example.com", "bob@example.com"],
+            userProfileImage: "Avatar",
+            imageURL: "https://via.placeholder.com/150"
+        ))
 }

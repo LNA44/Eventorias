@@ -121,17 +121,11 @@ struct ListView: View {
         }
         .background(Color(.black))
         .navigationBarBackButtonHidden(true)
-        .onAppear {
-            Task {
-                await eventsVM.fetchEvents()
-                print(eventsVM.events.count)
-            }
-        }
-        .onChange(of: eventsVM.searchText) { _, newValue in //déclenche la recherche réactive à chaque frappe.
+        /*.onChange(of: eventsVM.searchText) { _, newValue in //déclenche la recherche réactive à chaque frappe.
             Task {
                 await eventsVM.fetchEvents(search: newValue)
             }
-        }
+        }*/
     }
 }
 

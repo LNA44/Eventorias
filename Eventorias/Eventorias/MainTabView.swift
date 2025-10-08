@@ -9,18 +9,22 @@ import SwiftUI
 
 struct MainTabView: View {
     var eventsVM: EventsViewModel
-
+    @State private var selectedTab = 0
+    
     var body: some View {
-        TabView {
-            ListView(eventsVM: eventsVM)
+        TabView(selection: $selectedTab) {
+            EventsContainerView(eventsVM: eventsVM)
                 .tabItem {
-                    Label("Événements", systemImage: "list.bullet")
+                    Label("Events", systemImage: "calendar.badge.plus")
                 }
+                .tag(0)
             
             ProfileView()
                 .tabItem {
-                    Label("Profil", systemImage: "person.crop.circle")
+                    Label("Profile", systemImage: "person")
                 }
+                .tag(1)
         }
+        .tint(Color("ButtonColor"))
     }
 }

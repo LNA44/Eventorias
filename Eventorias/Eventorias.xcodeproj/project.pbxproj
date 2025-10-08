@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		190D6E2A5AF15FB8B1404068 /* Pods_EventoriasUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EA88B4E7092A02905BF3A78 /* Pods_EventoriasUITests.framework */; };
-		CA67E926CDC49C6ABB7BC4B3 /* Pods_EventoriasTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E37722A457DD17EB7C5472C4 /* Pods_EventoriasTests.framework */; };
 		F361B9A82E8EC5400088C136 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F361B9A12E8EC5400088C136 /* Assets.xcassets */; };
 		F361B9A92E8EC5400088C136 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361B9A22E8EC5400088C136 /* AuthenticationView.swift */; };
 		F361B9AA2E8EC5400088C136 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361B9A32E8EC5400088C136 /* AuthenticationViewModel.swift */; };
@@ -24,6 +22,18 @@
 		F36F84BF2E9543A400D4ACA1 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84BE2E9543A400D4ACA1 /* RootView.swift */; };
 		F36F84C12E95440900D4ACA1 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84C02E95440900D4ACA1 /* MainTabView.swift */; };
 		F36F84C32E95446E00D4ACA1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84C22E95446E00D4ACA1 /* ProfileView.swift */; };
+		F36F84CB2E954EAB00D4ACA1 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84CA2E954EAB00D4ACA1 /* CalendarView.swift */; };
+		F36F84CD2E954F4600D4ACA1 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84CC2E954F4600D4ACA1 /* Day.swift */; };
+		F36F84CF2E954FD200D4ACA1 /* EventsContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84CE2E954FD200D4ACA1 /* EventsContainerView.swift */; };
+		F36F84D12E9568F200D4ACA1 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84D02E9568F200D4ACA1 /* CreateEventView.swift */; };
+		F36F84D32E956C1A00D4ACA1 /* UIImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84D22E956C1A00D4ACA1 /* UIImagePickerController.swift */; };
+		F36F84D52E956E6300D4ACA1 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = F36F84D42E956E6300D4ACA1 /* FirebaseStorage */; };
+		F36F84D72E966AE100D4ACA1 /* WhitePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84D62E966AE100D4ACA1 /* WhitePicker.swift */; };
+		F36F84DF2E969F2000D4ACA1 /* StaticMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84DE2E969F2000D4ACA1 /* StaticMapView.swift */; };
+		F36F84E12E96A8CC00D4ACA1 /* GoogleMapsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84E02E96A8CC00D4ACA1 /* GoogleMapsService.swift */; };
+		F36F84E92E96AD0700D4ACA1 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = F36F84E82E96AD0700D4ACA1 /* Key.plist */; };
+		F36F84EA2E96AD0700D4ACA1 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = F36F84E82E96AD0700D4ACA1 /* Key.plist */; };
+		F36F84EB2E96AD0700D4ACA1 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = F36F84E82E96AD0700D4ACA1 /* Key.plist */; };
 		F39B0EE72E8D645C00416D67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */; };
 		F39B0EE82E8D645C00416D67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */; };
 		F39B0EE92E8D645C00416D67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */; };
@@ -68,6 +78,15 @@
 		F36F84BE2E9543A400D4ACA1 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		F36F84C02E95440900D4ACA1 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		F36F84C22E95446E00D4ACA1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		F36F84CA2E954EAB00D4ACA1 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		F36F84CC2E954F4600D4ACA1 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
+		F36F84CE2E954FD200D4ACA1 /* EventsContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsContainerView.swift; sourceTree = "<group>"; };
+		F36F84D02E9568F200D4ACA1 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
+		F36F84D22E956C1A00D4ACA1 /* UIImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImagePickerController.swift; sourceTree = "<group>"; };
+		F36F84D62E966AE100D4ACA1 /* WhitePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitePicker.swift; sourceTree = "<group>"; };
+		F36F84DE2E969F2000D4ACA1 /* StaticMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticMapView.swift; sourceTree = "<group>"; };
+		F36F84E02E96A8CC00D4ACA1 /* GoogleMapsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsService.swift; sourceTree = "<group>"; };
+		F36F84E82E96AD0700D4ACA1 /* Key.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Key.plist; sourceTree = "<group>"; };
 		F37172A42E8C1CF600FF8C0F /* Eventorias.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eventorias.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F37172B12E8C1CF700FF8C0F /* EventoriasTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EventoriasTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F37172BB2E8C1CF700FF8C0F /* EventoriasUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EventoriasUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,6 +112,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F39B0F802E8D7E2D00416D67 /* FirebaseFirestore in Frameworks */,
+				F36F84D52E956E6300D4ACA1 /* FirebaseStorage in Frameworks */,
 				F39B0F7E2E8D7E2D00416D67 /* FirebaseCore in Frameworks */,
 				F39B0F7C2E8D7E2D00416D67 /* FirebaseAuth in Frameworks */,
 			);
@@ -102,7 +122,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA67E926CDC49C6ABB7BC4B3 /* Pods_EventoriasTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,7 +129,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				190D6E2A5AF15FB8B1404068 /* Pods_EventoriasUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,7 +138,7 @@
 		F361B9A72E8EC5400088C136 /* Eventorias */ = {
 			isa = PBXGroup;
 			children = (
-				F361B9B62E8EC80C0088C136 /* Service */,
+				F361B9B62E8EC80C0088C136 /* Services */,
 				F361B9B92E8EC8380088C136 /* Model */,
 				F361B9BD2E8ECC100088C136 /* UI */,
 				F361B9A12E8EC5400088C136 /* Assets.xcassets */,
@@ -146,22 +164,29 @@
 				F361B9B42E8EC60D0088C136 /* EventsViewModel.swift */,
 				F361B9B02E8EC57F0088C136 /* ListView.swift */,
 				F361B9B22E8EC5C60088C136 /* RowView.swift */,
+				F36F84CA2E954EAB00D4ACA1 /* CalendarView.swift */,
+				F36F84CE2E954FD200D4ACA1 /* EventsContainerView.swift */,
+				F36F84D02E9568F200D4ACA1 /* CreateEventView.swift */,
+				F36F84D22E956C1A00D4ACA1 /* UIImagePickerController.swift */,
+				F36F84D62E966AE100D4ACA1 /* WhitePicker.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
 		};
-		F361B9B62E8EC80C0088C136 /* Service */ = {
+		F361B9B62E8EC80C0088C136 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				F361B9B72E8EC8220088C136 /* FirestoreService.swift */,
+				F36F84E02E96A8CC00D4ACA1 /* GoogleMapsService.swift */,
 			);
-			path = Service;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		F361B9B92E8EC8380088C136 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				F361B9BA2E8EC84B0088C136 /* Event.swift */,
+				F36F84CC2E954F4600D4ACA1 /* Day.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -170,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				F361B9BE2E8ECC710088C136 /* EventDetailsView.swift */,
+				F36F84DE2E969F2000D4ACA1 /* StaticMapView.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -190,6 +216,7 @@
 		F371729B2E8C1CF600FF8C0F = {
 			isa = PBXGroup;
 			children = (
+				F36F84E82E96AD0700D4ACA1 /* Key.plist */,
 				F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */,
 				F361B9A72E8EC5400088C136 /* Eventorias */,
 				F37172B42E8C1CF700FF8C0F /* EventoriasTests */,
@@ -337,6 +364,7 @@
 			files = (
 				F361B9A82E8EC5400088C136 /* Assets.xcassets in Resources */,
 				F39B0EE72E8D645C00416D67 /* GoogleService-Info.plist in Resources */,
+				F36F84E92E96AD0700D4ACA1 /* Key.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +372,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F36F84EA2E96AD0700D4ACA1 /* Key.plist in Resources */,
 				F39B0EE82E8D645C00416D67 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,6 +381,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F36F84EB2E96AD0700D4ACA1 /* Key.plist in Resources */,
 				F39B0EE92E8D645C00416D67 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,20 +440,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F36F84D72E966AE100D4ACA1 /* WhitePicker.swift in Sources */,
+				F36F84D32E956C1A00D4ACA1 /* UIImagePickerController.swift in Sources */,
 				F361B9A92E8EC5400088C136 /* AuthenticationView.swift in Sources */,
 				F361B9B52E8EC60D0088C136 /* EventsViewModel.swift in Sources */,
+				F36F84DF2E969F2000D4ACA1 /* StaticMapView.swift in Sources */,
 				F361B9AA2E8EC5400088C136 /* AuthenticationViewModel.swift in Sources */,
+				F36F84CD2E954F4600D4ACA1 /* Day.swift in Sources */,
 				F361B9B12E8EC57F0088C136 /* ListView.swift in Sources */,
 				F361B9BB2E8EC84B0088C136 /* Event.swift in Sources */,
+				F36F84CB2E954EAB00D4ACA1 /* CalendarView.swift in Sources */,
 				F361B9B32E8EC5C60088C136 /* RowView.swift in Sources */,
+				F36F84CF2E954FD200D4ACA1 /* EventsContainerView.swift in Sources */,
 				F361B9AB2E8EC5400088C136 /* CustomTextField.swift in Sources */,
 				F36F84C12E95440900D4ACA1 /* MainTabView.swift in Sources */,
 				F361B9AC2E8EC5400088C136 /* EventoriasApp.swift in Sources */,
 				F36F84BF2E9543A400D4ACA1 /* RootView.swift in Sources */,
 				F361B9B82E8EC8220088C136 /* FirestoreService.swift in Sources */,
 				F361B9BF2E8ECC710088C136 /* EventDetailsView.swift in Sources */,
+				F36F84D12E9568F200D4ACA1 /* CreateEventView.swift in Sources */,
 				F36F84C32E95446E00D4ACA1 /* ProfileView.swift in Sources */,
 				F361B9AD2E8EC5400088C136 /* WelcomeView.swift in Sources */,
+				F36F84E12E96A8CC00D4ACA1 /* GoogleMapsService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -787,6 +825,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F36F84D42E956E6300D4ACA1 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F39B0F7A2E8D7E2D00416D67 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		F39B0F7B2E8D7E2D00416D67 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F39B0F7A2E8D7E2D00416D67 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

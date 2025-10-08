@@ -11,7 +11,6 @@ import Foundation
     private var service: FirestoreService { FirestoreService.shared }
     var events: [Event] = []
     var errorMessage: String?
-   // var isShowingAlert: Bool = false
     var isSortedAscending: Bool = true
     var isLoading: Bool = false
     var searchText: String = "" {
@@ -34,20 +33,47 @@ import Foundation
         isLoading = false
     }
     
-    func addEvent() async {
+    @MainActor
+    func addEvent(name: String, description: String, date: Date, time: Date,
+                  location: String, category: String, guests: [String],
+                  userProfileImage: String, imageURL: String?) async {
+        
+        let combinedDateTime = combine(date: date, time: time)
+        
         let newEvent = Event(
-            id: UUID().uuidString,
-            name: "Event example",
-            date: Date(),
-            imageURL: "https://via.placeholder.com/150",
-            userProfileImageURL: "https://via.placeholder.com/50"
-        )
+                id: UUID().uuidString,
+                name: name,
+                description: description,
+                date: combinedDateTime,
+                location: location,
+                category: category,
+                guests: guests,
+                userProfileImage: userProfileImage,
+                imageURL: imageURL
+            )
+        
         do {
             try await FirestoreService.shared.addEvent(newEvent)
-            await fetchEvents()
+            events.append(newEvent)
         } catch {
-            print("Erreur ajout événement: \(error)")
+            errorMessage = error.localizedDescription
         }
+    }
+    
+    private func combine(date: Date, time: Date) -> Date {
+        let calendar = Calendar.current
+        let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
+        let timeComponents = calendar.dateComponents([.hour, .minute, .second], from: time)
+
+        var combinedComponents = DateComponents()
+        combinedComponents.year = dateComponents.year
+        combinedComponents.month = dateComponents.month
+        combinedComponents.day = dateComponents.day
+        combinedComponents.hour = timeComponents.hour
+        combinedComponents.minute = timeComponents.minute
+        combinedComponents.second = timeComponents.second
+
+        return calendar.date(from: combinedComponents) ?? date
     }
     
     func toggleSorting() {
