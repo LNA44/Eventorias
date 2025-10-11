@@ -9,66 +9,120 @@ import SwiftUI
 
 struct EventDetailsView: View {
     var event: Event
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack {
-            if let imageURL = event.imageURL, let url = URL(string: imageURL) {
-                    AsyncImage(url: url) { phase in
-                        switch phase {
-                        case .empty:
-                            ProgressView() // loading
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(height: 150)
-                                .clipped()
-                                .cornerRadius(8)
-                        case .failure:
-                            Image(systemName: "photo") // fallback si erreur
+        ZStack {
+            Color.black
+                .ignoresSafeArea()
+            
+            VStack(spacing: 0) {
+                // Barre custom en haut car IOS ne permet plus de mettre dans barre de navigation chevron + titre à gauche
+                HStack(spacing: 8) {
+                    Button(action: {
+                        dismiss()
+                    }) {
+                        Image(systemName: "chevron.left") 
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 18, height: 18)
+                            .foregroundColor(.white)
+                    }
+                    Text(event.name)
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundColor(.white)
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                    Spacer()
+                }
+                .padding()
+                .background(Color.black)
+                
+                ScrollView {
+                    VStack {
+                        if let imageURL = event.imageURL, let url = URL(string: imageURL) {
+                            AsyncImage(url: url) { phase in
+                                switch phase {
+                                case .empty:
+                                    ProgressView() // loading
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(height: 150)
+                                        .clipped()
+                                        .cornerRadius(8)
+                                case .failure:
+                                    Image(systemName: "photo") // fallback si erreur
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 150)
+                                        .foregroundColor(.gray)
+                                @unknown default:
+                                    EmptyView()
+                                }
+                            }
+                        } else {
+                            Image(systemName: "photo") // si pas d'URL
                                 .resizable()
                                 .scaledToFit()
                                 .frame(height: 150)
                                 .foregroundColor(.gray)
-                        @unknown default:
-                            EmptyView()
                         }
-                    }
-                } else {
-                    Image(systemName: "photo") // si pas d'URL
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 150)
-                        .foregroundColor(.gray)
-                }
-            
-            VStack {
-                HStack {
-                    HStack {
-                        Image("Icon - Today")
-                        Text(event.date.formattedDate(from: event.date))
-                    }
-                    HStack {
-                        Image(systemName: "clock")
-                        Text(event.date.formattedTime(from: event.date))
-                    }
-                    Image(event.userProfileImage)
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .clipShape(Circle())
-                }
-                Text(event.description)
-                
-                HStack {
-                    VStack {
-                        Text(event.location)
                         
+                        VStack(spacing: 20) {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Image("Icon - Today")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .scaleEffect(1.15)
+                                            .frame(width: 20, height: 20)
+                                        
+                                        Text(event.date.formattedDate(from: event.date))
+                                    }
+                                    HStack {
+                                        Image(systemName: "clock")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 20, height: 20)
+                                        
+                                        Text(event.date.formattedTime(from: event.date))
+                                    }
+                                    
+                                }
+                                Spacer()
+                                
+                                Image(event.userProfileImage)
+                                    .resizable()
+                                    .frame(width: 70, height: 70)
+                                    .clipShape(Circle())
+                                    .frame(alignment: .leading)
+                            }
+                            
+                            Text(event.description)
+                            
+                            HStack {
+                                Text(event.location)
+                                
+                                Spacer()
+                                
+                                StaticMapView(event: event)
+                                    .frame(width: 149, height: 72)
+                                    //.cornerRadius(16)
+                            }
+                            Spacer()
+                        }
+                        .padding(.top, 15)
                     }
+                    .foregroundColor(.white)
+                    .padding(10)
+                    .navigationBarBackButtonHidden(true)
+                    .navigationBarTitleDisplayMode(.inline)
                 }
             }
         }
-        .navigationTitle(event.name)
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -99,6 +153,7 @@ extension Date {
             category: "Musique",
             guests: ["alice@example.com", "bob@example.com"],
             userProfileImage: "Avatar",
-            imageURL: "https://via.placeholder.com/150"
+            imageURL: "https://via.placeholder.com/150",
+            isUserInvited: false
         ))
 }

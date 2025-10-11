@@ -16,18 +16,62 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 	FirebaseApp.configure()
       
 #if DEBUG
-      // Auth Emulator
-      Auth.auth().useEmulator(withHost: "localhost", port: 9099)
+        let testEmail = "test@emulator.com"
+        let testPassword = "123Elena!"
+        
+        #if targetEnvironment(simulator)
+        // 🔹 Auth Emulator
+        Auth.auth().useEmulator(withHost: "localhost", port: 9099)
+        
+        // 🔹 Firestore Emulator
+        let settings = Firestore.firestore().settings
+        settings.host = "localhost:8080"
+        settings.isSSLEnabled = false
+        Firestore.firestore().settings = settings
+        
+        // Appel de tes fonctions existantes
+      Auth.auth().createUser(withEmail: testEmail, password: testPassword) { result, error in
+          if let error = error as NSError? {
+              if error.code == AuthErrorCode.emailAlreadyInUse.rawValue {
+                  print("✅ Compte test déjà existant")
+              } else {
+                  print("⚠️ Erreur création compte test : \(error.localizedDescription)")
+              }
+          } else if let user = result?.user {
+              print("🎉 Compte test créé avec succès : \(testEmail)")
+              Task {
+                  do {
+                      try await FirestoreService.shared.saveUserToFirestore(uid: user.uid, email: testEmail)
+                      print("✅ Utilisateur enregistré dans Firestore")
+                  } catch {
+                      print("⚠️ Erreur Firestore : \(error.localizedDescription)")
+                  }
+              }
+          }
+      }
       
-      // Firestore Emulator
-      let settings = Firestore.firestore().settings
-      settings.host = "localhost:8080"
-      settings.isSSLEnabled = false
-      Firestore.firestore().settings = settings
-      
-      let testEmail = "test@emulator.com"
-      let testPassword = "123Elena!"
-      
+      Auth.auth().createUser(withEmail: "a@gmail.com", password: "123Arthur!") { result, error in
+          if let error = error as NSError? {
+              if error.code == AuthErrorCode.emailAlreadyInUse.rawValue {
+                  print("✅ Compte test déjà existant")
+              } else {
+                  print("⚠️ Erreur création compte test : \(error.localizedDescription)")
+              }
+          } else if let user = result?.user {
+                  print("🎉 Compte test créé avec succès : \(testEmail)")
+                  Task {
+                      do {
+                          try await FirestoreService.shared.saveUserToFirestore(uid: user.uid, email: "a@gmail.com")
+                          print("✅ Utilisateur enregistré dans Firestore")
+                      } catch {
+                          print("⚠️ Erreur Firestore : \(error.localizedDescription)")
+                      }
+                  }
+              }
+      }
+
+        #else
+        // 📱 iPhone réel : Firebase en ligne
       Auth.auth().createUser(withEmail: testEmail, password: testPassword) { result, error in
           if let error = error as NSError? {
               if error.code == AuthErrorCode.emailAlreadyInUse.rawValue {
@@ -39,15 +83,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
               print("🎉 Compte test créé avec succès : \(testEmail)")
           }
       }
-      
-      Auth.auth().signIn(withEmail: "testEmail", password: "testPassword") { result, error in
-          if let error = error {
-              print("Erreur connexion : \(error.localizedDescription)")
-          } else {
-              print("✅ Connexion réussie avec l'émulateur !")
-          }
-      }
-#endif
+        #endif
+        #endif
       return true
   }
 }
@@ -74,3 +111,15 @@ struct EventoriasApp: App {
     }
 }
 
+extension FirestoreService {
+    func saveUserToFirestore(uid: String, email: String) async throws {
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(uid)
+
+        try await userRef.setData([
+            "uid": uid,
+            "email": email,
+            "createdAt": FieldValue.serverTimestamp()
+        ], merge: true)
+    }
+}

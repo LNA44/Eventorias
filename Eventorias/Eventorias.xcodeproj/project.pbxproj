@@ -34,6 +34,8 @@
 		F36F84E92E96AD0700D4ACA1 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = F36F84E82E96AD0700D4ACA1 /* Key.plist */; };
 		F36F84EA2E96AD0700D4ACA1 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = F36F84E82E96AD0700D4ACA1 /* Key.plist */; };
 		F36F84EB2E96AD0700D4ACA1 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = F36F84E82E96AD0700D4ACA1 /* Key.plist */; };
+		F37C03652E97BC4D00647D3A /* CameraPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37C03642E97BC4D00647D3A /* CameraPickerController.swift */; };
+		F37C03702E992B1800647D3A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37C036F2E992B1800647D3A /* User.swift */; };
 		F39B0EE72E8D645C00416D67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */; };
 		F39B0EE82E8D645C00416D67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */; };
 		F39B0EE92E8D645C00416D67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */; };
@@ -90,6 +92,9 @@
 		F37172A42E8C1CF600FF8C0F /* Eventorias.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eventorias.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F37172B12E8C1CF700FF8C0F /* EventoriasTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EventoriasTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F37172BB2E8C1CF700FF8C0F /* EventoriasUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EventoriasUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F37C03642E97BC4D00647D3A /* CameraPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPickerController.swift; sourceTree = "<group>"; };
+		F37C03662E97CA9E00647D3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F37C036F2E992B1800647D3A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,6 +143,7 @@
 		F361B9A72E8EC5400088C136 /* Eventorias */ = {
 			isa = PBXGroup;
 			children = (
+				F37C03662E97CA9E00647D3A /* Info.plist */,
 				F361B9B62E8EC80C0088C136 /* Services */,
 				F361B9B92E8EC8380088C136 /* Model */,
 				F361B9BD2E8ECC100088C136 /* UI */,
@@ -169,6 +175,7 @@
 				F36F84D02E9568F200D4ACA1 /* CreateEventView.swift */,
 				F36F84D22E956C1A00D4ACA1 /* UIImagePickerController.swift */,
 				F36F84D62E966AE100D4ACA1 /* WhitePicker.swift */,
+				F37C03642E97BC4D00647D3A /* CameraPickerController.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -187,6 +194,7 @@
 			children = (
 				F361B9BA2E8EC84B0088C136 /* Event.swift */,
 				F36F84CC2E954F4600D4ACA1 /* Day.swift */,
+				F37C036F2E992B1800647D3A /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -460,8 +468,10 @@
 				F361B9BF2E8ECC710088C136 /* EventDetailsView.swift in Sources */,
 				F36F84D12E9568F200D4ACA1 /* CreateEventView.swift in Sources */,
 				F36F84C32E95446E00D4ACA1 /* ProfileView.swift in Sources */,
+				F37C03702E992B1800647D3A /* User.swift in Sources */,
 				F361B9AD2E8EC5400088C136 /* WelcomeView.swift in Sources */,
 				F36F84E12E96A8CC00D4ACA1 /* GoogleMapsService.swift in Sources */,
+				F37C03652E97BC4D00647D3A /* CameraPickerController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +639,9 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Eventorias/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to the camera so the user can take photos";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to the camera so the user can choose photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -665,6 +678,9 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Eventorias/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to the camera so the user can take photos";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to the camera so the user can choose photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

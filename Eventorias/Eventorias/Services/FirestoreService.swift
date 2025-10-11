@@ -44,9 +44,7 @@ class FirestoreService {
                 return nil
             }
             
-            // Conversion guests String → [String]
-            let guestsString = data["guests"] as? String ?? ""
-            let guests = guestsString.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+            let guests = data["guests"] as? [String] ?? []
             let imageURL = data["imageURL"] as? String
             let date = dateTimestamp.dateValue() // conversion Timestamp → Date
             
@@ -59,7 +57,8 @@ class FirestoreService {
                 category: category,
                 guests: guests,
                 userProfileImage: userProfileImage,
-                imageURL: imageURL
+                imageURL: imageURL,
+                isUserInvited: false
             )
         }
         
@@ -67,7 +66,6 @@ class FirestoreService {
     }
     
     func addEvent(_ event: Event) async throws {
-        let guestsString = event.guests.joined(separator: ",") //car firestore n'accepte pas les tableaux de String
         
         try await db.collection("Event").document(event.id).setData([
             "name": event.name,
@@ -76,10 +74,25 @@ class FirestoreService {
             "date": Timestamp(date: event.date),
             "location": event.location,
             "category": event.category,
-            "guests": guestsString,
+            "guests": event.guests,
             "userProfileImage": event.userProfileImage,
             "imageURL": event.imageURL ?? ""
         ])
+    }
+    
+    func convertEmailsToUIDs(emails: [String]) async -> [String] {
+        let db = Firestore.firestore()
+        var uids: [String] = []
+
+        for email in emails {
+            let query = db.collection("users").whereField("email", isEqualTo: email)
+            if let snapshot = try? await query.getDocuments(), let doc = snapshot.documents.first {
+                uids.append(doc.documentID) 
+            } else {
+                print("⚠️ Aucun user trouvé pour email:", email)
+            }
+        }
+        return uids
     }
     
     func uploadImage(_ image: UIImage) async throws -> String {

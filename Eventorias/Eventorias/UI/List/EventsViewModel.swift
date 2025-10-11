@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 @Observable class EventsViewModel {
     private var service: FirestoreService { FirestoreService.shared }
@@ -25,8 +26,24 @@ import Foundation
     func fetchEvents(search: String = "") async {
         isLoading = true
         do {
-            self.events = try await FirestoreService.shared.fetchEvents(search: search)
+            var fetchedEvents = try await FirestoreService.shared.fetchEvents(search: search)
             print("Fetched events: \(events)")
+            
+            if let currentUserID = Auth.auth().currentUser?.uid {
+                // 1) mettre à jour isUserInvited pour chaque event
+                for i in fetchedEvents.indices {
+                    let invited = fetchedEvents[i].guests.contains(currentUserID)
+                            print("🔍 Event: \(fetchedEvents[i].name)")
+                            print("Guests:", fetchedEvents[i].guests)
+                            print("CurrentUserID:", currentUserID)
+                            print("Is invited:", invited)
+                            fetchedEvents[i].isUserInvited = invited
+                }
+                
+                // 2) trier pour que les événements invités remontent en haut
+                fetchedEvents.sort { $0.isUserInvited && !$1.isUserInvited }
+            }
+            self.events = fetchedEvents
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -35,10 +52,16 @@ import Foundation
     
     @MainActor
     func addEvent(name: String, description: String, date: Date, time: Date,
-                  location: String, category: String, guests: [String],
+                  location: String, category: String, guests: String,
                   userProfileImage: String, imageURL: String?) async {
-        
+        print("guests avant enregistrement: \(guests)")
         let combinedDateTime = combine(date: date, time: time)
+        
+        let emails = guests
+                .split(separator: ",")
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
+
+            let guestUIDs = await FirestoreService.shared.convertEmailsToUIDs(emails: emails)
         
         let newEvent = Event(
                 id: UUID().uuidString,
@@ -47,11 +70,12 @@ import Foundation
                 date: combinedDateTime,
                 location: location,
                 category: category,
-                guests: guests,
+                guests: guestUIDs,
                 userProfileImage: userProfileImage,
-                imageURL: imageURL
+                imageURL: imageURL,
+                isUserInvited: false
             )
-        
+        print("location avant enregistrement : \(newEvent.location)")
         do {
             try await FirestoreService.shared.addEvent(newEvent)
             events.append(newEvent)

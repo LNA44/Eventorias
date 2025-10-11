@@ -11,8 +11,8 @@ struct RowView: View {
     var event: Event
     let formatter: DateFormatter = {
         let f = DateFormatter()
-        f.dateStyle = .medium
-        f.timeStyle = .none
+        f.dateFormat = "MMMM d, yyyy" // Nom complet du mois, jour, année
+        f.locale = Locale(identifier: "en_US") // Pour avoir le mois en anglais
         return f
     }()
     
@@ -25,7 +25,20 @@ struct RowView: View {
                     .clipShape(Circle())
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    Text(event.name)
+                    HStack {
+                        Text(event.name)
+                        if event.isUserInvited {
+                            Text("Invité")
+                                .font(.caption2)
+                                .bold()
+                                .padding(.vertical, 4)
+                                .padding(.horizontal, 8)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.blue, lineWidth: 1)
+                                )
+                        }
+                    }
                     
                     Text(formatter.string(from: event.date))
                 }
@@ -74,6 +87,7 @@ struct RowView: View {
             category: "Musique",
             guests: ["alice@example.com", "bob@example.com"],
             userProfileImage: "Avatar",
-            imageURL: "https://via.placeholder.com/150"
+            imageURL: "https://via.placeholder.com/150",
+            isUserInvited: false
         ))
 }

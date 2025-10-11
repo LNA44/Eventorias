@@ -12,12 +12,34 @@ struct StaticMapView: View {
     let event: Event
     
     var body: some View {
-        AsyncImage(url: GoogleMapsService.staticMapURL(for: event.location)) { image in
-            image
-                .resizable()
-                .scaledToFit()
-        } placeholder: {
-            ProgressView()
+        if let url = GoogleMapsService.staticMapURL(for: event.location) {
+            VStack {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(8)
+                    case .failure(let error):
+                        VStack {
+                            Image(systemName: "xmark.octagon")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .foregroundColor(.red)
+                            Text("Erreur chargement carte : \(error.localizedDescription)")
+                                .font(.caption)
+                                .multilineTextAlignment(.center)
+                        }
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+            }
+        } else {
+            Text("Impossible de générer l'URL de la carte")
         }
     }
 }
@@ -32,6 +54,7 @@ struct StaticMapView: View {
         category: "Musique",
         guests: ["alice@example.com", "bob@example.com"],
         userProfileImage: "Avatar",
-        imageURL: "https://via.placeholder.com/150"
+        imageURL: "https://via.placeholder.com/150",
+        isUserInvited: false
     ))
 }

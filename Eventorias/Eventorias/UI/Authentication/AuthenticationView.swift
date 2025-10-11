@@ -80,12 +80,13 @@ struct AuthenticationView: View {
             .padding(.horizontal, 10)
             
             Button(action: {
-                onAuthSuccess()
-                /*authVM.signIn { success in
+                
+                authVM.signIn { success in
                     if success {
                         isSignedIn = true
+                        onAuthSuccess()
                     }
-                }*/
+                }
             }) {
                 HStack {
                     Text("Sign in")
@@ -99,9 +100,6 @@ struct AuthenticationView: View {
             }
             .padding(.horizontal)
         }
-       /* .navigationDestination(isPresented: $isSignedIn) {
-            ListView(eventsVM: eventsVM)
-        }*/
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
         .alert(isPresented: $authVM.isShowingAlert) {

@@ -13,7 +13,7 @@ struct CustomTextField: View {
     var font: Font = .system(size: 16, weight: .regular, design: .rounded)
     var foregroundColor: Color = .white
     var backgroundColor: Color = Color("TextfieldColor")
-    var cornerRadius: CGFloat = 4
+    var cornerRadius: CGFloat = 5
     var paddingValue: CGFloat = 15
     
     var body: some View {
