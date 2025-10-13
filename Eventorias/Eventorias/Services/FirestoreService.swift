@@ -39,7 +39,7 @@ class FirestoreService {
                   let dateTimestamp = data["date"] as? Timestamp,
                   let location = data["location"] as? String,
                   let category = data["category"] as? String,
-                  let userProfileImage = data["userProfileImage"] as? String
+                  let userID = data["userID"] as? String
             else {
                 return nil
             }
@@ -56,7 +56,7 @@ class FirestoreService {
                 location: location,
                 category: category,
                 guests: guests,
-                userProfileImage: userProfileImage,
+                userID: userID,
                 imageURL: imageURL,
                 isUserInvited: false
             )
@@ -75,7 +75,7 @@ class FirestoreService {
             "location": event.location,
             "category": event.category,
             "guests": event.guests,
-            "userProfileImage": event.userProfileImage,
+            "userID": event.userID,
             "imageURL": event.imageURL ?? ""
         ])
     }
@@ -102,5 +102,44 @@ class FirestoreService {
         let storageRef = Storage.storage().reference().child("eventImages/\(UUID().uuidString).jpg")
         try await storageRef.putDataAsync(imageData)
         return try await storageRef.downloadURL().absoluteString
+    }
+    
+    func getUserProfile(for uid: String, completion: @escaping (User?) -> Void) {
+        db.collection("users").document(uid).getDocument { snapshot, error in
+            guard let data = snapshot?.data(), error == nil else {
+                completion(nil)
+                return
+            }
+            
+            let name = data["name"] as? String ?? "Utilisateur"
+            let email = data["email"] as? String ?? ""
+            let avatarURL = data["avatarURL"] as? String
+            
+            let user = User(id: uid, email: email, avatarURL: avatarURL, name: name)
+            completion(user)
+        }
+    }
+    
+    func updateUserAvatarURL(for userId: String, url: String, completion: @escaping (Error?) -> Void) {
+        db.collection("users").document(userId).updateData([
+            "avatarURL": url
+        ]) { error in
+            completion(error)
+        }
+    }
+    
+    func getAvatarURL(for userID: String) async -> String? {
+        do {
+            let doc = try await Firestore.firestore()
+                .collection("users")
+                .document(userID)
+                .getDocument()
+            
+            guard let data = doc.data() else { return nil }
+            return data["avatarURL"] as? String
+        } catch {
+            print("Erreur récupération avatarURL: \(error)")
+            return nil
+        }
     }
 }

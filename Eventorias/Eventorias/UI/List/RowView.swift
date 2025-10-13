@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RowView: View {
     var event: Event
+    var eventsVM: EventsViewModel
     let formatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "MMMM d, yyyy" // Nom complet du mois, jour, année
@@ -17,12 +18,29 @@ struct RowView: View {
     }()
     
     var body: some View {
+        let avatarURL = eventsVM.getAvatar(for: event.userID)
+        
         HStack {
-            HStack(spacing: 15) {
-                Image(event.userProfileImage)
-                    .resizable()
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
+            HStack(spacing: 10) {
+                HStack {
+                    if let urlString = avatarURL, let url = URL(string: urlString) {
+                        AsyncImage(url: url) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                        } placeholder: {
+                            Circle()
+                                .fill(Color.gray.opacity(0.3))
+                        }
+                        .frame(width: 40, height: 40)
+                        .clipShape(Circle())
+                    } else {
+                        Circle().fill(Color.gray.opacity(0.3))
+                            .frame(width: 40, height: 40)
+                    }
+                    
+                    Text(event.name)
+                }
                 
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
@@ -39,6 +57,7 @@ struct RowView: View {
                                 )
                         }
                     }
+                    Text(event.category)
                     
                     Text(formatter.string(from: event.date))
                 }
@@ -70,6 +89,7 @@ struct RowView: View {
             }
         }
         .padding(.leading, 20)
+        .padding(.vertical, 10)
         .background(Color("TextfieldColor"))
         .cornerRadius(12)
         .frame(maxWidth: .infinity)
@@ -86,8 +106,8 @@ struct RowView: View {
             location: "Paris",
             category: "Musique",
             guests: ["alice@example.com", "bob@example.com"],
-            userProfileImage: "Avatar",
+            userID: "1DYN12",
             imageURL: "https://via.placeholder.com/150",
             isUserInvited: false
-        ))
+    ), eventsVM: EventsViewModel())
 }

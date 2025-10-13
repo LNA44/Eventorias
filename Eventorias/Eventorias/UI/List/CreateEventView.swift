@@ -17,13 +17,13 @@ struct CreateEventView: View {
     @State private var time = Date()
     @State private var timeString: String = ""
     @State private var location = ""
-    @State private var category = ""
     @State private var guests: String = ""
     @State private var selectedImage: UIImage?
     @State private var showCameraPicker = false
     @State private var cameraImage: UIImage?
     @State private var showImagePicker = false
     @State private var isSaving = false
+    @State private var selectedCategory: String = "Other"
     let dateFormatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "MM/dd/yyyy"
@@ -161,6 +161,37 @@ struct CreateEventView: View {
                     .background(Color("TextfieldColor"))
                     .cornerRadius(5)
                     
+                    VStack(spacing: 0) {
+                        Text("Category")
+                            .foregroundColor(.white)
+                            .padding(.top, 10)
+                            .padding(.leading, 15)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Menu {
+                            ForEach(Categories.all, id: \.self) { category in
+                                Button(action: {
+                                    selectedCategory = category
+                                }) {
+                                    Text(category)
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                    Text(selectedCategory.isEmpty ? "Select a category" : selectedCategory)
+                                        .foregroundColor(.white)
+                                    Image(systemName: "chevron.down") // flèche vers le bas
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 14, weight: .bold))
+                                Spacer()
+                                }
+                                .padding(.leading, 15)
+                                .padding(.vertical, 8)
+                        }
+                    }
+                    .background(Color("TextfieldColor"))
+                    .cornerRadius(5)
+                    
                     HStack(spacing: 10) {
                         Button(action: { showCameraPicker = true }) {
                             HStack {
@@ -208,9 +239,8 @@ struct CreateEventView: View {
                                 date: date,
                                 time: time,
                                 location: location,
-                                category: category,
+                                category: selectedCategory,
                                 guests: guests,
-                                userProfileImage: "Avatar",
                                 imageURL: imageURL
                             )
                             isSaving = false

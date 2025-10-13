@@ -9,6 +9,9 @@ import Foundation
 
 struct GoogleMapsService {
     static let shared = GoogleMapsService()
+    
+    private init() {}
+
     static var apiKey: String {
             guard let path = Bundle.main.path(forResource: "Key", ofType: "plist"),
                   let dict = NSDictionary(contentsOfFile: path),

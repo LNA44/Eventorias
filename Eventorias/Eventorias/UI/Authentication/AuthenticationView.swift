@@ -80,10 +80,10 @@ struct AuthenticationView: View {
             .padding(.horizontal, 10)
             
             Button(action: {
-                
-                authVM.signIn { success in
-                    if success {
-                        isSignedIn = true
+                Task {
+                    await authVM.signIn()
+                    
+                    if authVM.errorMessage == nil {
                         onAuthSuccess()
                     }
                 }

@@ -12,32 +12,23 @@ import FirebaseAuth
     var password: String = ""
     var errorMessage: String? = nil
     var isShowingAlert: Bool = false
+    private var service: FirebaseAuthService { FirebaseAuthService.shared }
     
-    func signIn(completion: @escaping (Bool) -> Void) {
+    func signIn() async {
         guard !email.isEmpty, !password.isEmpty else {
-            completion(false)
             return
         }
         guard isValidEmail() else {
-            completion(false)
             return
         }
         guard isValidPassword() else {
-            completion(false)
             return
         }
-        Auth.auth().signIn(withEmail: email, password: password) { result, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    self.errorMessage = error.localizedDescription
-                    self.isShowingAlert = true
-                    completion(false)
-                } else {
-                    self.errorMessage = ""
-                    self.isShowingAlert = false
-                    completion(true)
-                }
-            }
+        do {
+            try await service.signIn(email: email, password: password)
+        } catch {
+            errorMessage = error.localizedDescription
+            isShowingAlert = true
         }
     }
     

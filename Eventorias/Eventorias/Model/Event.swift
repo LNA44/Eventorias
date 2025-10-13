@@ -16,12 +16,12 @@ struct Event: Identifiable, Decodable, Hashable {
     var location: String
     var category: String
     var guests: [String] // emails des invités
-    var userProfileImage: String = "Avatar"
+    var userID: String
     var imageURL: String?
     var isUserInvited: Bool = false
     
     init(id: String, name: String, description: String, date: Date, location: String, category: String, guests: [String],
-         userProfileImage: String, imageURL: String? = nil, isUserInvited: Bool) {
+         userID: String, imageURL: String? = nil, isUserInvited: Bool) {
         self.id = id
         self.name = name
         self.description = description
@@ -29,7 +29,7 @@ struct Event: Identifiable, Decodable, Hashable {
         self.location = location
         self.category = category
         self.guests = guests
-        self.userProfileImage = userProfileImage
+        self.userID = userID
         self.imageURL = imageURL
         self.isUserInvited = isUserInvited
     }

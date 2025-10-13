@@ -53,7 +53,7 @@ struct StaticMapView: View {
         location: "Paris",
         category: "Musique",
         guests: ["alice@example.com", "bob@example.com"],
-        userProfileImage: "Avatar",
+        userID: "AEE64j3",
         imageURL: "https://via.placeholder.com/150",
         isUserInvited: false
     ))

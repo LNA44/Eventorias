@@ -10,6 +10,7 @@ import SwiftUI
 struct RootView: View {
     var authVM: AuthenticationViewModel
     var eventsVM: EventsViewModel
+    var userVM: UserViewModel
     @State private var currentStep: Step = .welcome
     
     enum Step {
@@ -34,7 +35,7 @@ struct RootView: View {
                 .navigationBarHidden(true)
                 
             case .main:
-                MainTabView(eventsVM: eventsVM)
+                MainTabView(eventsVM: eventsVM, userVM: userVM)
             }
         }
     }

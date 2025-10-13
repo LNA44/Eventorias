@@ -34,8 +34,12 @@
 		F36F84E92E96AD0700D4ACA1 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = F36F84E82E96AD0700D4ACA1 /* Key.plist */; };
 		F36F84EA2E96AD0700D4ACA1 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = F36F84E82E96AD0700D4ACA1 /* Key.plist */; };
 		F36F84EB2E96AD0700D4ACA1 /* Key.plist in Resources */ = {isa = PBXBuildFile; fileRef = F36F84E82E96AD0700D4ACA1 /* Key.plist */; };
+		F3762A732E9D39EA001E8114 /* FirebaseStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3762A722E9D39EA001E8114 /* FirebaseStorageService.swift */; };
 		F37C03652E97BC4D00647D3A /* CameraPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37C03642E97BC4D00647D3A /* CameraPickerController.swift */; };
 		F37C03702E992B1800647D3A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37C036F2E992B1800647D3A /* User.swift */; };
+		F37C03782E9A6BFC00647D3A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37C03772E9A6BFC00647D3A /* Constants.swift */; };
+		F37C037B2E9A892700647D3A /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37C037A2E9A892700647D3A /* UserViewModel.swift */; };
+		F37C037D2E9A898B00647D3A /* FirebaseAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37C037C2E9A898B00647D3A /* FirebaseAuthService.swift */; };
 		F39B0EE72E8D645C00416D67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */; };
 		F39B0EE82E8D645C00416D67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */; };
 		F39B0EE92E8D645C00416D67 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */; };
@@ -92,9 +96,13 @@
 		F37172A42E8C1CF600FF8C0F /* Eventorias.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eventorias.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F37172B12E8C1CF700FF8C0F /* EventoriasTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EventoriasTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F37172BB2E8C1CF700FF8C0F /* EventoriasUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EventoriasUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3762A722E9D39EA001E8114 /* FirebaseStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageService.swift; sourceTree = "<group>"; };
 		F37C03642E97BC4D00647D3A /* CameraPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPickerController.swift; sourceTree = "<group>"; };
 		F37C03662E97CA9E00647D3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F37C036F2E992B1800647D3A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F37C03772E9A6BFC00647D3A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F37C037A2E9A892700647D3A /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		F37C037C2E9A898B00647D3A /* FirebaseAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthService.swift; sourceTree = "<group>"; };
 		F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,6 +159,7 @@
 				F361B9A52E8EC5400088C136 /* EventoriasApp.swift */,
 				F36F84BE2E9543A400D4ACA1 /* RootView.swift */,
 				F36F84C02E95440900D4ACA1 /* MainTabView.swift */,
+				F37C03772E9A6BFC00647D3A /* Constants.swift */,
 			);
 			path = Eventorias;
 			sourceTree = "<group>";
@@ -185,6 +194,8 @@
 			children = (
 				F361B9B72E8EC8220088C136 /* FirestoreService.swift */,
 				F36F84E02E96A8CC00D4ACA1 /* GoogleMapsService.swift */,
+				F37C037C2E9A898B00647D3A /* FirebaseAuthService.swift */,
+				F3762A722E9D39EA001E8114 /* FirebaseStorageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -216,7 +227,7 @@
 				F361B9AE2E8EC5450088C136 /* Authentication */,
 				F361B9AF2E8EC5620088C136 /* List */,
 				F361B9BC2E8ECC030088C136 /* Event */,
-				F36F84C22E95446E00D4ACA1 /* ProfileView.swift */,
+				F37C03792E9A883A00647D3A /* Profile */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -242,6 +253,15 @@
 				F37172BB2E8C1CF700FF8C0F /* EventoriasUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F37C03792E9A883A00647D3A /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				F36F84C22E95446E00D4ACA1 /* ProfileView.swift */,
+				F37C037A2E9A892700647D3A /* UserViewModel.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		FDED3525F16F2B291448A3B0 /* Frameworks */ = {
@@ -448,6 +468,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F37C03782E9A6BFC00647D3A /* Constants.swift in Sources */,
 				F36F84D72E966AE100D4ACA1 /* WhitePicker.swift in Sources */,
 				F36F84D32E956C1A00D4ACA1 /* UIImagePickerController.swift in Sources */,
 				F361B9A92E8EC5400088C136 /* AuthenticationView.swift in Sources */,
@@ -456,6 +477,7 @@
 				F361B9AA2E8EC5400088C136 /* AuthenticationViewModel.swift in Sources */,
 				F36F84CD2E954F4600D4ACA1 /* Day.swift in Sources */,
 				F361B9B12E8EC57F0088C136 /* ListView.swift in Sources */,
+				F37C037B2E9A892700647D3A /* UserViewModel.swift in Sources */,
 				F361B9BB2E8EC84B0088C136 /* Event.swift in Sources */,
 				F36F84CB2E954EAB00D4ACA1 /* CalendarView.swift in Sources */,
 				F361B9B32E8EC5C60088C136 /* RowView.swift in Sources */,
@@ -468,6 +490,8 @@
 				F361B9BF2E8ECC710088C136 /* EventDetailsView.swift in Sources */,
 				F36F84D12E9568F200D4ACA1 /* CreateEventView.swift in Sources */,
 				F36F84C32E95446E00D4ACA1 /* ProfileView.swift in Sources */,
+				F3762A732E9D39EA001E8114 /* FirebaseStorageService.swift in Sources */,
+				F37C037D2E9A898B00647D3A /* FirebaseAuthService.swift in Sources */,
 				F37C03702E992B1800647D3A /* User.swift in Sources */,
 				F361B9AD2E8EC5400088C136 /* WelcomeView.swift in Sources */,
 				F36F84E12E96A8CC00D4ACA1 /* GoogleMapsService.swift in Sources */,

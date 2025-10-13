@@ -34,10 +34,19 @@ struct ListView: View {
             .padding(.horizontal, 10)
             
             HStack {
-                Button(action: {
-                    // Action de tri ici
-                    eventsVM.toggleSorting()
-                }) {
+                Menu {
+                    Button(action: {
+                        eventsVM.sortByDate()
+                    }) {
+                        Text("By Date")
+                    }
+                    
+                    Button(action: {
+                        eventsVM.sortByCategory()
+                    }) {
+                        Text("By Category")
+                    }
+                } label: {
                     HStack(spacing: 4) {
                         Image("Icon - Sort")
                             .foregroundColor(.white)
@@ -50,6 +59,7 @@ struct ListView: View {
                     .background(Color("TextfieldColor"))
                     .cornerRadius(16)
                 }
+                
                 Spacer()
             }
             .padding(.horizontal, 10)
@@ -102,8 +112,8 @@ struct ListView: View {
                 List {
                     ForEach(eventsVM.events) { event in
                         ZStack {
-                            RowView(event: event)
-                            NavigationLink(destination: EventDetailsView(event: event)) {
+                            RowView(event: event, eventsVM: eventsVM)
+                            NavigationLink(destination: EventDetailsView(eventsVM: eventsVM, event: event)) {
                             }
                             .opacity(0)
                             
@@ -121,11 +131,6 @@ struct ListView: View {
         }
         .background(Color(.black))
         .navigationBarBackButtonHidden(true)
-        /*.onChange(of: eventsVM.searchText) { _, newValue in //déclenche la recherche réactive à chaque frappe.
-            Task {
-                await eventsVM.fetchEvents(search: newValue)
-            }
-        }*/
     }
 }
 

@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EventDetailsView: View {
+    var eventsVM: EventsViewModel
     var event: Event
     @Environment(\.dismiss) var dismiss
     
@@ -94,11 +95,24 @@ struct EventDetailsView: View {
                                 }
                                 Spacer()
                                 
-                                Image(event.userProfileImage)
-                                    .resizable()
+                                let avatarURL = eventsVM.getAvatar(for: event.userID)
+                                
+                                if let urlString = avatarURL, let url = URL(string: urlString) {
+                                    AsyncImage(url: url) { image in
+                                        image
+                                            .resizable()
+                                            .scaledToFill()
+                                    } placeholder: {
+                                        Circle()
+                                            .fill(Color.gray.opacity(0.3))
+                                    }
                                     .frame(width: 70, height: 70)
                                     .clipShape(Circle())
-                                    .frame(alignment: .leading)
+                                } else {
+                                    Circle()
+                                        .fill(Color.gray.opacity(0.3))
+                                        .frame(width: 70, height: 70)
+                                }
                             }
                             
                             Text(event.description)
@@ -144,7 +158,7 @@ extension Date {
 }
 
 #Preview {
-    EventDetailsView(event: Event(
+    EventDetailsView(eventsVM: EventsViewModel(), event: Event(
             id: "2",
             name: "MusicFestival",
             description: "Un super festival de musique",
@@ -152,7 +166,7 @@ extension Date {
             location: "Paris",
             category: "Musique",
             guests: ["alice@example.com", "bob@example.com"],
-            userProfileImage: "Avatar",
+            userID: "17FYd83",
             imageURL: "https://via.placeholder.com/150",
             isUserInvited: false
         ))

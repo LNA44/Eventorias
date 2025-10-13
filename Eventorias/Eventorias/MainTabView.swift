@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainTabView: View {
     var eventsVM: EventsViewModel
+    var userVM: UserViewModel
     @State private var selectedTab = 0
     
     var body: some View {
@@ -19,7 +20,7 @@ struct MainTabView: View {
                 }
                 .tag(0)
             
-            ProfileView()
+            ProfileView(userVM: userVM)
                 .tabItem {
                     Label("Profile", systemImage: "person")
                 }

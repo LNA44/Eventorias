@@ -10,5 +10,6 @@ import Foundation
 struct User: Identifiable, Codable {
     let id: String // le même que l'uid Firebase Auth
     let email: String
-    let avatarURL: String?
+    var avatarURL: String?
+    let name: String
 }

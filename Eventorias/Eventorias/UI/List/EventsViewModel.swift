@@ -14,6 +14,7 @@ import FirebaseAuth
     var errorMessage: String?
     var isSortedAscending: Bool = true
     var isLoading: Bool = false
+    var avatars: [String: String] = [:]
     var searchText: String = "" {
         didSet {
             Task {
@@ -53,7 +54,7 @@ import FirebaseAuth
     @MainActor
     func addEvent(name: String, description: String, date: Date, time: Date,
                   location: String, category: String, guests: String,
-                  userProfileImage: String, imageURL: String?) async {
+                imageURL: String?) async {
         print("guests avant enregistrement: \(guests)")
         let combinedDateTime = combine(date: date, time: time)
         
@@ -61,7 +62,12 @@ import FirebaseAuth
                 .split(separator: ",")
                 .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
 
-            let guestUIDs = await FirestoreService.shared.convertEmailsToUIDs(emails: emails)
+        let guestUIDs = await FirestoreService.shared.convertEmailsToUIDs(emails: emails)
+        
+        guard let currentUserID = Auth.auth().currentUser?.uid else {
+               errorMessage = "Impossible de récupérer l'utilisateur courant."
+               return
+           }
         
         let newEvent = Event(
                 id: UUID().uuidString,
@@ -71,7 +77,7 @@ import FirebaseAuth
                 location: location,
                 category: category,
                 guests: guestUIDs,
-                userProfileImage: userProfileImage,
+                userID: currentUserID,
                 imageURL: imageURL,
                 isUserInvited: false
             )
@@ -100,9 +106,29 @@ import FirebaseAuth
         return calendar.date(from: combinedComponents) ?? date
     }
     
-    func toggleSorting() {
-        isSortedAscending.toggle()
-        events.sort { isSortedAscending ? $0.date < $1.date : $0.date > $1.date }
+    func sortByDate(ascending: Bool = true) {
+        events.sort {
+            ascending ? $0.date < $1.date : $0.date > $1.date
+        }
+    }
+    
+    func sortByCategory() {
+        events.sort { $0.category < $1.category }
+    }
+    
+    func loadAvatars() async {
+        for event in events {
+            if avatars[event.userID] == nil {
+                let avatar = await FirestoreService.shared.getAvatarURL(for: event.userID)
+                if let avatar = avatar {
+                    avatars[event.userID] = avatar
+                }
+            }
+        }
+    }
+    
+    func getAvatar(for userID: String) -> String? {
+        return avatars[userID]
     }
 }
 
