@@ -16,8 +16,24 @@ struct ProfileView: View {
         VStack(spacing: 20) {
             HStack {
                 Text("User Profile")
-                if let userVMAvatarURL = userVM.avatarURL {
-                    Image(userVMAvatarURL)
+                    .font(.largeTitle)
+                
+                Spacer()
+                
+                if let urlString = userVM.avatarURL, let url = URL(string: urlString) {
+                    AsyncImage(url: url) { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    } placeholder: {
+                        Circle()
+                            .fill(Color.gray.opacity(0.3))
+                    }
+                    .frame(width: 40, height: 40)
+                    .clipShape(Circle())
+                } else {
+                    Circle().fill(Color.gray.opacity(0.3))
+                        .frame(width: 40, height: 40)
                 }
             }
             VStack(spacing: 0) {
@@ -67,7 +83,6 @@ struct ProfileView: View {
         .foregroundColor(.white)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
-        //.ignoresSafeArea()
         .onAppear {
             userVM.loadCurrentUserID()
             userVM.loadUserProfile()

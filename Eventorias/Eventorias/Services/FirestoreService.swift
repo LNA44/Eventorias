@@ -130,7 +130,7 @@ class FirestoreService {
     
     func getAvatarURL(for userID: String) async -> String? {
         do {
-            let doc = try await Firestore.firestore()
+            let doc = try await db
                 .collection("users")
                 .document(userID)
                 .getDocument()

@@ -38,8 +38,6 @@ struct RowView: View {
                         Circle().fill(Color.gray.opacity(0.3))
                             .frame(width: 40, height: 40)
                     }
-                    
-                    Text(event.name)
                 }
                 
                 VStack(alignment: .leading, spacing: 10) {

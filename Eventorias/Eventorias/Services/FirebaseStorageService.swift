@@ -19,7 +19,7 @@ class FirebaseStorageService {
             completion(.failure(NSError(domain: "ImageError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Impossible to convert image"])))
             return
         }
-        
+        //Upload sur firebase Storage
         let storageRef = Storage.storage().reference().child("avatars/\(userId).jpg")
         
         storageRef.putData(imageData, metadata: nil) { metadata, error in
@@ -27,7 +27,7 @@ class FirebaseStorageService {
                 completion(.failure(error))
                 return
             }
-            
+            //Récupère l'URL publique
             storageRef.downloadURL { url, error in
                 if let error = error {
                     completion(.failure(error))
@@ -49,6 +49,19 @@ class FirebaseStorageService {
                     } else {
                         completion(.success(url.absoluteString))
                     }
+                }
+            }
+        }
+     }
+    //Wrapper async de la fonction d'en haut
+    func uploadAvatarImageAsync(userId: String, image: UIImage) async throws -> String {
+        try await withCheckedThrowingContinuation { continuation in
+            self.uploadAvatarImage(userId: userId, image: image) { result in
+                switch result {
+                case .success(let url):
+                    continuation.resume(returning: url)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
                 }
             }
         }

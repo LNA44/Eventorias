@@ -18,16 +18,7 @@ import UIKit
     var name: String = ""
     var email: String = ""
     var avatarURL: String? = nil
-    
-    /*init() {
-        //utile si utilisateur déjà connecté avant le lancement de l'app (une autre fois)
-            if let uid = authService.getCurrentUserID() {
-                self.userID = uid
-                self.email = authService.getCurrentUserEmail() ?? ""
-            } else {
-                print("❌ Aucun utilisateur connecté au démarrage")
-            }
-        }*/
+
     func loadCurrentUserID() {
             if let uid = authService.getCurrentUserID() {
                 self.userID = uid
@@ -56,29 +47,23 @@ import UIKit
         }
     }
     
-    func uploadAvatar(image: UIImage) {
+    func uploadAvatar(image: UIImage) async throws -> String {
         guard !userID.isEmpty else {
-                   print("❌ Aucun userID disponible pour uploader l’avatar")
-                   return
-               }
+            print("❌ Aucun userID disponible pour uploader l’avatar")
+            throw NSError(domain: "UserViewModel", code: -1, userInfo: [NSLocalizedDescriptionKey: "Aucun userID disponible"])
+        }
         
-        FirebaseStorageService.shared.uploadAvatarImage(userId: userID, image: image) { result in
-            switch result {
-            case .success(let url):
-                DispatchQueue.main.async {
-                    self.avatarURL = url
-                }
-                print("✅ Avatar uploadé : \(url)")
-                self.firestoreService.updateUserAvatarURL(for: self.userID, url: url) { error in
-                    if let error = error {
-                        print("⚠️ Erreur mise à jour avatarURL dans Firestore : \(error.localizedDescription)")
-                    } else {
-                        print("✅ avatarURL mise à jour dans Firestore")
+        return try await withCheckedThrowingContinuation { continuation in
+            FirebaseStorageService.shared.uploadAvatarImage(userId: userID, image: image) { result in
+                switch result {
+                case .success(let url):
+                    DispatchQueue.main.async {
+                        self.avatarURL = url
                     }
+                    continuation.resume(returning: url)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
                 }
-                
-            case .failure(let error):
-                print("❌ Erreur upload avatar : \(error.localizedDescription)")
             }
         }
     }

@@ -131,6 +131,11 @@ struct ListView: View {
         }
         .background(Color(.black))
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            Task {
+                await eventsVM.loadAvatars()
+            }
+        }
     }
 }
 
