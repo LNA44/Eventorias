@@ -19,6 +19,15 @@
 		F361B9B82E8EC8220088C136 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361B9B72E8EC8220088C136 /* FirestoreService.swift */; };
 		F361B9BB2E8EC84B0088C136 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361B9BA2E8EC84B0088C136 /* Event.swift */; };
 		F361B9BF2E8ECC710088C136 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361B9BE2E8ECC710088C136 /* EventDetailsView.swift */; };
+		F3682F8B2E9F8572002E8578 /* Inter_28pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */; };
+		F3682F8C2E9F8572002E8578 /* Inter_28pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */; };
+		F3682F8D2E9F8572002E8578 /* Inter_28pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */; };
+		F3682F8F2E9F857D002E8578 /* Inter_24pt-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F8E2E9F857D002E8578 /* Inter_24pt-SemiBold.ttf */; };
+		F3682F902E9F857D002E8578 /* Inter_24pt-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F8E2E9F857D002E8578 /* Inter_24pt-SemiBold.ttf */; };
+		F3682F912E9F857D002E8578 /* Inter_24pt-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F8E2E9F857D002E8578 /* Inter_24pt-SemiBold.ttf */; };
+		F3682F932E9F8592002E8578 /* Inter_28pt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F922E9F8592002E8578 /* Inter_28pt-Medium.ttf */; };
+		F3682F942E9F8592002E8578 /* Inter_28pt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F922E9F8592002E8578 /* Inter_28pt-Medium.ttf */; };
+		F3682F952E9F8592002E8578 /* Inter_28pt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F922E9F8592002E8578 /* Inter_28pt-Medium.ttf */; };
 		F36F84BF2E9543A400D4ACA1 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84BE2E9543A400D4ACA1 /* RootView.swift */; };
 		F36F84C12E95440900D4ACA1 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84C02E95440900D4ACA1 /* MainTabView.swift */; };
 		F36F84C32E95446E00D4ACA1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84C22E95446E00D4ACA1 /* ProfileView.swift */; };
@@ -81,6 +90,9 @@
 		F361B9B72E8EC8220088C136 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		F361B9BA2E8EC84B0088C136 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		F361B9BE2E8ECC710088C136 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
+		F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_28pt-Regular.ttf"; sourceTree = "<group>"; };
+		F3682F8E2E9F857D002E8578 /* Inter_24pt-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_24pt-SemiBold.ttf"; sourceTree = "<group>"; };
+		F3682F922E9F8592002E8578 /* Inter_28pt-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_28pt-Medium.ttf"; sourceTree = "<group>"; };
 		F36F84BE2E9543A400D4ACA1 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		F36F84C02E95440900D4ACA1 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		F36F84C22E95446E00D4ACA1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -235,6 +247,9 @@
 		F371729B2E8C1CF600FF8C0F = {
 			isa = PBXGroup;
 			children = (
+				F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */,
+				F3682F922E9F8592002E8578 /* Inter_28pt-Medium.ttf */,
+				F3682F8E2E9F857D002E8578 /* Inter_24pt-SemiBold.ttf */,
 				F36F84E82E96AD0700D4ACA1 /* Key.plist */,
 				F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */,
 				F361B9A72E8EC5400088C136 /* Eventorias */,
@@ -390,9 +405,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3682F8D2E9F8572002E8578 /* Inter_28pt-Regular.ttf in Resources */,
 				F361B9A82E8EC5400088C136 /* Assets.xcassets in Resources */,
 				F39B0EE72E8D645C00416D67 /* GoogleService-Info.plist in Resources */,
 				F36F84E92E96AD0700D4ACA1 /* Key.plist in Resources */,
+				F3682F952E9F8592002E8578 /* Inter_28pt-Medium.ttf in Resources */,
+				F3682F912E9F857D002E8578 /* Inter_24pt-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,6 +419,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F36F84EA2E96AD0700D4ACA1 /* Key.plist in Resources */,
+				F3682F942E9F8592002E8578 /* Inter_28pt-Medium.ttf in Resources */,
+				F3682F8B2E9F8572002E8578 /* Inter_28pt-Regular.ttf in Resources */,
+				F3682F902E9F857D002E8578 /* Inter_24pt-SemiBold.ttf in Resources */,
 				F39B0EE82E8D645C00416D67 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,6 +431,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F36F84EB2E96AD0700D4ACA1 /* Key.plist in Resources */,
+				F3682F932E9F8592002E8578 /* Inter_28pt-Medium.ttf in Resources */,
+				F3682F8C2E9F8572002E8578 /* Inter_28pt-Regular.ttf in Resources */,
+				F3682F8F2E9F857D002E8578 /* Inter_24pt-SemiBold.ttf in Resources */,
 				F39B0EE92E8D645C00416D67 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,15 +13,17 @@ struct EventsContainerView: View {
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
-            // ✅ Contenu principal full screen
             VStack(spacing: 0) {
-                // Picker en haut
                 Spacer()
+                
                 HStack {
                     Picker("", selection: $showCalendar) {
-                        Text("List").tag(false)
-                        Text("Calendar").tag(true)
+                        Text("List")
+                            .tag(false)
+                        Text("Calendar")
+                            .tag(true)
                     }
+                    .font(.custom("Inter28pt-Regular", size: 16))
                     .pickerStyle(.segmented)
                     .padding(.horizontal)
                 }
@@ -62,6 +64,11 @@ struct EventsContainerView: View {
         }
         .task {
             if eventsVM.events.isEmpty {
+                await eventsVM.fetchEvents()
+            }
+        }
+        .onChange(of: eventsVM.events) {_, newEvents in
+            Task {
                 await eventsVM.fetchEvents()
             }
         }

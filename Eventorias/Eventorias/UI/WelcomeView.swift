@@ -10,35 +10,40 @@ import FirebaseCore
 import FirebaseAuth
 
 struct WelcomeView: View {
-    //var authVM: AuthenticationViewModel
-    //var eventsVM: EventsViewModel
     let onNext: () -> Void
     
 	var body: some View {
         NavigationStack {
             VStack(spacing: 50) {
                 Image("Logo Eventorias")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 240, height: 110)
                 
                 Button(action: {
                     // Appelle le callback pour passer à l'étape suivante
                     onNext()
                 }) {
-                    HStack {
+                    HStack(spacing: 20) {
                         Image(systemName: "envelope.fill")
                             .foregroundColor(.white)
                         Text("Sign in with email")
+                            .font(.custom("Inter24pt-SemiBold", size: 16))
                             .foregroundColor(.white)
                             .bold()
                     }
-                    .padding()
-                    .frame(width: 250)
+                    .padding(.vertical, 15)
+                    .frame(width: 230)
                     .background(Color("ButtonColor"))
                     .cornerRadius(4)
+                    
                 }
+                Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.black)
+            .padding(.top, 150)
         }
+        .background(Color.black)
 	}
 }
 

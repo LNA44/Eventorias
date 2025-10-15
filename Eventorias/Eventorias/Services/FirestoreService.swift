@@ -47,7 +47,7 @@ class FirestoreService {
             let guests = data["guests"] as? [String] ?? []
             let imageURL = data["imageURL"] as? String
             let date = dateTimestamp.dateValue() // conversion Timestamp → Date
-            
+
             return Event(
                 id: doc.documentID,
                 name: name,
@@ -61,12 +61,11 @@ class FirestoreService {
                 isUserInvited: false
             )
         }
-        
+        print("Events: \(events)")
         return events
     }
     
     func addEvent(_ event: Event) async throws {
-        
         try await db.collection("Event").document(event.id).setData([
             "name": event.name,
             "name_lowercased": event.name.lowercased(),
@@ -81,7 +80,6 @@ class FirestoreService {
     }
     
     func convertEmailsToUIDs(emails: [String]) async -> [String] {
-        let db = Firestore.firestore()
         var uids: [String] = []
 
         for email in emails {
@@ -140,6 +138,22 @@ class FirestoreService {
         } catch {
             print("Erreur récupération avatarURL: \(error)")
             return nil
+        }
+    }
+    
+    func updateUserAvatarURL(userId: String, url: String) async throws {
+        try await db.collection("users").document(userId).setData(["avatarURL": url], merge: true)
+    }
+    
+    func saveUserToFirestore(uid: String, email: String, name: String = "", avatarURL: String? = nil) async throws {
+        let userRef = db.collection("users").document(uid)
+        let user = User(id: uid, email: email, avatarURL: avatarURL, name: name)
+        do {
+            try userRef.setData(from: user, merge: true)
+            print("✅ User enregistré : \(email)")
+        } catch {
+            print("❌ Erreur Firestore pour \(email) : \(error)")
+            throw error
         }
     }
 }

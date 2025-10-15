@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import UIKit
 
 @Observable class EventsViewModel {
     private var service: FirestoreService { FirestoreService.shared }
@@ -27,7 +28,7 @@ import FirebaseAuth
     func fetchEvents(search: String = "") async {
         isLoading = true
         do {
-            var fetchedEvents = try await FirestoreService.shared.fetchEvents(search: search)
+            var fetchedEvents = try await service.fetchEvents(search: search)
             print("Fetched events: \(events)")
             
             if let currentUserID = Auth.auth().currentUser?.uid {
@@ -45,6 +46,7 @@ import FirebaseAuth
                 fetchedEvents.sort { $0.isUserInvited && !$1.isUserInvited }
             }
             self.events = fetchedEvents
+            await loadAvatars()
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -62,7 +64,7 @@ import FirebaseAuth
                 .split(separator: ",")
                 .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
 
-        let guestUIDs = await FirestoreService.shared.convertEmailsToUIDs(emails: emails)
+        let guestUIDs = await service.convertEmailsToUIDs(emails: emails)
         
         guard let currentUserID = Auth.auth().currentUser?.uid else {
                errorMessage = "Impossible de récupérer l'utilisateur courant."
@@ -83,7 +85,7 @@ import FirebaseAuth
             )
         print("location avant enregistrement : \(newEvent.location)")
         do {
-            try await FirestoreService.shared.addEvent(newEvent)
+            try await service.addEvent(newEvent)
             events.append(newEvent)
         } catch {
             errorMessage = error.localizedDescription
@@ -119,7 +121,7 @@ import FirebaseAuth
     func loadAvatars() async {
         for event in events {
             if avatars[event.userID] == nil {
-                let avatar = await FirestoreService.shared.getAvatarURL(for: event.userID)
+                let avatar = await service.getAvatarURL(for: event.userID)
                 if let avatar = avatar {
                     avatars[event.userID] = avatar
                 }
@@ -129,6 +131,11 @@ import FirebaseAuth
     
     func getAvatar(for userID: String) -> String? {
         return avatars[userID]
+    }
+    
+    @MainActor
+    func uploadEventImage(_ image: UIImage) async throws -> String {
+        try await service.uploadImage(image)
     }
 }
 

@@ -38,18 +38,7 @@ class FirebaseStorageService {
                     completion(.failure(NSError(domain: "URLError", code: -1, userInfo: nil)))
                     return
                 }
-                
-                // Stocker l'URL dans Firestore
-                let db = Firestore.firestore()
-                db.collection("users").document(userId).setData([
-                    "avatarURL": url.absoluteString
-                ], merge: true) { err in
-                    if let err = err {
-                        completion(.failure(err))
-                    } else {
-                        completion(.success(url.absoluteString))
-                    }
-                }
+                completion(.success(url.absoluteString))
             }
         }
      }

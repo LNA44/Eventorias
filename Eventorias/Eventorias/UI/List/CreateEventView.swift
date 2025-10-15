@@ -53,7 +53,7 @@ struct CreateEventView: View {
                             .foregroundColor(.white)
                     }
                     Text("Creation of an event")
-                        .font(.system(size: 24, weight: .bold))
+                        .font(.custom("Inter24pt-SemiBold", size: 20))
                         .foregroundColor(.white)
                         .lineLimit(1)
                         .truncationMode(.tail)
@@ -65,6 +65,7 @@ struct CreateEventView: View {
                 VStack(spacing: 20) {
                     VStack(spacing: 0) {
                         Text("Title")
+                            .font(.custom("Inter28pt-Regular", size: 12))
                             .foregroundColor(.white)
                             .padding(.top, 10)
                             .padding(.leading, 15)
@@ -78,6 +79,7 @@ struct CreateEventView: View {
 
                     VStack(spacing: 0) {
                         Text("Description")
+                            .font(.custom("Inter28pt-Regular", size: 12))
                             .foregroundColor(.white)
                             .padding(.top, 10)
                             .padding(.leading, 15)
@@ -92,6 +94,7 @@ struct CreateEventView: View {
                     HStack(spacing: 15) {
                         VStack(spacing: 0) {
                             Text("Date")
+                                .font(.custom("Inter28pt-Regular", size: 12))
                                 .foregroundColor(.white)
                                 .padding(.top, 10)
                                 .padding(.leading, 15)
@@ -114,6 +117,7 @@ struct CreateEventView: View {
                         
                         VStack(spacing: 0) {
                             Text("Time")
+                                .font(.custom("Inter28pt-Regular", size: 12))
                                 .foregroundColor(.white)
                                 .padding(.top, 10)
                                 .padding(.leading, 15)
@@ -137,6 +141,7 @@ struct CreateEventView: View {
                     
                     VStack(spacing: 0) {
                         Text("Address")
+                            .font(.custom("Inter28pt-Regular", size: 12))
                             .foregroundColor(.white)
                             .padding(.top, 10)
                             .padding(.leading, 15)
@@ -150,6 +155,7 @@ struct CreateEventView: View {
                     
                     VStack(spacing: 0) {
                         Text("Guests")
+                            .font(.custom("Inter28pt-Regular", size: 12))
                             .foregroundColor(.white)
                             .padding(.top, 10)
                             .padding(.leading, 15)
@@ -163,6 +169,7 @@ struct CreateEventView: View {
                     
                     VStack(spacing: 0) {
                         Text("Category")
+                            .font(.custom("Inter28pt-Regular", size: 12))
                             .foregroundColor(.white)
                             .padding(.top, 10)
                             .padding(.leading, 15)
@@ -174,19 +181,21 @@ struct CreateEventView: View {
                                     selectedCategory = category
                                 }) {
                                     Text(category)
+                                        .font(.custom("Inter28pt-Regular", size: 16))
                                 }
                             }
                         } label: {
                             HStack {
                                     Text(selectedCategory.isEmpty ? "Select a category" : selectedCategory)
                                         .foregroundColor(.white)
-                                    Image(systemName: "chevron.down") // flèche vers le bas
+                                    Image(systemName: "chevron.down") 
                                         .foregroundColor(.white)
                                         .font(.system(size: 14, weight: .bold))
                                 Spacer()
                                 }
                                 .padding(.leading, 15)
-                                .padding(.vertical, 8)
+                                .padding(.top, 5)
+                                .padding(.bottom, 8)
                         }
                     }
                     .background(Color("TextfieldColor"))
@@ -228,11 +237,12 @@ struct CreateEventView: View {
                     
                     Button(action: {
                         isSaving = true
+                        guard let selectedImage else {
+                            return
+                        }
+                        
                         Task {
-                            var imageURL: String? = nil
-                            if let selectedImage {
-                                imageURL = try? await FirestoreService.shared.uploadImage(selectedImage)
-                            }
+                            let imageURL = try? await eventsVM.uploadEventImage(selectedImage)
                             await eventsVM.addEvent(
                                 name: name,
                                 description: description,
@@ -248,6 +258,7 @@ struct CreateEventView: View {
                         }
                     }) {
                         Text("Validate")
+                            .font(.custom("Inter24pt-SemiBold", size: 16))
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity, minHeight: 44)
                             .background(Color("ButtonColor"))

@@ -19,12 +19,14 @@ struct ListView: View {
 
                 HStack {
                     Image(systemName: "magnifyingglass")
-                        .foregroundColor(.white.opacity(0.7))
+                        .foregroundColor(.white)
                         .padding(.leading, 8)
 
                     TextField(
                         text: $eventsVM.searchText,
-                        prompt: Text("Search").foregroundColor(.white.opacity(0.6))
+                        prompt: Text("Search")
+                            .font(.custom("Inter28pt-Regular", size: 16))
+                            .foregroundColor(.white)
                     ) {}
                     .foregroundColor(.white)
                     .padding(.vertical, 8)
@@ -39,18 +41,21 @@ struct ListView: View {
                         eventsVM.sortByDate()
                     }) {
                         Text("By Date")
+                            .font(.custom("Inter28pt-Regular", size: 16))
                     }
                     
                     Button(action: {
                         eventsVM.sortByCategory()
                     }) {
                         Text("By Category")
+                            .font(.custom("Inter28pt-Regular", size: 16))
                     }
                 } label: {
                     HStack(spacing: 4) {
                         Image("Icon - Sort")
                             .foregroundColor(.white)
                         Text("Sorting")
+                            .font(.custom("Inter28pt-Regular", size: 16))
                             .foregroundColor(.white)
                             .font(.system(size: 14, weight: .semibold))
                     }

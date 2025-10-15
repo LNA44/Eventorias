@@ -10,7 +10,7 @@ import SwiftUI
 struct CustomTextField: View {
     var placeholder: String
     @Binding var text: String
-    var font: Font = .system(size: 16, weight: .regular, design: .rounded)
+    var font: Font = .custom("Inter28pt-Regular", size: 16)
     var foregroundColor: Color = .white
     var backgroundColor: Color = Color("TextfieldColor")
     var cornerRadius: CGFloat = 5
@@ -20,6 +20,7 @@ struct CustomTextField: View {
         ZStack(alignment: .leading) {
             if text.isEmpty {
                 Text(placeholder)
+                    .font(.custom("Inter28pt-Regular", size: 16))
                     .foregroundColor(.white)
                     .font(font)
                     .padding(.horizontal, paddingValue)

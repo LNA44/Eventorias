@@ -19,8 +19,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
       
 #if DEBUG
 #if targetEnvironment(simulator)
+      setupFirebaseEmulators()
       Task {
-          setupFirebaseEmulators()
           await createTestUsers()
       }
 #else
@@ -80,6 +80,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // 2️⃣ Upload de l'avatar
         if let image = UIImage(named: avatarImage) {
             let avatarURL = try await FirebaseStorageService.shared.uploadAvatarImageAsync(userId: user.uid, image: image)
+            try await FirestoreService.shared.updateUserAvatarURL(userId: user.uid, url: avatarURL)
             
             // 3️⃣ Mise à jour de l'avatarURL
             try await FirestoreService.shared.saveUserToFirestore(uid: user.uid, email: email, name: name, avatarURL: avatarURL)
@@ -105,9 +106,6 @@ struct EventoriasApp: App {
         WindowGroup {
             if let authVM = authVM {
                 RootView(authVM: authVM, eventsVM: eventsVM, userVM: userVM)
-                    //.onAppear {
-                      //  delegate.userVM = userVM // ✅ On passe la référence ici
-                    //}
             } else {
                 ProgressView("Loading...")
                     .onAppear {
@@ -120,18 +118,3 @@ struct EventoriasApp: App {
     }
 }
 
-extension FirestoreService {
-    func saveUserToFirestore(uid: String, email: String, name: String = "", avatarURL: String? = nil) async throws {
-            let db = Firestore.firestore()
-            let userRef = db.collection("users").document(uid)
-
-            let user = User(
-                id: uid,
-                email: email,
-                avatarURL: avatarURL,
-                name: name
-            )
-
-            try userRef.setData(from: user, merge: true)
-        }
-}

@@ -31,6 +31,7 @@ struct CalendarView: View {
                 Spacer()
                 
                 Text(monthYearString(from: currentDate))
+                    .font(.custom("Inter28pt-Medium", size: 16))
                     .foregroundColor(.white)
                     .bold()
                 
@@ -50,7 +51,7 @@ struct CalendarView: View {
             HStack {
                 ForEach(weekDays, id: \.self) { day in
                     Text(day)
-                        .font(.caption)
+                        .font(.custom("Inter28pt-Regular", size: 14))
                         .foregroundColor(.white.opacity(0.7))
                         .frame(maxWidth: .infinity)
                 }
@@ -66,6 +67,7 @@ struct CalendarView: View {
                             Color.clear.frame(height: 30) // case vide
                         } else {
                             Text("\(day.number)")
+                                .font(.custom("Inter28pt-Medium", size: 16))
                                 .foregroundColor(.white)
                                 .frame(width: 30, height: 30)
                                 .background(hasEvent(on: day.date) ? Color.green : Color.clear)
@@ -90,6 +92,7 @@ struct CalendarView: View {
 
                 List(selectedDayEvents) { event in
                     Text(event.name)
+                        .font(.custom("Inter28pt-Medium", size: 16))
                         .foregroundColor(.white) // texte blanc
                         .listRowBackground(Color("TextfieldColor")) // fond cellule
                 }

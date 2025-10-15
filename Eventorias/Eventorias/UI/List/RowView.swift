@@ -21,7 +21,7 @@ struct RowView: View {
         let avatarURL = eventsVM.getAvatar(for: event.userID)
         
         HStack {
-            HStack(spacing: 10) {
+            HStack(spacing: 15) {
                 HStack {
                     if let urlString = avatarURL, let url = URL(string: urlString) {
                         AsyncImage(url: url) { image in
@@ -40,9 +40,10 @@ struct RowView: View {
                     }
                 }
                 
-                VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 5) {
                     HStack {
                         Text(event.name)
+                            .font(.custom("Inter28pt-Medium", size: 16))
                         if event.isUserInvited {
                             Text("Invité")
                                 .font(.caption2)
@@ -55,9 +56,13 @@ struct RowView: View {
                                 )
                         }
                     }
+                    .padding(.bottom, 5)
+                    
                     Text(event.category)
+                        .font(.custom("Inter28pt-Regular", size: 14))
                     
                     Text(formatter.string(from: event.date))
+                        .font(.custom("Inter28pt-Regular", size: 14))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -72,7 +77,7 @@ struct RowView: View {
                         image
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 136, height: 80)
+                            .frame(width: 150, height: 90)
                             .cornerRadius(8)
                     case .failure:
                         Image(systemName: "photo")
@@ -87,7 +92,7 @@ struct RowView: View {
             }
         }
         .padding(.leading, 20)
-        .padding(.vertical, 10)
+       // .padding(.vertical, 10)
         .background(Color("TextfieldColor"))
         .cornerRadius(12)
         .frame(maxWidth: .infinity)

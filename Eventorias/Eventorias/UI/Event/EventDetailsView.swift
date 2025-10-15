@@ -45,14 +45,14 @@ struct EventDetailsView: View {
                             AsyncImage(url: url) { phase in
                                 switch phase {
                                 case .empty:
-                                    ProgressView() // loading
+                                    ProgressView()
                                 case .success(let image):
                                     image
                                         .resizable()
                                         .scaledToFill()
-                                        .frame(height: 150)
-                                        .clipped()
+                                        .frame(width: 390, height: 360)
                                         .cornerRadius(8)
+                                        .clipped()
                                 case .failure:
                                     Image(systemName: "photo") // fallback si erreur
                                         .resizable()
@@ -82,6 +82,8 @@ struct EventDetailsView: View {
                                             .frame(width: 20, height: 20)
                                         
                                         Text(event.date.formattedDate(from: event.date))
+                                            .font(.custom("Inter28pt-Medium", size: 16))
+
                                     }
                                     HStack {
                                         Image(systemName: "clock")
@@ -90,6 +92,7 @@ struct EventDetailsView: View {
                                             .frame(width: 20, height: 20)
                                         
                                         Text(event.date.formattedTime(from: event.date))
+                                            .font(.custom("Inter28pt-Medium", size: 16))
                                     }
                                     
                                 }
@@ -116,15 +119,16 @@ struct EventDetailsView: View {
                             }
                             
                             Text(event.description)
+                                .font(.custom("Inter28pt-Regular", size: 14))
                             
                             HStack {
                                 Text(event.location)
+                                    .font(.custom("Inter28pt-Medium", size: 16))
                                 
                                 Spacer()
                                 
                                 StaticMapView(event: event)
                                     .frame(width: 149, height: 72)
-                                    //.cornerRadius(16)
                             }
                             Spacer()
                         }
@@ -141,7 +145,6 @@ struct EventDetailsView: View {
 }
 
 extension Date {
-    // Fonctions pour formater la date et l'heure
     func formattedDate(from date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d, yyyy" // Nom complet du mois, jour, année

@@ -19,6 +19,7 @@ struct AuthenticationView: View {
                 VStack {
                     VStack(spacing: 0) {
                         Text("E-mail adress")
+                            .font(.custom("Inter28pt-Regular", size: 12))
                             .foregroundColor(.white)
                             .padding(.top, 10)
                             .padding(.leading, 15)
@@ -28,6 +29,8 @@ struct AuthenticationView: View {
                             .padding(.bottom, 5)
                     }
                     .background(Color("TextfieldColor"))
+                    .cornerRadius(5)
+                    
                     if authVM.email.isEmpty {
                         Text("Email is required")
                             .foregroundColor(Color("ButtonColor"))
@@ -38,6 +41,7 @@ struct AuthenticationView: View {
                 VStack {
                     VStack(spacing: 5) {
                         Text("Password")
+                            .font(.custom("Inter28pt-Regular", size: 12))
                             .foregroundColor(.white)
                             .padding(.top, 10)
                             .padding(.leading, 15)
@@ -47,6 +51,7 @@ struct AuthenticationView: View {
                             ZStack(alignment: .leading) {
                                 if authVM.password.isEmpty {
                                     Text("Password")
+                                        .font(.custom("Inter28pt-Regular", size: 16))
                                         .foregroundColor(.gray)
                                         .padding(.leading, 15)
                                 }
@@ -54,7 +59,7 @@ struct AuthenticationView: View {
                                 SecureField("", text: $authVM.password)
                                     .padding(.leading, 15)
                                     .frame(height: 20)
-                                
+                                    .font(.custom("Inter28pt-Regular", size: 16))
                                     .foregroundColor(.white)
                                     .cornerRadius(8)
                             }
@@ -63,14 +68,18 @@ struct AuthenticationView: View {
                         .padding(.bottom, 10)
                     }
                     .background(Color("TextfieldColor"))
+                    .cornerRadius(5)
+
                     if authVM.password.isEmpty {
                         Text("Password is required")
+                            .font(.custom("Inter28pt-Regular", size: 14))
                             .foregroundColor(Color("ButtonColor"))
                             .font(.caption)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     if !authVM.isValidPassword() && !authVM.password.isEmpty {
                         Text("Password must contain 8 characters, 1 uppercase letter, 1 number, 1 special character")
+                            .font(.custom("Inter28pt-Regular", size: 14))
                             .foregroundColor(Color("ButtonColor"))
                             .font(.caption)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -90,6 +99,7 @@ struct AuthenticationView: View {
             }) {
                 HStack {
                     Text("Sign in")
+                        .font(.custom("Inter24pt-SemiBold", size: 16))
                         .foregroundColor(.white)
                         .bold()
                 }
