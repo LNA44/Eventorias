@@ -9,12 +9,16 @@ import SwiftUI
 
 struct AuthenticationView: View {
     @Bindable var authVM: AuthenticationViewModel
-    //var eventsVM: EventsViewModel
+    @Binding var flow: RootView.AuthFlow
     @State private var isSignedIn = false
-    let onAuthSuccess: () -> Void
 	
     var body: some View {
-        VStack(spacing: 100) {
+        VStack() {
+            Text("Sign In")
+                .font(.custom("Inter24pt-SemiBold", size: 20))
+                .foregroundColor(.white)
+                .padding(.bottom, 40)
+            
             VStack(spacing: 20) {
                 VStack {
                     VStack(spacing: 0) {
@@ -27,6 +31,8 @@ struct AuthenticationView: View {
                         
                         CustomTextField(placeholder: "email@example.com", text: $authVM.email)
                             .padding(.bottom, 5)
+                            .autocapitalization(.none)
+                            .keyboardType(.emailAddress)
                     }
                     .background(Color("TextfieldColor"))
                     .cornerRadius(5)
@@ -77,31 +83,26 @@ struct AuthenticationView: View {
                             .font(.caption)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    if !authVM.isValidPassword() && !authVM.password.isEmpty {
+                    /*if !authVM.isValidPassword() && !authVM.password.isEmpty {
                         Text("Password must contain 8 characters, 1 uppercase letter, 1 number, 1 special character")
                             .font(.custom("Inter28pt-Regular", size: 14))
                             .foregroundColor(Color("ButtonColor"))
                             .font(.caption)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                    }
+                    }*/
                 }
             }
             .padding(.horizontal, 10)
             
             Button(action: {
                 Task {
-                    await authVM.signIn()
-                    
-                    if authVM.errorMessage == nil {
-                        onAuthSuccess()
-                    }
+                    await authVM.signIn(flow: $flow)
                 }
             }) {
                 HStack {
                     Text("Sign in")
                         .font(.custom("Inter24pt-SemiBold", size: 16))
                         .foregroundColor(.white)
-                        .bold()
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -109,6 +110,7 @@ struct AuthenticationView: View {
                 .cornerRadius(4)
             }
             .padding(.horizontal)
+            .padding(.top, 100)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
@@ -123,5 +125,10 @@ struct AuthenticationView: View {
 }
 
 #Preview {
-    AuthenticationView(authVM: AuthenticationViewModel(), onAuthSuccess: {})
+    @Previewable @State var flow: RootView.AuthFlow = .signIn
+
+    AuthenticationView(
+        authVM: AuthenticationViewModel(),
+        flow: $flow,
+    )
 }

@@ -28,6 +28,12 @@
 		F3682F932E9F8592002E8578 /* Inter_28pt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F922E9F8592002E8578 /* Inter_28pt-Medium.ttf */; };
 		F3682F942E9F8592002E8578 /* Inter_28pt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F922E9F8592002E8578 /* Inter_28pt-Medium.ttf */; };
 		F3682F952E9F8592002E8578 /* Inter_28pt-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F922E9F8592002E8578 /* Inter_28pt-Medium.ttf */; };
+		F3682F9D2E9FC7E2002E8578 /* CustomSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3682F9C2E9FC7E2002E8578 /* CustomSpinner.swift */; };
+		F3682F9F2E9FF129002E8578 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3682F9E2E9FF129002E8578 /* AppError.swift */; };
+		F3682FA12E9FF6D1002E8578 /* GoogleMapsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3682FA02E9FF6D1002E8578 /* GoogleMapsViewModel.swift */; };
+		F3682FA32EA0DEA9002E8578 /* ActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3682FA22EA0DEA9002E8578 /* ActivityController.swift */; };
+		F3682FA62EA0F212002E8578 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3682FA52EA0F212002E8578 /* SignUpView.swift */; };
+		F3682FA82EA0F692002E8578 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3682FA72EA0F692002E8578 /* SignUpViewModel.swift */; };
 		F36F84BF2E9543A400D4ACA1 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84BE2E9543A400D4ACA1 /* RootView.swift */; };
 		F36F84C12E95440900D4ACA1 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84C02E95440900D4ACA1 /* MainTabView.swift */; };
 		F36F84C32E95446E00D4ACA1 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36F84C22E95446E00D4ACA1 /* ProfileView.swift */; };
@@ -93,6 +99,12 @@
 		F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_28pt-Regular.ttf"; sourceTree = "<group>"; };
 		F3682F8E2E9F857D002E8578 /* Inter_24pt-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_24pt-SemiBold.ttf"; sourceTree = "<group>"; };
 		F3682F922E9F8592002E8578 /* Inter_28pt-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_28pt-Medium.ttf"; sourceTree = "<group>"; };
+		F3682F9C2E9FC7E2002E8578 /* CustomSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSpinner.swift; sourceTree = "<group>"; };
+		F3682F9E2E9FF129002E8578 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		F3682FA02E9FF6D1002E8578 /* GoogleMapsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsViewModel.swift; sourceTree = "<group>"; };
+		F3682FA22EA0DEA9002E8578 /* ActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityController.swift; sourceTree = "<group>"; };
+		F3682FA52EA0F212002E8578 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		F3682FA72EA0F692002E8578 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		F36F84BE2E9543A400D4ACA1 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		F36F84C02E95440900D4ACA1 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		F36F84C22E95446E00D4ACA1 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -172,6 +184,7 @@
 				F36F84BE2E9543A400D4ACA1 /* RootView.swift */,
 				F36F84C02E95440900D4ACA1 /* MainTabView.swift */,
 				F37C03772E9A6BFC00647D3A /* Constants.swift */,
+				F3682F9E2E9FF129002E8578 /* AppError.swift */,
 			);
 			path = Eventorias;
 			sourceTree = "<group>";
@@ -194,9 +207,7 @@
 				F36F84CA2E954EAB00D4ACA1 /* CalendarView.swift */,
 				F36F84CE2E954FD200D4ACA1 /* EventsContainerView.swift */,
 				F36F84D02E9568F200D4ACA1 /* CreateEventView.swift */,
-				F36F84D22E956C1A00D4ACA1 /* UIImagePickerController.swift */,
 				F36F84D62E966AE100D4ACA1 /* WhitePicker.swift */,
-				F37C03642E97BC4D00647D3A /* CameraPickerController.swift */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -227,6 +238,8 @@
 			children = (
 				F361B9BE2E8ECC710088C136 /* EventDetailsView.swift */,
 				F36F84DE2E969F2000D4ACA1 /* StaticMapView.swift */,
+				F3682FA02E9FF6D1002E8578 /* GoogleMapsViewModel.swift */,
+				F3682FA22EA0DEA9002E8578 /* ActivityController.swift */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -236,12 +249,33 @@
 			children = (
 				F361B9A62E8EC5400088C136 /* WelcomeView.swift */,
 				F361B9A42E8EC5400088C136 /* CustomTextField.swift */,
+				F3682FA92EA0F8DC002E8578 /* Controllers */,
+				F3682FA42EA0F184002E8578 /* SignUp */,
 				F361B9AE2E8EC5450088C136 /* Authentication */,
 				F361B9AF2E8EC5620088C136 /* List */,
 				F361B9BC2E8ECC030088C136 /* Event */,
 				F37C03792E9A883A00647D3A /* Profile */,
+				F3682F9C2E9FC7E2002E8578 /* CustomSpinner.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		F3682FA42EA0F184002E8578 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				F3682FA52EA0F212002E8578 /* SignUpView.swift */,
+				F3682FA72EA0F692002E8578 /* SignUpViewModel.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		F3682FA92EA0F8DC002E8578 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F37C03642E97BC4D00647D3A /* CameraPickerController.swift */,
+				F36F84D22E956C1A00D4ACA1 /* UIImagePickerController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		F371729B2E8C1CF600FF8C0F = {
@@ -494,6 +528,7 @@
 			files = (
 				F37C03782E9A6BFC00647D3A /* Constants.swift in Sources */,
 				F36F84D72E966AE100D4ACA1 /* WhitePicker.swift in Sources */,
+				F3682F9F2E9FF129002E8578 /* AppError.swift in Sources */,
 				F36F84D32E956C1A00D4ACA1 /* UIImagePickerController.swift in Sources */,
 				F361B9A92E8EC5400088C136 /* AuthenticationView.swift in Sources */,
 				F361B9B52E8EC60D0088C136 /* EventsViewModel.swift in Sources */,
@@ -507,7 +542,10 @@
 				F361B9B32E8EC5C60088C136 /* RowView.swift in Sources */,
 				F36F84CF2E954FD200D4ACA1 /* EventsContainerView.swift in Sources */,
 				F361B9AB2E8EC5400088C136 /* CustomTextField.swift in Sources */,
+				F3682FA62EA0F212002E8578 /* SignUpView.swift in Sources */,
 				F36F84C12E95440900D4ACA1 /* MainTabView.swift in Sources */,
+				F3682FA82EA0F692002E8578 /* SignUpViewModel.swift in Sources */,
+				F3682FA12E9FF6D1002E8578 /* GoogleMapsViewModel.swift in Sources */,
 				F361B9AC2E8EC5400088C136 /* EventoriasApp.swift in Sources */,
 				F36F84BF2E9543A400D4ACA1 /* RootView.swift in Sources */,
 				F361B9B82E8EC8220088C136 /* FirestoreService.swift in Sources */,
@@ -520,6 +558,8 @@
 				F361B9AD2E8EC5400088C136 /* WelcomeView.swift in Sources */,
 				F36F84E12E96A8CC00D4ACA1 /* GoogleMapsService.swift in Sources */,
 				F37C03652E97BC4D00647D3A /* CameraPickerController.swift in Sources */,
+				F3682F9D2E9FC7E2002E8578 /* CustomSpinner.swift in Sources */,
+				F3682FA32EA0DEA9002E8578 /* ActivityController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

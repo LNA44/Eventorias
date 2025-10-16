@@ -14,18 +14,37 @@ import FirebaseAuth
     var isShowingAlert: Bool = false
     private var service: FirebaseAuthService { FirebaseAuthService.shared }
     
-    func signIn() async {
+    func signIn(flow: Binding<RootView.AuthFlow>) async {
+        if service.getCurrentUserID() != nil {
+            do {
+                try service.signOut()
+            } catch {
+                isShowingAlert = true
+                errorMessage = "Impossible to sign out precedent user : \(error.localizedDescription)"
+            }
+        }
+        
         guard !email.isEmpty, !password.isEmpty else {
-            return
+            errorMessage = "Email et mot de passe requis"
+                   isShowingAlert = true
+                   return
         }
         guard isValidEmail() else {
-            return
+            errorMessage = "Email non valide"
+                   isShowingAlert = true
+                   return
         }
         guard isValidPassword() else {
-            return
+            errorMessage = "Mot de passe non valide"
+                    isShowingAlert = true
+                    return
         }
         do {
             try await service.signIn(email: email, password: password)
+            flow.wrappedValue = .main
+        } catch let error as AppError.AuthError {
+            errorMessage = error.errorDescription
+            isShowingAlert = true
         } catch {
             errorMessage = error.localizedDescription
             isShowingAlert = true
@@ -40,6 +59,10 @@ import FirebaseAuth
     func isValidPassword() -> Bool {
         let passwordRegex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$&*]).{8,}$"
         return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: password)
+    }
+    
+    func signOut() async throws {
+        try service.signOut()
     }
 }
 

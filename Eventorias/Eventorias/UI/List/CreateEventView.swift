@@ -163,6 +163,8 @@ struct CreateEventView: View {
                         
                         CustomTextField(placeholder: "Enter email addresses, separated by commas", text: $guests)
                             .padding(.bottom, 5)
+                            .autocapitalization(.none)
+                            .keyboardType(.emailAddress)
                     }
                     .background(Color("TextfieldColor"))
                     .cornerRadius(5)
@@ -242,7 +244,7 @@ struct CreateEventView: View {
                         }
                         
                         Task {
-                            let imageURL = try? await eventsVM.uploadEventImage(selectedImage)
+                            let imageURL = await eventsVM.uploadEventImage(selectedImage)
                             await eventsVM.addEvent(
                                 name: name,
                                 description: description,
@@ -275,6 +277,15 @@ struct CreateEventView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
         .navigationBarBackButtonHidden(true)
+        .alert(isPresented: $eventsVM.showError) {
+            Alert(
+                title: Text("Error"),
+                message: Text(eventsVM.errorMessage),
+                dismissButton: .default(Text("OK")) {
+                    eventsVM.showError = false
+                }
+            )
+        }
     }
 }
 

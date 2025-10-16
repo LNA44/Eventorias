@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ListView: View {
     @Bindable var eventsVM: EventsViewModel
+    var googleMapsVM: GoogleMapsViewModel
+    var isLoading: Bool = false
     
     var body: some View {
         VStack(spacing: 5) {
@@ -70,31 +72,33 @@ struct ListView: View {
             .padding(.horizontal, 10)
             .padding(.bottom, 15)
             
-            if eventsVM.isLoading {
+            if eventsVM.errorMessage != "" {
                 VStack(spacing: 12) {
-                    ProgressView()
-                        .tint(.white)
-                    Text("Loading events...")
+                    Circle()
+                            .fill(Color("TextfieldColor"))
+                            .frame(width: 60, height: 60)
+
+                        Text("!")
+                            .font(.custom("Inter28pt-Regular", size: 16))
+                            .foregroundColor(.white)
+                    
+                    Text("Error")
+                        .font(.custom("Inter28pt-Regular", size: 16))
                         .foregroundColor(.white)
-                        .font(.subheadline)
-                }
-                .frame(maxHeight: .infinity)
-                
-            } else if let error = eventsVM.errorMessage {
-                VStack(spacing: 12) {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .font(.system(size: 40))
-                        .foregroundColor(.yellow)
-                    Text(error)
+                    
+                    Text(eventsVM.errorMessage)
+                        .font(.custom("Inter28pt-Regular", size: 16))
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                         .padding()
                     
-                    Button("Retry") {
+                    Button("Try again") {
                         Task {
                             await eventsVM.fetchEvents()
                         }
                     }
+                    .font(.custom("Inter24pt-SemiBold", size: 16))
+                    .foregroundColor(.white)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                     .background(Color("ButtonColor"))
@@ -102,7 +106,7 @@ struct ListView: View {
                 }
                 .frame(maxHeight: .infinity)
                 
-            } else if eventsVM.events.isEmpty {
+            } else if eventsVM.events.isEmpty && !isLoading {
                 VStack(spacing: 12) {
                     Image(systemName: "calendar.badge.exclamationmark")
                         .font(.system(size: 40))
@@ -113,12 +117,15 @@ struct ListView: View {
                 }
                 .frame(maxHeight: .infinity)
                 
+            } else if isLoading {
+                EmptyView()
+                Spacer()
             } else {
                 List {
                     ForEach(eventsVM.events) { event in
                         ZStack {
                             RowView(event: event, eventsVM: eventsVM)
-                            NavigationLink(destination: EventDetailsView(eventsVM: eventsVM, event: event)) {
+                            NavigationLink(destination: EventDetailsView(eventsVM: eventsVM, event: event, googleMapsVM: googleMapsVM)) {
                             }
                             .opacity(0)
                             
@@ -145,5 +152,5 @@ struct ListView: View {
 }
 
 #Preview {
-    ListView(eventsVM: EventsViewModel())
+    ListView(eventsVM: EventsViewModel(), googleMapsVM: GoogleMapsViewModel())
 }

@@ -10,19 +10,37 @@ import FirebaseCore
 import FirebaseAuth
 
 struct WelcomeView: View {
-    let onNext: () -> Void
+    @Binding var flow: RootView.AuthFlow
     
 	var body: some View {
         NavigationStack {
-            VStack(spacing: 50) {
+            VStack(spacing: 20) {
                 Image("Logo Eventorias")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 240, height: 110)
+                    .padding(.bottom, 50)
                 
                 Button(action: {
-                    // Appelle le callback pour passer à l'étape suivante
-                    onNext()
+                    flow = .signUp
+                }) {
+                    HStack(spacing: 20) {
+                        Image(systemName: "envelope.fill")
+                            .foregroundColor(.white)
+                        Text("Sign up with email")
+                            .font(.custom("Inter24pt-SemiBold", size: 16))
+                            .foregroundColor(.white)
+                            .bold()
+                    }
+                    .padding(.vertical, 15)
+                    .frame(width: 230)
+                    .background(Color("ButtonColor"))
+                    .cornerRadius(4)
+                    
+                }
+                
+                Button(action: {
+                    flow = .signIn
                 }) {
                     HStack(spacing: 20) {
                         Image(systemName: "envelope.fill")
@@ -48,5 +66,7 @@ struct WelcomeView: View {
 }
 
 #Preview {
-    WelcomeView(onNext: {})
+    @Previewable @State var flow: RootView.AuthFlow = .welcome
+    
+    WelcomeView(flow: $flow)
 }

@@ -12,9 +12,9 @@ import UIKit
 @Observable class EventsViewModel {
     private var service: FirestoreService { FirestoreService.shared }
     var events: [Event] = []
-    var errorMessage: String?
+    var errorMessage: String = ""
+    var showError: Bool = false
     var isSortedAscending: Bool = true
-    var isLoading: Bool = false
     var avatars: [String: String] = [:]
     var searchText: String = "" {
         didSet {
@@ -26,7 +26,6 @@ import UIKit
     
     @MainActor
     func fetchEvents(search: String = "") async {
-        isLoading = true
         do {
             var fetchedEvents = try await service.fetchEvents(search: search)
             print("Fetched events: \(events)")
@@ -48,9 +47,8 @@ import UIKit
             self.events = fetchedEvents
             await loadAvatars()
         } catch {
-            errorMessage = error.localizedDescription
+            errorMessage = "An error has occurred, please try again later"
         }
-        isLoading = false
     }
     
     @MainActor
@@ -64,30 +62,38 @@ import UIKit
                 .split(separator: ",")
                 .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
 
-        let guestUIDs = await service.convertEmailsToUIDs(emails: emails)
-        
-        guard let currentUserID = Auth.auth().currentUser?.uid else {
-               errorMessage = "Impossible de récupérer l'utilisateur courant."
-               return
-           }
+        var guestUIDs: [String] = []
+        do {
+            guestUIDs = try await service.convertEmailsToUIDs(emails: emails)
+        } catch {
+            showError = true
+            errorMessage = error.localizedDescription
+            return
+        }
+        guard let currentUserID = FirebaseAuthService.shared.getCurrentUserID() else {
+                showError = true
+                errorMessage = "Impossible to get current user"
+                return
+            }
         
         let newEvent = Event(
-                id: UUID().uuidString,
-                name: name,
-                description: description,
-                date: combinedDateTime,
-                location: location,
-                category: category,
-                guests: guestUIDs,
-                userID: currentUserID,
-                imageURL: imageURL,
-                isUserInvited: false
-            )
+            id: UUID().uuidString,
+            name: name,
+            description: description,
+            date: combinedDateTime,
+            location: location,
+            category: category,
+            guests: guestUIDs,
+            userID: currentUserID,
+            imageURL: imageURL,
+            isUserInvited: false
+        )
         print("location avant enregistrement : \(newEvent.location)")
         do {
             try await service.addEvent(newEvent)
             events.append(newEvent)
         } catch {
+            showError = true
             errorMessage = error.localizedDescription
         }
     }
@@ -96,7 +102,7 @@ import UIKit
         let calendar = Calendar.current
         let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
         let timeComponents = calendar.dateComponents([.hour, .minute, .second], from: time)
-
+        
         var combinedComponents = DateComponents()
         combinedComponents.year = dateComponents.year
         combinedComponents.month = dateComponents.month
@@ -104,7 +110,7 @@ import UIKit
         combinedComponents.hour = timeComponents.hour
         combinedComponents.minute = timeComponents.minute
         combinedComponents.second = timeComponents.second
-
+        
         return calendar.date(from: combinedComponents) ?? date
     }
     
@@ -121,9 +127,14 @@ import UIKit
     func loadAvatars() async {
         for event in events {
             if avatars[event.userID] == nil {
-                let avatar = await service.getAvatarURL(for: event.userID)
-                if let avatar = avatar {
-                    avatars[event.userID] = avatar
+                do {
+                    let avatar = try await service.getAvatarURL(for: event.userID)
+                    if let avatar = avatar {
+                        avatars[event.userID] = avatar
+                    }
+                } catch {
+                    self.errorMessage = error.localizedDescription
+                    self.showError = true
                 }
             }
         }
@@ -134,9 +145,15 @@ import UIKit
     }
     
     @MainActor
-    func uploadEventImage(_ image: UIImage) async throws -> String {
-        try await service.uploadImage(image)
+    func uploadEventImage(_ image: UIImage) async -> String? {
+        do {
+            let url = try await service.uploadImage(image)
+            return url
+        } catch {
+            self.errorMessage = error.localizedDescription
+            self.showError = true
+            return nil
+        }
     }
 }
-
 

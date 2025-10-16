@@ -11,31 +11,31 @@ struct RootView: View {
     var authVM: AuthenticationViewModel
     var eventsVM: EventsViewModel
     var userVM: UserViewModel
-    @State private var currentStep: Step = .welcome
+    var signUpVM: SignUpViewModel
+    var googleMapsVM: GoogleMapsViewModel
+    @State private var flow: AuthFlow = .welcome
     
-    enum Step {
+    enum AuthFlow {
         case welcome
-        case auth
+        case signUp
+        case signIn
         case main
     }
     
     var body: some View {
         NavigationStack {
-            switch currentStep {
+            switch flow {
             case .welcome:
-                WelcomeView() {
-                    currentStep = .auth
-                }
-                .navigationBarHidden(true)
-                
-            case .auth:
-                AuthenticationView(authVM: authVM) {
-                    currentStep = .main
-                }
-                .navigationBarHidden(true)
-                
+                WelcomeView(flow: $flow)
+                    .navigationBarHidden(true)
+            case .signUp:
+                SignUpView(signUpVM: signUpVM, flow: $flow)
+                    .navigationBarHidden(true)
+            case .signIn:
+                AuthenticationView(authVM: authVM, flow: $flow)
+                    .navigationBarHidden(true)
             case .main:
-                MainTabView(eventsVM: eventsVM, userVM: userVM)
+                MainTabView(eventsVM: eventsVM, userVM: userVM, googleMapsVM: googleMapsVM)
             }
         }
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
-    var userVM: UserViewModel
+    @Bindable var userVM: UserViewModel
     @State var isToggleOn: Bool = false
     
     var body: some View {
@@ -93,6 +93,15 @@ struct ProfileView: View {
         .onAppear {
             userVM.loadCurrentUserID()
             userVM.loadUserProfile()
+        }
+        .alert(isPresented: $userVM.showError) {
+            Alert(
+                title: Text("Error"),
+                message: Text(userVM.errorMessage),
+                dismissButton: .default(Text("OK")) {
+                    userVM.showError = false
+                }
+            )
         }
     }
 }

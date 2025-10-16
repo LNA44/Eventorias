@@ -79,15 +79,17 @@ class FirestoreService {
         ])
     }
     
-    func convertEmailsToUIDs(emails: [String]) async -> [String] {
+    func convertEmailsToUIDs(emails: [String]) async throws -> [String] {
         var uids: [String] = []
-
+        
         for email in emails {
             let query = db.collection("users").whereField("email", isEqualTo: email)
-            if let snapshot = try? await query.getDocuments(), let doc = snapshot.documents.first {
-                uids.append(doc.documentID) 
+            let snapshot = try await query.getDocuments()
+            
+            if let doc = snapshot.documents.first {
+                uids.append(doc.documentID)
             } else {
-                print("⚠️ Aucun user trouvé pour email:", email)
+                throw AppError.FirestoreError.userNotFound(email: email)
             }
         }
         return uids
@@ -95,15 +97,20 @@ class FirestoreService {
     
     func uploadImage(_ image: UIImage) async throws -> String {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-            throw NSError(domain: "ImageError", code: 0)
+            throw AppError.FirestoreError.imageError("Impossible to convert image to JPEG")
         }
         let storageRef = Storage.storage().reference().child("eventImages/\(UUID().uuidString).jpg")
-        try await storageRef.putDataAsync(imageData)
+        _ = try await storageRef.putDataAsync(imageData)
         return try await storageRef.downloadURL().absoluteString
     }
     
     func getUserProfile(for uid: String, completion: @escaping (User?) -> Void) {
         db.collection("users").document(uid).getDocument { snapshot, error in
+            if error != nil {
+                completion(nil)
+                return
+            }
+            
             guard let data = snapshot?.data(), error == nil else {
                 completion(nil)
                 return
@@ -126,19 +133,10 @@ class FirestoreService {
         }
     }
     
-    func getAvatarURL(for userID: String) async -> String? {
-        do {
-            let doc = try await db
-                .collection("users")
-                .document(userID)
-                .getDocument()
-            
-            guard let data = doc.data() else { return nil }
-            return data["avatarURL"] as? String
-        } catch {
-            print("Erreur récupération avatarURL: \(error)")
-            return nil
-        }
+    func getAvatarURL(for userID: String) async throws -> String? {
+        let doc = try await db.collection("users").document(userID).getDocument()
+        guard let data = doc.data() else { return nil }
+        return data["avatarURL"] as? String
     }
     
     func updateUserAvatarURL(userId: String, url: String) async throws {
@@ -150,10 +148,8 @@ class FirestoreService {
         let user = User(id: uid, email: email, avatarURL: avatarURL, name: name)
         do {
             try userRef.setData(from: user, merge: true)
-            print("✅ User enregistré : \(email)")
         } catch {
-            print("❌ Erreur Firestore pour \(email) : \(error)")
-            throw error
+            throw AppError.FirestoreError.saveUserFailed(underlying: error)
         }
     }
 }

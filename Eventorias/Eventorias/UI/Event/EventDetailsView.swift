@@ -10,7 +10,9 @@ import SwiftUI
 struct EventDetailsView: View {
     var eventsVM: EventsViewModel
     var event: Event
+    var googleMapsVM: GoogleMapsViewModel
     @Environment(\.dismiss) var dismiss
+    @State private var isShareSheetPresented = false
     
     var body: some View {
         ZStack {
@@ -127,8 +129,29 @@ struct EventDetailsView: View {
                                 
                                 Spacer()
                                 
-                                StaticMapView(event: event)
+                                StaticMapView(googleMapsVM: googleMapsVM, event: event)
                                     .frame(width: 149, height: 72)
+                            }
+                            
+                            Button {
+                                isShareSheetPresented = true
+                            } label: {
+                                Label("Partager l'événement", systemImage: "square.and.arrow.up")
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .font(.custom("Inter24pt-SemiBold", size: 16))
+                                    .foregroundColor(.white)
+                                    .background(Color("ButtonColor"))
+                                    .cornerRadius(4)
+                            }
+                            .sheet(isPresented: $isShareSheetPresented) {
+                                let textToShare = """
+                                        📅 \(event.name)
+                                        🗓️ \(event.date.formatted(date: .long, time: .shortened))
+                                        📍 \(event.location)
+                                        """
+                                
+                                ActivityController(activityItems: [textToShare])
                             }
                             Spacer()
                         }
@@ -172,5 +195,5 @@ extension Date {
             userID: "17FYd83",
             imageURL: "https://via.placeholder.com/150",
             isUserInvited: false
-        ))
+    ), googleMapsVM: GoogleMapsViewModel())
 }

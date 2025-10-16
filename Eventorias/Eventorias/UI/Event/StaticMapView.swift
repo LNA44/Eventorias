@@ -8,44 +8,50 @@
 import SwiftUI
 
 struct StaticMapView: View {
-    private var service: GoogleMapsService { GoogleMapsService.shared }
+    var googleMapsVM: GoogleMapsViewModel
     let event: Event
     
     var body: some View {
-        if let url = GoogleMapsService.staticMapURL(for: event.location) {
-            VStack {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(8)
-                    case .failure(let error):
-                        VStack {
-                            Image(systemName: "xmark.octagon")
+        VStack {
+            if let url = googleMapsVM.mapURL {
+                VStack {
+                    AsyncImage(url: url) { phase in
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                        case .success(let image):
+                            image
                                 .resizable()
-                                .frame(width: 50, height: 50)
-                                .foregroundColor(.red)
-                            Text("Erreur chargement carte : \(error.localizedDescription)")
-                                .font(.caption)
-                                .multilineTextAlignment(.center)
+                                .scaledToFit()
+                                .cornerRadius(8)
+                        case .failure(let error):
+                            VStack {
+                                Image(systemName: "xmark.octagon")
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(.red)
+                                Text("Erreur chargement carte : \(error.localizedDescription)")
+                                    .font(.caption)
+                                    .multilineTextAlignment(.center)
+                            }
+                        @unknown default:
+                            EmptyView()
                         }
-                    @unknown default:
-                        EmptyView()
                     }
                 }
+                
+            } else {
+                Text("Impossible de générer l'URL de la carte")
             }
-        } else {
-            Text("Impossible de générer l'URL de la carte")
+        }
+        .onAppear {
+            googleMapsVM.loadMap(for: event.location)
         }
     }
 }
 
 #Preview {
-    StaticMapView(event: Event(
+    StaticMapView(googleMapsVM: GoogleMapsViewModel(), event: Event(
         id: "2",
         name: "MusicFestival",
         description: "Un super festival de musique",

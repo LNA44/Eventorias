@@ -17,31 +17,23 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 				   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 	FirebaseApp.configure()
       
-#if DEBUG
-#if targetEnvironment(simulator)
-      setupFirebaseEmulators()
+/*#if DEBUG
+//#if targetEnvironment(simulator)
+      //setupFirebaseEmulators()
+      /*Task {
+          await createTestUsers()
+      }*/
+//#else
+        // 📱 iPhone réel : Firebase en ligne
       Task {
           await createTestUsers()
       }
-#else
-        // 📱 iPhone réel : Firebase en ligne
-      Auth.auth().createUser(withEmail: testEmail, password: testPassword) { result, error in
-          if let error = error as NSError? {
-              if error.code == AuthErrorCode.emailAlreadyInUse.rawValue {
-                  print("✅ Compte test déjà existant")
-              } else {
-                  print("⚠️ Erreur création compte test : \(error.localizedDescription)")
-              }
-          } else {
-              print("🎉 Compte test créé avec succès : \(testEmail)")
-          }
-      }
 #endif
-#endif
+//#endif*/
       return true
   }
     
-    private func setupFirebaseEmulators() {
+    /*private func setupFirebaseEmulators() {
         // 🔹 Auth Emulator
         Auth.auth().useEmulator(withHost: "localhost", port: 9099)
         
@@ -55,10 +47,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         let storage = Storage.storage()
         storage.useEmulator(withHost: "localhost", port: 9199) // ✅ avant toute opération
         print("🔹 Storage Emulator configuré")
-    }
+    }*/
     
     // MARK: - Création des comptes de test
-    private func createTestUsers() async {
+   /* private func createTestUsers() async {
         do {
                 try await createUser(email: "test@emulator.com", password: "123Elena!", name: "Elena", avatarImage: "Avatar-woman")
                 try await createUser(email: "a@gmail.com", password: "123Arthur!", name: "Arthur", avatarImage: "Avatar-man")
@@ -79,7 +71,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         // 2️⃣ Upload de l'avatar
         if let image = UIImage(named: avatarImage) {
-            let avatarURL = try await FirebaseStorageService.shared.uploadAvatarImageAsync(userId: user.uid, image: image)
+            let avatarURL = try await FirebaseStorageService.shared.uploadAvatarImage(userId: user.uid, image: image)
             try await FirestoreService.shared.updateUserAvatarURL(userId: user.uid, url: avatarURL)
             
             // 3️⃣ Mise à jour de l'avatarURL
@@ -90,7 +82,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // 4️⃣ Déconnexion
         try Auth.auth().signOut()
         print("🔹 Déconnecté : \(email)")
-    }
+    }*/
 }
 
 
@@ -98,22 +90,25 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct EventoriasApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @State private var authVM: AuthenticationViewModel?
+   // @State private var authVM: AuthenticationViewModel?
+    @State private var authVM = AuthenticationViewModel()
     @State private var eventsVM = EventsViewModel()
     @State private var userVM = UserViewModel()
+    @State private var googleMapsVM = GoogleMapsViewModel()
+    @State private var signUpVM = SignUpViewModel()
     
     var body: some Scene {
         WindowGroup {
-            if let authVM = authVM {
-                RootView(authVM: authVM, eventsVM: eventsVM, userVM: userVM)
-            } else {
-                ProgressView("Loading...")
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            self.authVM = AuthenticationViewModel()
-                        }
-                    }
-            }
+            //if let authVM = authVM {
+            RootView(authVM: authVM, eventsVM: eventsVM, userVM: userVM, signUpVM: signUpVM, googleMapsVM: googleMapsVM)
+            /* } else {
+             ProgressView("Loading...")
+             .onAppear {
+             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+             self.authVM = AuthenticationViewModel()
+             }
+             }
+             }*/
         }
     }
 }

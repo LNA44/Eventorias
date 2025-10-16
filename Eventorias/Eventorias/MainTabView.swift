@@ -10,11 +10,12 @@ import SwiftUI
 struct MainTabView: View {
     var eventsVM: EventsViewModel
     var userVM: UserViewModel
+    var googleMapsVM: GoogleMapsViewModel
     @State private var selectedTab = 0
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            EventsContainerView(eventsVM: eventsVM)
+            EventsContainerView(eventsVM: eventsVM, googleMapsVM: googleMapsVM)
                 .tabItem {
                     Label("Events", systemImage: "calendar.badge.plus")
                 }
