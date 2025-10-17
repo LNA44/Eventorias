@@ -19,8 +19,12 @@ class FirebaseAuthService {
     func signUp(email: String, password: String) async throws -> AuthDataResult {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<AuthDataResult, Error>) in
             auth.createUser(withEmail: email, password: password) { result, error in
-                if let error = error {
-                    continuation.resume(throwing: error)
+                if let error = error as NSError? {
+                    if AuthErrorCode(rawValue: error.code) == .emailAlreadyInUse {
+                        continuation.resume(throwing: AppError.AuthError.userAlreadyCreated)
+                    } else {
+                        continuation.resume(throwing: error)
+                    }
                     return
                 }
                 if let result = result {

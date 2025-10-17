@@ -12,7 +12,8 @@ import FirebaseAuth
     var email: String = ""
     var password: String = ""
     var name: String = ""
-    var errorMessage: String? = nil
+    var selectedImage: UIImage?
+    var errorMessage: String = ""
     var showError: Bool = false
     var isLoading = false
     private var authService: FirebaseAuthService { FirebaseAuthService.shared }
@@ -22,6 +23,9 @@ import FirebaseAuth
     func createUser(email: String, password: String, name: String, avatarImage: UIImage?) async {
         isLoading = true
         defer { isLoading = false } //meme si ce qui suit échoue, on fera quand meme isLoading = false
+        if self.name == "" || self.selectedImage == nil {
+            return
+        }
         do {
             
             let result = try await authService.signUp(email: email, password: password)
@@ -41,13 +45,11 @@ import FirebaseAuth
             }
             
             // 4️⃣ Déconnexion
-            do {
-                try authService.signOut()
-                print("✅ Déconnecté avec succès")
-            } catch {
-                self.errorMessage = error.localizedDescription
-                self.showError = true
-            }
+            try authService.signOut()
+            print("✅ Déconnecté avec succès")
+        } catch let error as AppError.AuthError {
+            showError = true
+            errorMessage = error.errorDescription
         } catch {
             self.errorMessage = error.localizedDescription
             self.showError = true

@@ -27,11 +27,13 @@ enum AppError: Error {
     
     enum AuthError: Error {
         case userNotCreated
+        case userAlreadyCreated
         case unknown
         
         var errorDescription: String {
             switch self {
             case .userNotCreated: return "You didn't create an account yet"
+            case .userAlreadyCreated: return "User already created"
             case .unknown: return "An unknown error occurred"
                 
             }

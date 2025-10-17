@@ -10,7 +10,6 @@ import SwiftUI
 struct SignUpView: View {
     @Bindable var signUpVM: SignUpViewModel
     @Binding var flow: RootView.AuthFlow
-    @State private var selectedImage: UIImage?
     @State private var cameraImage: UIImage?
     @State private var showImagePicker = false
     @State private var showCameraPicker = false
@@ -107,6 +106,13 @@ struct SignUpView: View {
             }
             .background(Color("TextfieldColor"))
             .cornerRadius(5)
+            if signUpVM.name.isEmpty {
+                Text("Name is required")
+                    .font(.custom("Inter28pt-Regular", size: 14))
+                    .foregroundColor(Color("ButtonColor"))
+                    .font(.caption)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
             
             VStack(spacing: 0) {
                 HStack(spacing: 10) {
@@ -136,17 +142,24 @@ struct SignUpView: View {
                         .cornerRadius(15)
                     }
                     .sheet(isPresented: $showImagePicker) {
-                        ImagePicker(selectedImage: $selectedImage)
+                        ImagePicker(selectedImage: $signUpVM.selectedImage) //modif
                     }
                 }
                 .padding(.top, 30)
+                if signUpVM.selectedImage == nil {
+                    Text("Choose an avatar")
+                        .font(.custom("Inter28pt-Regular", size: 14))
+                        .foregroundColor(Color("ButtonColor"))
+                        .font(.caption)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
             }
             
             Button(action: {
                 Task {
-                    await signUpVM.createUser(email: signUpVM.email, password: signUpVM.password, name: signUpVM.name, avatarImage: selectedImage)
+                    await signUpVM.createUser(email: signUpVM.email, password: signUpVM.password, name: signUpVM.name, avatarImage: signUpVM.selectedImage)//modif
                     
-                    if signUpVM.errorMessage == nil {
+                    if signUpVM.errorMessage == "" && signUpVM.name != "" && signUpVM.selectedImage != nil {
                         flow = .signIn
                     }
                 }
@@ -171,6 +184,15 @@ struct SignUpView: View {
         .padding(.horizontal, 10)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
+        .alert(isPresented: $signUpVM.showError) {
+            Alert(
+                title: Text("Error"),
+                message: Text(signUpVM.errorMessage),
+                dismissButton: .default(Text("OK")) {
+                    signUpVM.showError = false
+                }
+            )
+        }
     }
 }
 #Preview {
