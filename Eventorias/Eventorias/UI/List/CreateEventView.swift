@@ -348,7 +348,7 @@ struct CreateEventView: View {
                                 isSaving = false
                                 
                                 if !eventsVM.notFoundEmails.isEmpty {
-                                    alertMessage = "Emails non trouvés : \(eventsVM.notFoundEmails.joined(separator: ", "))"
+                                    alertMessage = "Coudn't find those emails : \(eventsVM.notFoundEmails.joined(separator: ", "))"
                                     showAlert = true
                                 } else if eventsVM.showError {
                                     alertMessage = eventsVM.errorMessage
