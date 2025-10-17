@@ -10,7 +10,7 @@ import SwiftUI
 struct CustomSpinner: View {
     var size: CGFloat = 44
     var lineWidth: CGFloat = 4
-    var colorLong: Color = .black
+    var colorLong: Color = .white
     var colorShort: Color = .gray.opacity(0.75)
     @State private var rotation: Angle = .degrees(0)
 

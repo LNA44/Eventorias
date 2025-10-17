@@ -44,33 +44,38 @@ struct EventDetailsView: View {
                 ScrollView {
                     VStack {
                         if let imageURL = event.imageURL, let url = URL(string: imageURL) {
-                            AsyncImage(url: url) { phase in
-                                switch phase {
-                                case .empty:
-                                    ProgressView()
-                                case .success(let image):
-                                    image
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 390, height: 360)
-                                        .cornerRadius(8)
-                                        .clipped()
-                                case .failure:
-                                    Image(systemName: "photo") // fallback si erreur
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(height: 150)
-                                        .foregroundColor(.gray)
-                                @unknown default:
-                                    EmptyView()
+                            ZStack {
+                                // Fond / placeholder gris ou fallback
+                                AsyncImage(url: url) { phase in
+                                    switch phase {
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 390, height: 360)
+                                            .cornerRadius(8)
+                                            .clipped()
+                                    case .failure(_), .empty:
+                                        Rectangle()
+                                            .fill(Color.gray.opacity(0.3))
+                                            .frame(width: 390, height: 360)
+                                            .cornerRadius(8)
+                                    @unknown default:
+                                        EmptyView()
+                                    }
+                                }
+
+                                AsyncImage(url: url) { phase in
+                                    if case .empty = phase {
+                                        CustomSpinner(size: 20, lineWidth: 2)
+                                    }
                                 }
                             }
                         } else {
-                            Image(systemName: "photo") // si pas d'URL
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: 150)
-                                .foregroundColor(.gray)
+                            Rectangle()
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(width: 390, height: 360)
+                                .cornerRadius(8)
                         }
                         
                         VStack(spacing: 20) {
@@ -103,16 +108,30 @@ struct EventDetailsView: View {
                                 let avatarURL = eventsVM.getAvatar(for: event.userID)
                                 
                                 if let urlString = avatarURL, let url = URL(string: urlString) {
-                                    AsyncImage(url: url) { image in
-                                        image
-                                            .resizable()
-                                            .scaledToFill()
-                                    } placeholder: {
+                                    ZStack {
+                                        // Fond gris circulaire
                                         Circle()
                                             .fill(Color.gray.opacity(0.3))
+                                            .frame(width: 70, height: 70)
+                                        
+                                        AsyncImage(url: url) { phase in
+                                            switch phase {
+                                            case .success(let image):
+                                                image
+                                                    .resizable()
+                                                    .scaledToFill()
+                                                    .frame(width: 70, height: 70)
+                                                    .clipShape(Circle())
+                                            case .empty:
+                                                CustomSpinner(size: 20, lineWidth: 2)
+                                                    .frame(width: 70, height: 70)
+                                            case .failure(_):
+                                                EmptyView()
+                                            @unknown default:
+                                                EmptyView()
+                                            }
+                                        }
                                     }
-                                    .frame(width: 70, height: 70)
-                                    .clipShape(Circle())
                                 } else {
                                     Circle()
                                         .fill(Color.gray.opacity(0.3))

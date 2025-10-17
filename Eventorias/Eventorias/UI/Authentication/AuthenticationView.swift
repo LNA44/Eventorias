@@ -100,9 +100,13 @@ struct AuthenticationView: View {
                 }
             }) {
                 HStack {
-                    Text("Sign in")
-                        .font(.custom("Inter24pt-SemiBold", size: 16))
-                        .foregroundColor(.white)
+                    if authVM.isLoading {
+                        CustomSpinner(size: 20, lineWidth: 2)
+                    } else {
+                        Text("Sign in")
+                            .font(.custom("Inter24pt-SemiBold", size: 16))
+                            .foregroundColor(.white)
+                    }
                 }
                 .padding()
                 .frame(maxWidth: .infinity)

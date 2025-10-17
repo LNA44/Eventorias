@@ -22,18 +22,36 @@ struct ProfileView: View {
                 Spacer()
                 
                 if let urlString = userVM.avatarURL, let url = URL(string: urlString) {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    } placeholder: {
+                    ZStack {
+                        // Cercle gris de fond
                         Circle()
                             .fill(Color.gray.opacity(0.3))
+                            .frame(width: 40, height: 40)
+                        
+                        // AsyncImage avec image et spinner
+                        AsyncImage(url: url) { phase in
+                            switch phase {
+                            case .success(let image):
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 40, height: 40)
+                                    .clipShape(Circle())
+                            case .empty:
+                                // Spinner pendant le chargement
+                                CustomSpinner(size: 20, lineWidth: 2)
+                                    .frame(width: 40, height: 40)
+                            case .failure(_):
+                                // On garde le cercle gris si l'image n'existe pas
+                                EmptyView()
+                            @unknown default:
+                                EmptyView()
+                            }
+                        }
                     }
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
                 } else {
-                    Circle().fill(Color.gray.opacity(0.3))
+                    Circle()
+                        .fill(Color.gray.opacity(0.3))
                         .frame(width: 40, height: 40)
                 }
             }

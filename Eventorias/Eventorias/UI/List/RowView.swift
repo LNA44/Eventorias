@@ -24,18 +24,36 @@ struct RowView: View {
             HStack(spacing: 15) {
                 HStack {
                     if let urlString = avatarURL, let url = URL(string: urlString) {
-                        AsyncImage(url: url) { image in
-                            image
-                                .resizable()
-                                .scaledToFill()
-                        } placeholder: {
-                            Circle()
-                                .fill(Color.gray.opacity(0.3))
+                        ZStack {
+                            // Fond gris ou image si déjà chargée
+                            AsyncImage(url: url) { phase in
+                                switch phase {
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 40, height: 40)
+                                        .clipShape(Circle())
+                                case .failure(_), .empty:
+                                    Circle()
+                                        .fill(Color.gray.opacity(0.3))
+                                        .frame(width: 40, height: 40)
+                                @unknown default:
+                                    EmptyView()
+                                }
+                            }
+
+                            // Spinner seulement pendant le chargement
+                            AsyncImage(url: url) { phase in
+                                if case .empty = phase {
+                                    CustomSpinner(size: 20, lineWidth: 2)
+                                        .frame(width: 40, height: 40)
+                                }
+                            }
                         }
-                        .frame(width: 40, height: 40)
-                        .clipShape(Circle())
                     } else {
-                        Circle().fill(Color.gray.opacity(0.3))
+                        Circle()
+                            .fill(Color.gray.opacity(0.3))
                             .frame(width: 40, height: 40)
                     }
                 }
@@ -68,31 +86,41 @@ struct RowView: View {
             }
                         
             if let imageURL = event.imageURL, let url = URL(string: imageURL) {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .empty:
-                        ProgressView()
-                            .frame(width: 60, height: 60)
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 150, height: 90)
-                            .cornerRadius(8)
-                    case .failure:
-                        Image(systemName: "photo")
-                            .frame(width: 136, height: 68)
-                    @unknown default:
-                        EmptyView()
+                ZStack {
+                    // Fond ou placeholder gris
+                    AsyncImage(url: url) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 150, height: 90)
+                                .cornerRadius(8)
+                        case .failure(_), .empty:
+                            Rectangle()
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(width: 150, height: 90)
+                                .cornerRadius(8)
+                        @unknown default:
+                            EmptyView()
+                        }
+                    }
+
+                    // Spinner pendant le téléchargement
+                    AsyncImage(url: url) { phase in
+                        if case .empty = phase {
+                            CustomSpinner(size: 20, lineWidth: 2)
+                        }
                     }
                 }
             } else {
-                Image(systemName: "photo")
-                    .frame(width: 136, height: 80)
+                Rectangle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: 150, height: 90)
+                    .cornerRadius(8)
             }
         }
         .padding(.leading, 20)
-       // .padding(.vertical, 10)
         .background(Color("TextfieldColor"))
         .cornerRadius(12)
         .frame(maxWidth: .infinity)

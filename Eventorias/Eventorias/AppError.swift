@@ -21,7 +21,6 @@ enum AppError: Error {
     }
     
     enum FirestoreError: Error {
-        case userNotFound(email:String)
         case saveUserFailed(underlying: Error)
         case imageError(String)
     }

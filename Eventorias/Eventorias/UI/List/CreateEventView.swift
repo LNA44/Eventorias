@@ -24,6 +24,8 @@ struct CreateEventView: View {
     @State private var showImagePicker = false
     @State private var isSaving = false
     @State private var selectedCategory: String = "Other"
+    @State private var showAlert = false
+    @State private var alertMessage = ""
     let dateFormatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "MM/dd/yyyy"
@@ -238,13 +240,19 @@ struct CreateEventView: View {
                     Spacer()
                     
                     Button(action: {
+                        print("🟡 Validate button pressed")
+                            print("selectedImage:", selectedImage as Any)
+                        
                         isSaving = true
                         guard let selectedImage else {
                             return
                         }
                         
                         Task {
+                            print("🟡 Starting uploadEventImage...")
                             let imageURL = await eventsVM.uploadEventImage(selectedImage)
+                            print("🟢 uploadEventImage done, url: \(imageURL ?? "nil")")
+                            print("🟡 About to call addEvent...")
                             await eventsVM.addEvent(
                                 name: name,
                                 description: description,
@@ -256,16 +264,33 @@ struct CreateEventView: View {
                                 imageURL: imageURL
                             )
                             isSaving = false
-                            dismiss()
+                            
+                            if !eventsVM.notFoundEmails.isEmpty {
+                                alertMessage = "Emails non trouvés : \(eventsVM.notFoundEmails.joined(separator: ", "))"
+                                showAlert = true
+                            } else if eventsVM.showError {
+                                alertMessage = eventsVM.errorMessage
+                                showAlert = true
+                                eventsVM.showError = false
+                            } else {
+                                // tout est ok → fermer la vue
+                                dismiss()
+                            }
                         }
                     }) {
-                        Text("Validate")
-                            .font(.custom("Inter24pt-SemiBold", size: 16))
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity, minHeight: 44)
-                            .background(Color("ButtonColor"))
-                            .cornerRadius(5)
-                            .padding(.horizontal)
+                        HStack {
+                            if isSaving {
+                                CustomSpinner(size: 20, lineWidth: 2)
+                            } else {
+                                Text("Validate")
+                                    .font(.custom("Inter24pt-SemiBold", size: 16))
+                                    .foregroundColor(.white)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .background(Color("ButtonColor"))
+                        .cornerRadius(5)
+                        .padding(.horizontal)
                     }
                     .disabled(name.isEmpty || location.isEmpty)
                     .padding(.bottom, 24)
@@ -277,15 +302,13 @@ struct CreateEventView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
         .navigationBarBackButtonHidden(true)
-        .alert(isPresented: $eventsVM.showError) {
-            Alert(
-                title: Text("Error"),
-                message: Text(eventsVM.errorMessage),
-                dismissButton: .default(Text("OK")) {
-                    eventsVM.showError = false
-                }
-            )
-        }
+        .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Attention"),
+                    message: Text(alertMessage),
+                    dismissButton: .default(Text("OK")) {}
+                )
+            }
     }
 }
 

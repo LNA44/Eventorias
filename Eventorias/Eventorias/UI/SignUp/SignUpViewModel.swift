@@ -14,12 +14,16 @@ import FirebaseAuth
     var name: String = ""
     var errorMessage: String? = nil
     var showError: Bool = false
+    var isLoading = false
     private var authService: FirebaseAuthService { FirebaseAuthService.shared }
     private var firestoreService: FirestoreService { FirestoreService.shared }
     private var firebaseStorageService: FirebaseStorageService { FirebaseStorageService.shared }
     
     func createUser(email: String, password: String, name: String, avatarImage: UIImage?) async {
+        isLoading = true
+        defer { isLoading = false } //meme si ce qui suit échoue, on fera quand meme isLoading = false
         do {
+            
             let result = try await authService.signUp(email: email, password: password)
             let user = result.user
             print("🎉 Compte Auth créé : \(email)")

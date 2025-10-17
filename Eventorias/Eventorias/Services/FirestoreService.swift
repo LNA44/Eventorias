@@ -79,9 +79,10 @@ class FirestoreService {
         ])
     }
     
-    func convertEmailsToUIDs(emails: [String]) async throws -> [String] {
+    func convertEmailsToUIDs(emails: [String]) async throws -> ConvertEmailsResult {
         var uids: [String] = []
-        
+        var notFound: [String] = []
+
         for email in emails {
             let query = db.collection("users").whereField("email", isEqualTo: email)
             let snapshot = try await query.getDocuments()
@@ -89,10 +90,10 @@ class FirestoreService {
             if let doc = snapshot.documents.first {
                 uids.append(doc.documentID)
             } else {
-                throw AppError.FirestoreError.userNotFound(email: email)
+                notFound.append(email)
             }
         }
-        return uids
+        return ConvertEmailsResult(uids: uids, notFound: notFound)
     }
     
     func uploadImage(_ image: UIImage) async throws -> String {

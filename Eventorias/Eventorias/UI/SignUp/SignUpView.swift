@@ -152,9 +152,13 @@ struct SignUpView: View {
                 }
             }) {
                 HStack {
-                    Text("Sign Up")
-                        .font(.custom("Inter24pt-SemiBold", size: 16))
-                        .foregroundColor(.white)
+                    if signUpVM.isLoading {
+                        CustomSpinner(size: 20, lineWidth: 2)
+                    } else {
+                        Text("Sign Up")
+                            .font(.custom("Inter24pt-SemiBold", size: 16))
+                            .foregroundColor(.white)
+                    }
                 }
                 .padding()
                 .frame(maxWidth: .infinity)

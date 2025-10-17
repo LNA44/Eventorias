@@ -70,11 +70,6 @@ struct EventsContainerView: View {
                     .frame(width: 44, height: 44)
             }
         }
-       /* .task {
-            if eventsVM.events.isEmpty {
-                await eventsVM.fetchEvents()
-            }
-        }*/
         .task {
             isLoading = true
             await eventsVM.fetchEvents()

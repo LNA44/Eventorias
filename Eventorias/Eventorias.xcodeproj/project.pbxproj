@@ -19,6 +19,7 @@
 		F361B9B82E8EC8220088C136 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361B9B72E8EC8220088C136 /* FirestoreService.swift */; };
 		F361B9BB2E8EC84B0088C136 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361B9BA2E8EC84B0088C136 /* Event.swift */; };
 		F361B9BF2E8ECC710088C136 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361B9BE2E8ECC710088C136 /* EventDetailsView.swift */; };
+		F3663C932EA22EAD00297E07 /* ConvertEmailsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3663C922EA22EAD00297E07 /* ConvertEmailsResult.swift */; };
 		F3682F8B2E9F8572002E8578 /* Inter_28pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */; };
 		F3682F8C2E9F8572002E8578 /* Inter_28pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */; };
 		F3682F8D2E9F8572002E8578 /* Inter_28pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */; };
@@ -96,6 +97,7 @@
 		F361B9B72E8EC8220088C136 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		F361B9BA2E8EC84B0088C136 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		F361B9BE2E8ECC710088C136 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
+		F3663C922EA22EAD00297E07 /* ConvertEmailsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertEmailsResult.swift; sourceTree = "<group>"; };
 		F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_28pt-Regular.ttf"; sourceTree = "<group>"; };
 		F3682F8E2E9F857D002E8578 /* Inter_24pt-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_24pt-SemiBold.ttf"; sourceTree = "<group>"; };
 		F3682F922E9F8592002E8578 /* Inter_28pt-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_28pt-Medium.ttf"; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				F361B9BA2E8EC84B0088C136 /* Event.swift */,
 				F36F84CC2E954F4600D4ACA1 /* Day.swift */,
 				F37C036F2E992B1800647D3A /* User.swift */,
+				F3663C922EA22EAD00297E07 /* ConvertEmailsResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -535,6 +538,7 @@
 				F36F84DF2E969F2000D4ACA1 /* StaticMapView.swift in Sources */,
 				F361B9AA2E8EC5400088C136 /* AuthenticationViewModel.swift in Sources */,
 				F36F84CD2E954F4600D4ACA1 /* Day.swift in Sources */,
+				F3663C932EA22EAD00297E07 /* ConvertEmailsResult.swift in Sources */,
 				F361B9B12E8EC57F0088C136 /* ListView.swift in Sources */,
 				F37C037B2E9A892700647D3A /* UserViewModel.swift in Sources */,
 				F361B9BB2E8EC84B0088C136 /* Event.swift in Sources */,

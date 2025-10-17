@@ -12,9 +12,13 @@ import FirebaseAuth
     var password: String = ""
     var errorMessage: String? = nil
     var isShowingAlert: Bool = false
+    var isLoading = false
     private var service: FirebaseAuthService { FirebaseAuthService.shared }
     
     func signIn(flow: Binding<RootView.AuthFlow>) async {
+        isLoading = true
+        defer { isLoading = false }
+        
         if service.getCurrentUserID() != nil {
             do {
                 try service.signOut()

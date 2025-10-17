@@ -12,6 +12,7 @@ import UIKit
 @Observable class EventsViewModel {
     private var service: FirestoreService { FirestoreService.shared }
     var events: [Event] = []
+    var notFoundEmails: [String] = []
     var errorMessage: String = ""
     var showError: Bool = false
     var isSortedAscending: Bool = true
@@ -55,44 +56,46 @@ import UIKit
     func addEvent(name: String, description: String, date: Date, time: Date,
                   location: String, category: String, guests: String,
                 imageURL: String?) async {
-        print("guests avant enregistrement: \(guests)")
+        print("🟡 addEvent VM called")
         let combinedDateTime = combine(date: date, time: time)
-        
+        print("🟡 About to convert emails")
         let emails = guests
                 .split(separator: ",")
                 .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
-
-        var guestUIDs: [String] = []
         do {
-            guestUIDs = try await service.convertEmailsToUIDs(emails: emails)
-        } catch {
-            showError = true
-            errorMessage = error.localizedDescription
-            return
-        }
-        guard let currentUserID = FirebaseAuthService.shared.getCurrentUserID() else {
+            let result = try await service.convertEmailsToUIDs(emails: emails)
+            let guestUIDs = result.uids
+            notFoundEmails = result.notFound
+            print("🟡 Checking current user ID")
+            guard let currentUserID = FirebaseAuthService.shared.getCurrentUserID() else {
+                print("⚠️ Current user ID is nil")
                 showError = true
                 errorMessage = "Impossible to get current user"
                 return
             }
-        
-        let newEvent = Event(
-            id: UUID().uuidString,
-            name: name,
-            description: description,
-            date: combinedDateTime,
-            location: location,
-            category: category,
-            guests: guestUIDs,
-            userID: currentUserID,
-            imageURL: imageURL,
-            isUserInvited: false
-        )
-        print("location avant enregistrement : \(newEvent.location)")
-        do {
+            
+            let newEvent = Event(
+                id: UUID().uuidString,
+                name: name,
+                description: description,
+                date: combinedDateTime,
+                location: location,
+                category: category,
+                guests: guestUIDs,
+                userID: currentUserID,
+                imageURL: imageURL,
+                isUserInvited: false
+            )
+            print("location avant enregistrement : \(newEvent.location)")
+            print("🟡 Adding event to Firestore: \(newEvent)")
             try await service.addEvent(newEvent)
+            print("✅ Event added successfully")
             events.append(newEvent)
         } catch {
+            print("🔥 Firestore addEvent error:", error.localizedDescription)
+            if let nsError = error as NSError? { //a retirer
+                print("🔥 Code:", nsError.code, "| Domain:", nsError.domain)//a retirer
+            }//a retirer
             showError = true
             errorMessage = error.localizedDescription
         }
