@@ -10,7 +10,6 @@ import FirebaseAuth
 import UIKit
 
 @Observable class EventsViewModel {
-    private var service: FirestoreService { FirestoreService.shared }
     var events: [Event] = []
     var notFoundEmails: [String] = []
     var errorMessage: String = ""
@@ -23,6 +22,13 @@ import UIKit
                 await fetchEvents(search: searchText)
             }
         }
+    }
+    private let service: FirestoreServicing
+    
+    init(
+        service: FirestoreServicing = FirestoreService.shared,
+    ) {
+        self.service = service
     }
     
     @MainActor

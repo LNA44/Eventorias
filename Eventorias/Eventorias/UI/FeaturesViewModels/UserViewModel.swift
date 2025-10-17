@@ -10,9 +10,6 @@ import FirebaseAuth
 import UIKit
 
 @Observable class UserViewModel {
-    private var authService: FirebaseAuthService { FirebaseAuthService.shared }
-    private var firestoreService: FirestoreService { FirestoreService.shared }
-    private var firebaseStorageService: FirebaseStorageService { FirebaseStorageService.shared }
 
     var userID: String = ""
     var name: String = ""
@@ -20,6 +17,20 @@ import UIKit
     var avatarURL: String? = nil
     var errorMessage: String = ""
     var showError: Bool = false
+    
+    private let authService: any FirebaseAuthServicing
+    private let firestoreService: FirestoreServicing
+    private let firebaseStorageService: FirebaseStorageServicing
+    
+    init(
+        authService: any FirebaseAuthServicing = FirebaseAuthService.shared,
+        firestoreService: FirestoreServicing = FirestoreService.shared,
+        firebaseStorageService: FirebaseStorageServicing = FirebaseStorageService.shared
+    ) {
+        self.authService = authService
+        self.firestoreService = firestoreService
+        self.firebaseStorageService = firebaseStorageService
+    }
     
     func loadCurrentUserID() {
         if let uid = authService.getCurrentUserID() {

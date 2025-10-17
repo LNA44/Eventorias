@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GoogleMapsService {
+struct GoogleMapsService: GoogleMapsServicing {
     static let shared = GoogleMapsService()
     static var apiKey: String {
         get throws { 

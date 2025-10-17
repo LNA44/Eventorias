@@ -13,7 +13,13 @@ import FirebaseAuth
     var errorMessage: String? = nil
     var isShowingAlert: Bool = false
     var isLoading = false
-    private var service: FirebaseAuthService { FirebaseAuthService.shared }
+    private var service: any FirebaseAuthServicing
+    
+    init(
+        service: any FirebaseAuthServicing = FirebaseAuthService.shared,
+    ) {
+        self.service = service
+    }
     
     func signIn(flow: Binding<RootView.AuthFlow>) async {
         isLoading = true
@@ -29,19 +35,19 @@ import FirebaseAuth
         }
         
         guard !email.isEmpty, !password.isEmpty else {
-            errorMessage = "Email et mot de passe requis"
-                   isShowingAlert = true
-                   return
+            errorMessage = "Email and password required"
+            isShowingAlert = true
+            return
         }
         guard isValidEmail() else {
-            errorMessage = "Email non valide"
-                   isShowingAlert = true
-                   return
+            errorMessage = "Invalid email"
+            isShowingAlert = true
+            return
         }
         guard isValidPassword() else {
-            errorMessage = "Mot de passe non valide"
-                    isShowingAlert = true
-                    return
+            errorMessage = "Invalid password"
+            isShowingAlert = true
+            return
         }
         do {
             try await service.signIn(email: email, password: password)

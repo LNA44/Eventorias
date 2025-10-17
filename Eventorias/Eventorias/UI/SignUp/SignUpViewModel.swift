@@ -16,9 +16,19 @@ import FirebaseAuth
     var errorMessage: String = ""
     var showError: Bool = false
     var isLoading = false
-    private var authService: FirebaseAuthService { FirebaseAuthService.shared }
-    private var firestoreService: FirestoreService { FirestoreService.shared }
-    private var firebaseStorageService: FirebaseStorageService { FirebaseStorageService.shared }
+    private let authService: any FirebaseAuthServicing
+    private let firestoreService: FirestoreServicing
+    private let firebaseStorageService: FirebaseStorageServicing
+    
+    init(
+        authService: any FirebaseAuthServicing = FirebaseAuthService.shared,
+        firestoreService: FirestoreServicing = FirestoreService.shared,
+        firebaseStorageService: FirebaseStorageServicing = FirebaseStorageService.shared
+    ) {
+        self.authService = authService
+        self.firestoreService = firestoreService
+        self.firebaseStorageService = firebaseStorageService
+    }
     
     func createUser(email: String, password: String, name: String, avatarImage: UIImage?) async {
         isLoading = true
@@ -28,20 +38,19 @@ import FirebaseAuth
         }
         do {
             
-            let result = try await authService.signUp(email: email, password: password)
-            let user = result.user
+            let user = try await authService.signUp(email: email, password: password)
             print("🎉 Compte Auth créé : \(email)")
             
             // 1️⃣ Crée le document Firestore immédiatement
-            try await firestoreService.saveUserToFirestore(uid: user.uid, email: email, name: name, avatarURL: nil)
+            try await firestoreService.saveUserToFirestore(uid: user.id, email: email, name: name, avatarURL: nil)
             
             // 2️⃣ Upload de l'avatar
             if let image = avatarImage {
-                let avatarURL = try await firebaseStorageService.uploadAvatarImage(userId: user.uid, image: image)
-                try await firestoreService.updateUserAvatarURL(userId: user.uid, url: avatarURL)
+                let avatarURL = try await firebaseStorageService.uploadAvatarImage(userId: user.id, image: image)
+                try await firestoreService.updateUserAvatarURL(userId: user.id, url: avatarURL)
                 
                 // 3️⃣ Mise à jour de l'avatarURL
-                try await firestoreService.saveUserToFirestore(uid: user.uid, email: email, name: name, avatarURL: avatarURL)
+                try await firestoreService.saveUserToFirestore(uid: user.id, email: email, name: name, avatarURL: avatarURL)
             }
             
             // 4️⃣ Déconnexion

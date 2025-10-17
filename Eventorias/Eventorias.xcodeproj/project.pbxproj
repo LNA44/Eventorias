@@ -20,6 +20,7 @@
 		F361B9BB2E8EC84B0088C136 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361B9BA2E8EC84B0088C136 /* Event.swift */; };
 		F361B9BF2E8ECC710088C136 /* EventDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F361B9BE2E8ECC710088C136 /* EventDetailsView.swift */; };
 		F3663C932EA22EAD00297E07 /* ConvertEmailsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3663C922EA22EAD00297E07 /* ConvertEmailsResult.swift */; };
+		F3663CA82EA26DE300297E07 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3663CA72EA26DE300297E07 /* Protocols.swift */; };
 		F3682F8B2E9F8572002E8578 /* Inter_28pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */; };
 		F3682F8C2E9F8572002E8578 /* Inter_28pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */; };
 		F3682F8D2E9F8572002E8578 /* Inter_28pt-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */; };
@@ -82,9 +83,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4EA88B4E7092A02905BF3A78 /* Pods_EventoriasUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EventoriasUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E23BB4720346E70D3F78A3D0 /* Pods_Eventorias.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eventorias.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E37722A457DD17EB7C5472C4 /* Pods_EventoriasTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EventoriasTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F361B9A12E8EC5400088C136 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F361B9A22E8EC5400088C136 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		F361B9A32E8EC5400088C136 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
@@ -98,6 +96,7 @@
 		F361B9BA2E8EC84B0088C136 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		F361B9BE2E8ECC710088C136 /* EventDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailsView.swift; sourceTree = "<group>"; };
 		F3663C922EA22EAD00297E07 /* ConvertEmailsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertEmailsResult.swift; sourceTree = "<group>"; };
+		F3663CA72EA26DE300297E07 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_28pt-Regular.ttf"; sourceTree = "<group>"; };
 		F3682F8E2E9F857D002E8578 /* Inter_24pt-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_24pt-SemiBold.ttf"; sourceTree = "<group>"; };
 		F3682F922E9F8592002E8578 /* Inter_28pt-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter_28pt-Medium.ttf"; sourceTree = "<group>"; };
@@ -203,7 +202,6 @@
 		F361B9AF2E8EC5620088C136 /* List */ = {
 			isa = PBXGroup;
 			children = (
-				F361B9B42E8EC60D0088C136 /* EventsViewModel.swift */,
 				F361B9B02E8EC57F0088C136 /* ListView.swift */,
 				F361B9B22E8EC5C60088C136 /* RowView.swift */,
 				F36F84CA2E954EAB00D4ACA1 /* CalendarView.swift */,
@@ -221,6 +219,7 @@
 				F36F84E02E96A8CC00D4ACA1 /* GoogleMapsService.swift */,
 				F37C037C2E9A898B00647D3A /* FirebaseAuthService.swift */,
 				F3762A722E9D39EA001E8114 /* FirebaseStorageService.swift */,
+				F3663CA72EA26DE300297E07 /* Protocols.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -250,6 +249,7 @@
 		F361B9BD2E8ECC100088C136 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				F3663CA62EA26CDF00297E07 /* FeaturesViewModels */,
 				F361B9A62E8EC5400088C136 /* WelcomeView.swift */,
 				F361B9A42E8EC5400088C136 /* CustomTextField.swift */,
 				F3682FA92EA0F8DC002E8578 /* Controllers */,
@@ -261,6 +261,15 @@
 				F3682F9C2E9FC7E2002E8578 /* CustomSpinner.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		F3663CA62EA26CDF00297E07 /* FeaturesViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				F37C037A2E9A892700647D3A /* UserViewModel.swift */,
+				F361B9B42E8EC60D0088C136 /* EventsViewModel.swift */,
+			);
+			path = FeaturesViewModels;
 			sourceTree = "<group>";
 		};
 		F3682FA42EA0F184002E8578 /* SignUp */ = {
@@ -293,7 +302,6 @@
 				F37172B42E8C1CF700FF8C0F /* EventoriasTests */,
 				F37172BE2E8C1CF700FF8C0F /* EventoriasUITests */,
 				F37172A52E8C1CF600FF8C0F /* Products */,
-				FDED3525F16F2B291448A3B0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -311,19 +319,8 @@
 			isa = PBXGroup;
 			children = (
 				F36F84C22E95446E00D4ACA1 /* ProfileView.swift */,
-				F37C037A2E9A892700647D3A /* UserViewModel.swift */,
 			);
 			path = Profile;
-			sourceTree = "<group>";
-		};
-		FDED3525F16F2B291448A3B0 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E23BB4720346E70D3F78A3D0 /* Pods_Eventorias.framework */,
-				E37722A457DD17EB7C5472C4 /* Pods_EventoriasTests.framework */,
-				4EA88B4E7092A02905BF3A78 /* Pods_EventoriasUITests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -350,7 +347,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F37172C82E8C1CF700FF8C0F /* Build configuration list for PBXNativeTarget "EventoriasTests" */;
 			buildPhases = (
-				E42549CFFB4525BDCD555E9E /* [CP] Check Pods Manifest.lock */,
 				F37172AD2E8C1CF700FF8C0F /* Sources */,
 				F37172AE2E8C1CF700FF8C0F /* Frameworks */,
 				F37172AF2E8C1CF700FF8C0F /* Resources */,
@@ -372,7 +368,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F37172CB2E8C1CF700FF8C0F /* Build configuration list for PBXNativeTarget "EventoriasUITests" */;
 			buildPhases = (
-				194E6191B28DFA3068820FFB /* [CP] Check Pods Manifest.lock */,
 				F37172B72E8C1CF700FF8C0F /* Sources */,
 				F37172B82E8C1CF700FF8C0F /* Frameworks */,
 				F37172B92E8C1CF700FF8C0F /* Resources */,
@@ -477,53 +472,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		194E6191B28DFA3068820FFB /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-EventoriasUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E42549CFFB4525BDCD555E9E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-EventoriasTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		F37172A02E8C1CF600FF8C0F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -532,6 +480,7 @@
 				F37C03782E9A6BFC00647D3A /* Constants.swift in Sources */,
 				F36F84D72E966AE100D4ACA1 /* WhitePicker.swift in Sources */,
 				F3682F9F2E9FF129002E8578 /* AppError.swift in Sources */,
+				F3663CA82EA26DE300297E07 /* Protocols.swift in Sources */,
 				F36F84D32E956C1A00D4ACA1 /* UIImagePickerController.swift in Sources */,
 				F361B9A92E8EC5400088C136 /* AuthenticationView.swift in Sources */,
 				F361B9B52E8EC60D0088C136 /* EventsViewModel.swift in Sources */,
@@ -804,7 +753,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 64KCF3XZ6R;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bougaranhelena.EventoriasTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -826,7 +775,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 64KCF3XZ6R;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bougaranhelena.EventoriasTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -9,10 +9,16 @@ import SwiftUI
 import Foundation
 
 @Observable class GoogleMapsViewModel {
-    private var googleMapsService: GoogleMapsService { GoogleMapsService.shared }
+    private var googleMapsService: GoogleMapsServicing
     var mapURL: URL?
     var errorMessage: String?
     var showError: Bool = false
+        
+    init(
+        googleMapsService: GoogleMapsServicing = GoogleMapsService.shared,
+    ) {
+        self.googleMapsService = googleMapsService
+    }
     
     func loadMap(for location: String) {
         do {

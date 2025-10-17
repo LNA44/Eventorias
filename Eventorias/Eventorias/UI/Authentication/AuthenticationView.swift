@@ -83,13 +83,6 @@ struct AuthenticationView: View {
                             .font(.caption)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    /*if !authVM.isValidPassword() && !authVM.password.isEmpty {
-                        Text("Password must contain 8 characters, 1 uppercase letter, 1 number, 1 special character")
-                            .font(.custom("Inter28pt-Regular", size: 14))
-                            .foregroundColor(Color("ButtonColor"))
-                            .font(.caption)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }*/
                 }
             }
             .padding(.horizontal, 10)
