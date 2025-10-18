@@ -47,20 +47,28 @@ final class SignUpVMUnitTests: XCTestCase {
     
     // MARK: - Test isValidPassword
     func testIsValidPassword() {
+        //When
         viewModel.password = "Abcdef1!"
+        
+        //Then
         XCTAssertTrue(viewModel.isValidPassword())
         
+        //When
         viewModel.password = "abcdef"
+        
+        //Then
         XCTAssertFalse(viewModel.isValidPassword())
     }
     
     // MARK: - Test createUser success
     func testCreateUserSuccess() async throws {
+        //Given
         viewModel.email = "user@test.com"
         viewModel.password = "Abcdef1!"
         viewModel.name = "Jean"
         viewModel.selectedImage = UIImage() // on peut mettre une UIImage vide pour le test
         
+        //When
         await viewModel.createUser(
             email: viewModel.email,
             password: viewModel.password,
@@ -68,13 +76,12 @@ final class SignUpVMUnitTests: XCTestCase {
             avatarImage: viewModel.selectedImage
         )
         
-        // Vérifie que les services ont été appelés
+        //Then
         XCTAssertTrue(mockAuth.didSignUp)
         XCTAssertTrue(mockAuth.didSignOut)
         XCTAssertTrue(mockFirestore.saveUserCalled)
         XCTAssertTrue(mockFirestore.updateUserAvatarURLCalled)
         
-        // Vérifie que le VM a mis à jour l'état
         XCTAssertFalse(viewModel.showError)
         XCTAssertEqual(viewModel.errorMessage, "")
         XCTAssertFalse(viewModel.isLoading)
@@ -82,11 +89,13 @@ final class SignUpVMUnitTests: XCTestCase {
     
     // MARK: - Test createUser missing data
     func testCreateUserWithMissingData() async throws {
+        //Given
         viewModel.email = ""
         viewModel.password = ""
         viewModel.name = ""
         viewModel.selectedImage = nil
         
+        //When
         await viewModel.createUser(
             email: viewModel.email,
             password: viewModel.password,
@@ -94,7 +103,7 @@ final class SignUpVMUnitTests: XCTestCase {
             avatarImage: viewModel.selectedImage
         )
         
-        // Aucune action n'a été faite
+        //Then
         XCTAssertFalse(mockAuth.didSignUp)
         XCTAssertFalse(mockAuth.didSignOut)
         XCTAssertFalse(mockFirestore.saveUserCalled)
@@ -104,6 +113,7 @@ final class SignUpVMUnitTests: XCTestCase {
     // MARK: - Test createUser with auth error
     func testCreateUserAuthError() async throws {
         // Simule un erreur dans MockAuth
+        //Given
         let failingAuth = FailingAuthService()
         
         viewModel = SignUpViewModel(
@@ -117,6 +127,7 @@ final class SignUpVMUnitTests: XCTestCase {
         viewModel.name = "Jean"
         viewModel.selectedImage = UIImage()
         
+        //When
         await viewModel.createUser(
             email: viewModel.email,
             password: viewModel.password,
@@ -124,6 +135,7 @@ final class SignUpVMUnitTests: XCTestCase {
             avatarImage: viewModel.selectedImage
         )
         
+        //Then
         XCTAssertTrue(viewModel.showError)
         XCTAssertEqual(viewModel.errorMessage, AppError.AuthError.userAlreadyCreated.errorDescription)
     }
@@ -131,6 +143,7 @@ final class SignUpVMUnitTests: XCTestCase {
     // MARK: - Test createUser with firestore error
     func testCreateUserGenericError() async throws {
         // Mock Firestore qui échoue
+        //Given
         let failingFirestore = FailingFirestoreService()
         
         viewModel = SignUpViewModel(
@@ -139,13 +152,12 @@ final class SignUpVMUnitTests: XCTestCase {
             firebaseStorageService: mockStorage
         )
         
-        // Remplissage des champs du VM
         viewModel.email = "user@test.com"
         viewModel.password = "Abcdef1!"
         viewModel.name = "Jean"
         viewModel.selectedImage = UIImage()
         
-        // Appel de la fonction à tester
+        //When
         await viewModel.createUser(
             email: viewModel.email,
             password: viewModel.password,
@@ -153,7 +165,7 @@ final class SignUpVMUnitTests: XCTestCase {
             avatarImage: viewModel.selectedImage
         )
         
-        // Vérifications
+        //Then
         XCTAssertTrue(viewModel.showError)
         XCTAssertEqual(viewModel.errorMessage, "The operation couldn’t be completed. (TestError error 1.)")
     }

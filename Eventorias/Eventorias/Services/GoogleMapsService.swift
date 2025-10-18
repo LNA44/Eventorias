@@ -9,7 +9,7 @@ import Foundation
 
 struct GoogleMapsService: GoogleMapsServicing {
     static let shared = GoogleMapsService()
-    static var apiKey: String {
+    private var apiKey: String {
         get throws { 
                 guard let path = Bundle.main.path(forResource: "Key", ofType: "plist"),
                       let dict = NSDictionary(contentsOfFile: path),
@@ -22,13 +22,11 @@ struct GoogleMapsService: GoogleMapsServicing {
     
     private init() {}
 
-    static func staticMapURL(for address: String, zoom: Int = 15, size: String = "180x90") throws -> URL? {
+    func createMapURL(for address: String) throws -> URL? {
         let encodedAddress = address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let encodedPipe = "%7C"
-        print("Adresse encodée:", encodedAddress)
-        let key = try apiKey //a supprimer aprs vérif
-        print("Clé API trouvée:", key)
-        let urlString = "https://maps.googleapis.com/maps/api/staticmap?center=\(encodedAddress)&zoom=\(zoom)&size=\(size)&markers=color:red\(encodedPipe)\(encodedAddress)&key=\(try apiKey)"
+        let key = try self.apiKey //a supprimer aprs vérif
+        let urlString = "https://maps.googleapis.com/maps/api/staticmap?center=\(encodedAddress)&zoom=15&size=180x90&markers=color:red\(encodedPipe)\(encodedAddress)&key=\(key)"
         guard let url = URL(string: urlString) else {
             throw AppError.GoogleMapsError.invalidURL
         }

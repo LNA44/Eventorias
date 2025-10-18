@@ -23,18 +23,21 @@ import UIKit
             }
         }
     }
-    private let service: FirestoreServicing
+    private let firestoreService: FirestoreServicing
+    private let authService: FirebaseAuthServicing
     
     init(
-        service: FirestoreServicing = FirestoreService.shared,
+        firestoreService: FirestoreServicing = FirestoreService.shared,
+        authService: FirebaseAuthServicing = FirebaseAuthService.shared
     ) {
-        self.service = service
+        self.firestoreService = firestoreService
+        self.authService = authService
     }
     
     @MainActor
     func fetchEvents(search: String = "") async {
         do {
-            var fetchedEvents = try await service.fetchEvents(search: search)
+            var fetchedEvents = try await firestoreService.fetchEvents(search: search)
             print("Fetched events: \(events)")
             
             if let currentUserID = Auth.auth().currentUser?.uid {
@@ -69,11 +72,11 @@ import UIKit
                 .split(separator: ",")
                 .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
         do {
-            let result = try await service.convertEmailsToUIDs(emails: emails)
+            let result = try await firestoreService.convertEmailsToUIDs(emails: emails)
             let guestUIDs = result.uids
             notFoundEmails = result.notFound
             print("🟡 Checking current user ID")
-            guard let currentUserID = FirebaseAuthService.shared.getCurrentUserID() else {
+            guard let currentUserID = authService.getCurrentUserID() else {
                 print("⚠️ Current user ID is nil")
                 showError = true
                 errorMessage = "Impossible to get current user"
@@ -94,7 +97,7 @@ import UIKit
             )
             print("location avant enregistrement : \(newEvent.location)")
             print("🟡 Adding event to Firestore: \(newEvent)")
-            try await service.addEvent(newEvent)
+            try await firestoreService.addEvent(newEvent)
             print("✅ Event added successfully")
             events.append(newEvent)
         } catch {
@@ -137,7 +140,7 @@ import UIKit
         for event in events {
             if avatars[event.userID] == nil {
                 do {
-                    let avatar = try await service.getAvatarURL(for: event.userID)
+                    let avatar = try await firestoreService.getAvatarURL(for: event.userID)
                     if let avatar = avatar {
                         avatars[event.userID] = avatar
                     }
@@ -156,7 +159,7 @@ import UIKit
     @MainActor
     func uploadEventImage(_ image: UIImage) async -> String? {
         do {
-            let url = try await service.uploadImage(image)
+            let url = try await firestoreService.uploadImage(image)
             return url
         } catch {
             self.errorMessage = error.localizedDescription

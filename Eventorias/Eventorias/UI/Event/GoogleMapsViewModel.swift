@@ -22,7 +22,7 @@ import Foundation
     
     func loadMap(for location: String) {
         do {
-            mapURL = try GoogleMapsService.staticMapURL(for: location)
+            mapURL = try googleMapsService.createMapURL(for: location)
         } catch let error as AppError.GoogleMapsError {
             switch error {
             case .keyNotFound:
@@ -37,6 +37,5 @@ import Foundation
             errorMessage = "Unknown error \(error.localizedDescription)"
         }
     }
-    
 }
     

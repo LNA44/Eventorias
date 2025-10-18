@@ -22,8 +22,7 @@ protocol FirestoreServicing {
 }
 
 protocol GoogleMapsServicing {
-    static var apiKey: String { get throws }
-    static func staticMapURL(for address: String, zoom: Int, size: String) throws -> URL?
+    func createMapURL(for address: String) throws -> URL?
 }
 
 protocol FirebaseAuthServicing {

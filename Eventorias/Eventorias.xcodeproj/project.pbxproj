@@ -131,9 +131,48 @@
 		F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F3578EEF2EA3ACD40065FBF1 /* Exceptions for "EventoriasTests" folder in "EventoriasTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				AuthenticationVMUnitTests/AuthenticationVMUnitTests.swift,
+				AuthenticationVMUnitTests/Mocks_AuthenticationVMTests.swift,
+				EventsVMUnitTests/EventsVMUnitTests.swift,
+				EventsVMUnitTests/Mocks_EventsVMUnitTests.swift,
+				GoogleMapsVMUnitTests/GoogleMapsVMUnitTests.swift,
+				GoogleMapsVMUnitTests/Mocks_GoogleMapsVMTests.swift,
+				SignUPVMUnitTests/Mocks_SignUpVMTests.swift,
+				SignUPVMUnitTests/SignUpVMUnitTests.swift,
+				UserVMUnitTests/Mocks_UserVMTests.swift,
+				UserVMUnitTests/UserVMUnitTests.swift,
+			);
+			target = F37172B02E8C1CF700FF8C0F /* EventoriasTests */;
+		};
+		F3578EF02EA3ACD40065FBF1 /* Exceptions for "EventoriasTests" folder in "EventoriasUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				AuthenticationVMUnitTests/AuthenticationVMUnitTests.swift,
+				AuthenticationVMUnitTests/Mocks_AuthenticationVMTests.swift,
+				EventsVMUnitTests/EventsVMUnitTests.swift,
+				EventsVMUnitTests/Mocks_EventsVMUnitTests.swift,
+				GoogleMapsVMUnitTests/GoogleMapsVMUnitTests.swift,
+				GoogleMapsVMUnitTests/Mocks_GoogleMapsVMTests.swift,
+				SignUPVMUnitTests/Mocks_SignUpVMTests.swift,
+				SignUPVMUnitTests/SignUpVMUnitTests.swift,
+				UserVMUnitTests/Mocks_UserVMTests.swift,
+				UserVMUnitTests/UserVMUnitTests.swift,
+			);
+			target = F37172BA2E8C1CF700FF8C0F /* EventoriasUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		F37172B42E8C1CF700FF8C0F /* EventoriasTests */ = {
+		F3578EEA2EA3ACD40065FBF1 /* EventoriasTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F3578EEF2EA3ACD40065FBF1 /* Exceptions for "EventoriasTests" folder in "EventoriasTests" target */,
+				F3578EF02EA3ACD40065FBF1 /* Exceptions for "EventoriasTests" folder in "EventoriasUITests" target */,
+			);
 			path = EventoriasTests;
 			sourceTree = "<group>";
 		};
@@ -293,13 +332,13 @@
 		F371729B2E8C1CF600FF8C0F = {
 			isa = PBXGroup;
 			children = (
+				F3578EEA2EA3ACD40065FBF1 /* EventoriasTests */,
 				F3682F8A2E9F8572002E8578 /* Inter_28pt-Regular.ttf */,
 				F3682F922E9F8592002E8578 /* Inter_28pt-Medium.ttf */,
 				F3682F8E2E9F857D002E8578 /* Inter_24pt-SemiBold.ttf */,
 				F36F84E82E96AD0700D4ACA1 /* Key.plist */,
 				F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */,
 				F361B9A72E8EC5400088C136 /* Eventorias */,
-				F37172B42E8C1CF700FF8C0F /* EventoriasTests */,
 				F37172BE2E8C1CF700FF8C0F /* EventoriasUITests */,
 				F37172A52E8C1CF600FF8C0F /* Products */,
 			);
@@ -356,9 +395,6 @@
 			dependencies = (
 				F37172B32E8C1CF700FF8C0F /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				F37172B42E8C1CF700FF8C0F /* EventoriasTests */,
-			);
 			name = EventoriasTests;
 			productName = EventoriasTests;
 			productReference = F37172B12E8C1CF700FF8C0F /* EventoriasTests.xctest */;
@@ -378,6 +414,7 @@
 				F37172BD2E8C1CF700FF8C0F /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				F3578EEA2EA3ACD40065FBF1 /* EventoriasTests */,
 				F37172BE2E8C1CF700FF8C0F /* EventoriasUITests */,
 			);
 			name = EventoriasUITests;

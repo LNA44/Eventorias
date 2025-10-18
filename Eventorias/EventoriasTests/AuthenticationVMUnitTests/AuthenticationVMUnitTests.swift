@@ -36,11 +36,14 @@ final class AuthenticationViewModelTests: XCTestCase {
     }
 
     func testSignInSuccess() async {
+        //Given
         viewModel.email = "test@email.com"
         viewModel.password = "Abcdef1!"
 
+        //When
         await viewModel.signIn(flow: flowBinding)
 
+        //Then
         XCTAssertTrue(mockAuth.didSignIn)
         XCTAssertEqual(authFlow, .main)
         XCTAssertFalse(viewModel.isShowingAlert)
@@ -48,68 +51,88 @@ final class AuthenticationViewModelTests: XCTestCase {
     }
 
     func testSignInEmptyEmailOrPassword() async {
+        //Given
         viewModel.email = ""
         viewModel.password = ""
 
+        //When
         await viewModel.signIn(flow: flowBinding)
 
+        //Then
         XCTAssertFalse(mockAuth.didSignIn)
         XCTAssertTrue(viewModel.isShowingAlert)
         XCTAssertEqual(viewModel.errorMessage, "Email et mot de passe requis")
     }
 
     func testSignInInvalidEmail() async {
+        //Given
         viewModel.email = "invalid-email"
         viewModel.password = "Abcdef1!"
 
+        //When
         await viewModel.signIn(flow: flowBinding)
 
+        //Then
         XCTAssertFalse(mockAuth.didSignIn)
         XCTAssertTrue(viewModel.isShowingAlert)
         XCTAssertEqual(viewModel.errorMessage, "Email non valide")
     }
 
     func testSignInInvalidPassword() async {
+        //Given
         viewModel.email = "test@email.com"
         viewModel.password = "abcdefg"
 
+        //When
         await viewModel.signIn(flow: flowBinding)
 
+        //Then
         XCTAssertFalse(mockAuth.didSignIn)
         XCTAssertTrue(viewModel.isShowingAlert)
         XCTAssertEqual(viewModel.errorMessage, "Mot de passe non valide")
     }
 
     func testSignInAuthError() async {
+        //Given
         viewModel.email = "test@email.com"
         viewModel.password = "Abcdef1!"
         mockAuth.shouldThrowSignInError = true
 
+        //When
         await viewModel.signIn(flow: flowBinding)
 
+        //Then
         XCTAssertTrue(viewModel.isShowingAlert)
         XCTAssertEqual(viewModel.errorMessage, AppError.AuthError.userNotCreated.errorDescription)
     }
 
     func testSignInGenericError() async {
+        //Given
         viewModel = AuthenticationViewModel(service: FailingAuth())
         viewModel.email = "test@email.com"
         viewModel.password = "Abcdef1!"
         
-        // Simule une erreur générique sur signIn
+        //When
         await viewModel.signIn(flow: flowBinding)
         
+        //Then
         XCTAssertTrue(viewModel.isShowingAlert)
         XCTAssertEqual(viewModel.errorMessage, NSError(domain: "Test", code: 123).localizedDescription)
     }
     
     func testSignOutSuccess() async throws {
+        //When
         try await viewModel.signOut()
+        
+        //Then
         XCTAssertTrue(mockAuth.didSignOut)
     }
     
     func testSignOutError() async {
+        //Given
         mockAuth.shouldThrowSignOutError = true
+        
+        //When & Then
         do {
             try await viewModel.signOut()
             XCTFail("Expected error but none thrown")
