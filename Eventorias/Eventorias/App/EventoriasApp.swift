@@ -12,10 +12,9 @@ import FirebaseAuth
 import FirebaseStorage
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    //var userVM: UserViewModel?
   func application(_ application: UIApplication,
 				   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-	FirebaseApp.configure()
+                  FirebaseApp.configure()
       return true
   }
 }
@@ -44,7 +43,7 @@ struct EventoriasApp: App {
                         }
                     }
             }
-        }
+         }
     }
 }
 

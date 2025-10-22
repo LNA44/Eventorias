@@ -29,6 +29,7 @@ struct EventsContainerView: View {
                             .font(.custom("Inter28pt-Regular", size: 16))
                             .pickerStyle(.segmented)
                             .padding(.horizontal)
+                            .accessibilityLabel("Affichage")
                         }
                         .padding(.vertical, 5)
                         .background(Color("ButtonColor"))
@@ -39,9 +40,11 @@ struct EventsContainerView: View {
                             if showCalendar {
                                 CalendarView(events: $eventsVM.events)
                                     .transition(.move(edge: .trailing))
+                                    .accessibilityLabel("Calendrier des événements")
                             } else {
                                 ListView(eventsVM: eventsVM, googleMapsVM: googleMapsVM, isLoading: isLoading)
                                     .transition(.move(edge: .leading))
+                                    .accessibilityLabel("Liste des événements")
                             }
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -61,6 +64,7 @@ struct EventsContainerView: View {
                                 .foregroundColor(.white)
                                 .offset(y: -3)
                         }
+                        .accessibilityLabel("Créer un nouvel événement")
                     }
                     .padding(.trailing, 20)
                     .padding(.bottom, 20)
@@ -68,6 +72,7 @@ struct EventsContainerView: View {
             if isLoading {
                 CustomSpinner()
                     .frame(width: 44, height: 44)
+                    .accessibilityLabel("Chargement en cours")
             }
         }
         .task {
@@ -75,10 +80,20 @@ struct EventsContainerView: View {
             await eventsVM.fetchEvents()
             isLoading = false
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Écran des événements")
     }
 }
 
-/*#Preview {
-    EventsContainerView()
+struct EventsContainerView_Previews: PreviewProvider {
+    @State static var eventsVM = MockEventsViewModel()
+    static var googleMapsVM = GoogleMapsViewModel()
+    
+    static var previews: some View {
+        NavigationView {
+            EventsContainerView(eventsVM: eventsVM, googleMapsVM: googleMapsVM)
+                .preferredColorScheme(.dark)
+        }
+        .previewDisplayName("Écran principal des événements")
+    }
 }
-*/

@@ -14,12 +14,19 @@ struct SignUpView: View {
     @State private var showImagePicker = false
     @State private var showCameraPicker = false
     
+#if DEBUG
+   private var isUITest: Bool {
+       ProcessInfo.processInfo.arguments.contains("-UITestMode")
+   }
+   #endif
+    
     var body: some View {
         VStack {
             Text("SignUp")
                 .font(.custom("Inter24pt-SemiBold", size: 20))
                 .foregroundColor(.white)
                 .padding(.bottom, 40)
+                .accessibilityLabel("Écran d'inscription")
             
             VStack {
                 VStack(spacing: 0) {
@@ -29,11 +36,15 @@ struct SignUpView: View {
                         .padding(.top, 10)
                         .padding(.leading, 15)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilityHidden(true)
                     
                     CustomTextField(placeholder: "email@example.com", text: $signUpVM.email)
                         .padding(.bottom, 5)
                         .autocapitalization(.none)
                         .keyboardType(.emailAddress)
+                        .accessibilityLabel("Adresse e-mail")
+                        .accessibilityIdentifier("emailField")
+                    
                 }
                 .background(Color("TextfieldColor"))
                 .cornerRadius(5)
@@ -43,6 +54,8 @@ struct SignUpView: View {
                         .foregroundColor(Color("ButtonColor"))
                         .font(.caption)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilityLabel("Erreur : l'adresse e-mail est obligatoire")
+                        .accessibilityIdentifier("emailErrorLabel")
                 }
             }
             VStack {
@@ -53,6 +66,7 @@ struct SignUpView: View {
                         .padding(.top, 10)
                         .padding(.leading, 15)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilityHidden(true)
                     
                     VStack {
                         ZStack(alignment: .leading) {
@@ -61,6 +75,7 @@ struct SignUpView: View {
                                     .font(.custom("Inter28pt-Regular", size: 16))
                                     .foregroundColor(.gray)
                                     .padding(.leading, 15)
+                                    .accessibilityHidden(true)
                             }
                             
                             SecureField("", text: $signUpVM.password)
@@ -69,6 +84,9 @@ struct SignUpView: View {
                                 .font(.custom("Inter28pt-Regular", size: 16))
                                 .foregroundColor(.white)
                                 .cornerRadius(8)
+                                .accessibilityLabel("Mot de passe")
+                                .accessibilityIdentifier("passwordField")
+
                         }
                         .background(Color("TextfieldColor"))
                     }
@@ -83,6 +101,8 @@ struct SignUpView: View {
                         .foregroundColor(Color("ButtonColor"))
                         .font(.caption)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilityLabel("Erreur : le mot de passe est obligatoire")
+                        .accessibilityIdentifier("passwordErrorLabel")
                 }
                 if !signUpVM.isValidPassword() && !signUpVM.password.isEmpty {
                     Text("Password must contain 8 characters, 1 uppercase letter, 1 number, 1 special character")
@@ -90,6 +110,7 @@ struct SignUpView: View {
                         .foregroundColor(Color("ButtonColor"))
                         .font(.caption)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilityLabel("Erreur : le mot de passe doit contenir huit caractères, une majuscule, un chiffre et un caractère spécial")
                 }
             }
             
@@ -100,9 +121,12 @@ struct SignUpView: View {
                     .padding(.top, 10)
                     .padding(.leading, 15)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityHidden(true)
                 
                 CustomTextField(placeholder: "Christopher Evans", text: $signUpVM.name)
                     .padding(.bottom, 5)
+                    .accessibilityLabel("Nom complet")
+                    .accessibilityIdentifier("nameField")
             }
             .background(Color("TextfieldColor"))
             .cornerRadius(5)
@@ -112,6 +136,8 @@ struct SignUpView: View {
                     .foregroundColor(Color("ButtonColor"))
                     .font(.caption)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityLabel("Erreur : le nom est obligatoire")
+                    .accessibilityIdentifier("nameErrorLabel")
             }
             
             VStack(spacing: 0) {
@@ -129,6 +155,8 @@ struct SignUpView: View {
                     .sheet(isPresented: $showCameraPicker) {
                         CameraPicker(image: $cameraImage)
                     }
+                    .accessibilityLabel("Prendre une photo")
+                    .accessibilityIdentifier("takePictureButton")
                     
                     Button(action: { showImagePicker = true }) {
                         HStack {
@@ -144,6 +172,8 @@ struct SignUpView: View {
                     .sheet(isPresented: $showImagePicker) {
                         ImagePicker(selectedImage: $signUpVM.selectedImage) //modif
                     }
+                    .accessibilityLabel("Choisir une photo depuis la galerie")
+                    .accessibilityIdentifier("choosePictureFromLibraryButton")
                 }
                 .padding(.top, 30)
                 if signUpVM.selectedImage == nil {
@@ -152,6 +182,8 @@ struct SignUpView: View {
                         .foregroundColor(Color("ButtonColor"))
                         .font(.caption)
                         .frame(maxWidth: .infinity, alignment: .center)
+                        .accessibilityLabel("Erreur : veuillez choisir une photo de profil")
+                        .accessibilityIdentifier("avatarErrorLabel")
                 }
             }
             
@@ -180,6 +212,8 @@ struct SignUpView: View {
             }
             .padding(.horizontal)
             .padding(.top, 100)
+            .accessibilityLabel("Créer un compte")
+            .accessibilityIdentifier("createAccountButton")
         }
         .padding(.horizontal, 10)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -193,8 +227,18 @@ struct SignUpView: View {
                 }
             )
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Formulaire d'inscription")
+        .onAppear {
+#if DEBUG
+            if isUITest {
+                signUpVM.selectedImage = UIImage(systemName: "person.fill")
+            }
+#endif
+        }
     }
 }
+
 #Preview {
     @Previewable @State var flow: RootView.AuthFlow = .signUp
     

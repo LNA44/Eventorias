@@ -13,7 +13,7 @@ import FirebaseAuth
     var errorMessage: String? = nil
     var isShowingAlert: Bool = false
     var isLoading = false
-    private var service: any FirebaseAuthServicing
+    var service: any FirebaseAuthServicing
     
     init(
         service: any FirebaseAuthServicing = FirebaseAuthService.shared,
@@ -31,6 +31,7 @@ import FirebaseAuth
             } catch {
                 isShowingAlert = true
                 errorMessage = "Impossible to sign out precedent user : \(error.localizedDescription)"
+                return
             }
         }
         

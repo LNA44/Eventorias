@@ -27,6 +27,7 @@ struct CalendarView: View {
                     Image(systemName: "chevron.left")
                         .foregroundColor(.white)
                 }
+                .accessibilityLabel("Mois précédent")
                 
                 Spacer()
                 
@@ -34,6 +35,7 @@ struct CalendarView: View {
                     .font(.custom("Inter28pt-Medium", size: 16))
                     .foregroundColor(.white)
                     .bold()
+                    .accessibilityLabel("Mois actuel")
                 
                 Spacer()
                 
@@ -43,6 +45,7 @@ struct CalendarView: View {
                     Image(systemName: "chevron.right")
                         .foregroundColor(.white)
                 }
+                .accessibilityLabel("Mois suivant")
             }
             .padding(.horizontal)
             
@@ -54,6 +57,7 @@ struct CalendarView: View {
                         .font(.custom("Inter28pt-Regular", size: 14))
                         .foregroundColor(.white.opacity(0.7))
                         .frame(maxWidth: .infinity)
+                        .accessibilityLabel(day)
                 }
             }
             
@@ -72,6 +76,7 @@ struct CalendarView: View {
                                 .frame(width: 30, height: 30)
                                 .background(hasEvent(on: day.date) ? Color.green : Color.clear)
                                 .clipShape(Circle())
+                                .accessibilityLabel("Jour \(day.number)")
                         }
                     }
                     .frame(maxWidth: .infinity)
@@ -81,6 +86,7 @@ struct CalendarView: View {
                             showingEventsSheet = true
                         }
                     }
+                    .accessibilityAddTraits(.isButton)
                 }
             }
             .frame(height: rowHeight * CGFloat(maxWeeks))
@@ -98,6 +104,8 @@ struct CalendarView: View {
                 }
                 .scrollContentBackground(.hidden) // empêche le blanc par défaut derrière les cellules
             }
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel("Événements du jour")
         }
     }
         
@@ -135,7 +143,48 @@ struct CalendarView: View {
     }
 }
 
-/*#Preview {
-    CalendarView()
+struct CalendarView_Previews: PreviewProvider {
+    @State static var mockEvents: [Event] = [
+        Event(
+            id: UUID().uuidString,
+            name: "Concert de jazz",
+            description: "Concert au parc le soir.",
+            date: Calendar.current.date(byAdding: .day, value: 1, to: Date())!,
+            location: "Parc Central",
+            category: "Musique",
+            guests: ["alice@example.com", "bob@example.com"],
+            userID: "user123",
+            imageURL: nil,
+            isUserInvited: true
+        ),
+        Event(
+            id: UUID().uuidString,
+            name: "Conférence iOS",
+            description: "Événement sur le développement SwiftUI.",
+            date: Calendar.current.date(byAdding: .day, value: 3, to: Date())!,
+            location: "Centre Tech",
+            category: "Technologie",
+            guests: ["dev@example.com"],
+            userID: "user123",
+            imageURL: nil,
+            isUserInvited: false
+        ),
+        Event(
+            id: UUID().uuidString,
+            name: "Dîner d'équipe",
+            description: "Dîner avec les collègues.",
+            date: Calendar.current.date(byAdding: .day, value: 5, to: Date())!,
+            location: "Restaurant Le Bon Repas",
+            category: "Social",
+            guests: ["team@example.com"],
+            userID: "user123",
+            imageURL: nil,
+            isUserInvited: true
+        )
+    ]
+    
+    static var previews: some View {
+        CalendarView(events: $mockEvents)
+            .previewDisplayName("Aperçu calendrier avec événements")
+    }
 }
-*/

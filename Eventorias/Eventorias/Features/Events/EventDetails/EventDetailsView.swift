@@ -31,11 +31,16 @@ struct EventDetailsView: View {
                             .frame(width: 18, height: 18)
                             .foregroundColor(.white)
                     }
+                    .accessibilityIdentifier("backButton")
+                    .accessibilityLabel("Retour")
+                    
                     Text(event.name)
                         .font(.system(size: 24, weight: .bold))
                         .foregroundColor(.white)
                         .lineLimit(1)
                         .truncationMode(.tail)
+                        .accessibilityIdentifier("eventNameLabel")
+                    
                     Spacer()
                 }
                 .padding()
@@ -60,6 +65,7 @@ struct EventDetailsView: View {
                                             .fill(Color.gray.opacity(0.3))
                                             .frame(width: 390, height: 360)
                                             .cornerRadius(8)
+                                            .accessibilityHidden(true)
                                     @unknown default:
                                         EmptyView()
                                     }
@@ -76,6 +82,7 @@ struct EventDetailsView: View {
                                 .fill(Color.gray.opacity(0.3))
                                 .frame(width: 390, height: 360)
                                 .cornerRadius(8)
+                                .accessibilityHidden(true)
                         }
                         
                         VStack(spacing: 20) {
@@ -92,6 +99,9 @@ struct EventDetailsView: View {
                                             .font(.custom("Inter28pt-Medium", size: 16))
 
                                     }
+                                    .accessibilityElement(children: .combine)
+                                    .accessibilityLabel("Date de l'événement")
+                                    
                                     HStack {
                                         Image(systemName: "clock")
                                             .resizable()
@@ -101,6 +111,8 @@ struct EventDetailsView: View {
                                         Text(event.date.formattedTime(from: event.date))
                                             .font(.custom("Inter28pt-Medium", size: 16))
                                     }
+                                    .accessibilityElement(children: .combine)
+                                    .accessibilityLabel("Heure de l'événement")
                                     
                                 }
                                 Spacer()
@@ -136,20 +148,28 @@ struct EventDetailsView: View {
                                     Circle()
                                         .fill(Color.gray.opacity(0.3))
                                         .frame(width: 70, height: 70)
+                                        .accessibilityLabel("Avatar non disponible")
                                 }
                             }
                             
                             Text(event.description)
                                 .font(.custom("Inter28pt-Regular", size: 14))
+                                .accessibilityIdentifier("eventDescriptionLabel")
+                                .accessibilityLabel("Description de l'événement")
+                                .accessibilityValue(event.description)
                             
                             HStack {
                                 Text(event.location)
                                     .font(.custom("Inter28pt-Medium", size: 16))
+                                    .accessibilityIdentifier("eventLocationLabel")
+                                    .accessibilityLabel("Lieu de l'événement")
+                                    .accessibilityValue(event.location)
                                 
                                 Spacer()
                                 
                                 StaticMapView(googleMapsVM: googleMapsVM, event: event)
                                     .frame(width: 149, height: 72)
+                                    .accessibilityLabel("Carte de localisation")
                             }
                             
                             Button {
@@ -163,6 +183,8 @@ struct EventDetailsView: View {
                                     .background(Color("ButtonColor"))
                                     .cornerRadius(4)
                             }
+                            .accessibilityLabel("Partager l'événement")
+                            .accessibilityIdentifier("shareButton")
                             .sheet(isPresented: $isShareSheetPresented) {
                                 let textToShare = """
                                         📅 \(event.name)

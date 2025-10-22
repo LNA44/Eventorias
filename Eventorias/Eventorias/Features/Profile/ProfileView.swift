@@ -18,6 +18,7 @@ struct ProfileView: View {
                 Text("User Profile")
                     .font(.custom("Inter24pt-SemiBold", size: 20))
                     .foregroundColor(.white)
+                    .accessibilityAddTraits(.isHeader)
                 
                 Spacer()
                 
@@ -37,13 +38,17 @@ struct ProfileView: View {
                                     .scaledToFill()
                                     .frame(width: 40, height: 40)
                                     .clipShape(Circle())
+                                    .accessibilityLabel("Avatar de l'utilisateur")
                             case .empty:
                                 // Spinner pendant le chargement
                                 CustomSpinner(size: 20, lineWidth: 2)
                                     .frame(width: 40, height: 40)
+                                    .accessibilityHidden(true)
                             case .failure(_):
-                                // On garde le cercle gris si l'image n'existe pas
-                                EmptyView()
+                                Circle()
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(width: 40, height: 40)
+                                    .accessibilityLabel("Avatar non disponible")
                             @unknown default:
                                 EmptyView()
                             }
@@ -53,6 +58,7 @@ struct ProfileView: View {
                     Circle()
                         .fill(Color.gray.opacity(0.3))
                         .frame(width: 40, height: 40)
+                        .accessibilityLabel("Avatar non disponible")
                 }
             }
             .padding(.horizontal, 10)
@@ -62,6 +68,7 @@ struct ProfileView: View {
                     .padding(.top, 10)
                     .padding(.leading, 15)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityHidden(true)
                 
                 Text(userVM.name)
                     .font(.custom("Inter28pt-Regular", size: 16))
@@ -69,6 +76,8 @@ struct ProfileView: View {
                     .padding(.bottom, 10)
                     .padding(.leading, 15)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityLabel("Nom")
+                    .accessibilityValue(userVM.name)
             }
             .background(Color("TextfieldColor"))
             .cornerRadius(5)
@@ -80,6 +89,7 @@ struct ProfileView: View {
                     .padding(.top, 10)
                     .padding(.leading, 15)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityHidden(true)
                 
                 Text(userVM.email)
                     .font(.custom("Inter28pt-Regular", size: 16))
@@ -87,6 +97,8 @@ struct ProfileView: View {
                     .padding(.bottom, 10)
                     .padding(.leading, 15)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .accessibilityLabel("E-mail")
+                    .accessibilityValue(userVM.email)
             }
             .background(Color("TextfieldColor"))
             .cornerRadius(5)
@@ -96,9 +108,13 @@ struct ProfileView: View {
                 Toggle("", isOn: $isToggleOn)
                     .labelsHidden()
                     .tint(Color("ButtonColor"))
+                    .accessibilityLabel("Notifications")
+                    .accessibilityValue(isToggleOn ? "Activées" : "Désactivées")
+                
                 Text("Notifications")
                     .font(.custom("Inter28pt-Regular", size: 16))
                     .foregroundColor(.white)
+                    .accessibilityHidden(true)
             }
             .padding(.leading, 10)
             .frame(maxWidth: .infinity, alignment: .leading)

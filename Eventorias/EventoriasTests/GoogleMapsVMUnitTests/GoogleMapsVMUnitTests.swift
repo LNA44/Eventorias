@@ -63,4 +63,17 @@ final class GoogleMapsVMUnitTests: XCTestCase {
         XCTAssertTrue(viewModel.showError)
         XCTAssertEqual(viewModel.errorMessage, AppError.GoogleMapsError.invalidURL.errorDescription)
     }
+
+    func testLoadMap_WhenUnknownError_ShouldShowError() {
+           // GIVEN
+           mockService.errorToThrow = NSError(domain: "Test", code: 42)
+
+           // WHEN
+        viewModel.loadMap(for: "Paris, France")
+
+           // THEN
+           XCTAssertTrue(viewModel.showError)
+           XCTAssertEqual(viewModel.errorMessage, "Unknown error The operation couldn’t be completed. (Test error 42.)")
+           XCTAssertNil(viewModel.mapURL)
+       }
 }

@@ -18,6 +18,7 @@ struct AuthenticationView: View {
                 .font(.custom("Inter24pt-SemiBold", size: 20))
                 .foregroundColor(.white)
                 .padding(.bottom, 40)
+                .accessibilityLabel("Écran de connexion")
             
             VStack(spacing: 20) {
                 VStack {
@@ -28,11 +29,14 @@ struct AuthenticationView: View {
                             .padding(.top, 10)
                             .padding(.leading, 15)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .accessibilityHidden(true)
                         
                         CustomTextField(placeholder: "email@example.com", text: $authVM.email)
                             .padding(.bottom, 5)
                             .autocapitalization(.none)
                             .keyboardType(.emailAddress)
+                            .accessibilityLabel("Adresse e-mail")
+                            .accessibilityIdentifier("emailField")
                     }
                     .background(Color("TextfieldColor"))
                     .cornerRadius(5)
@@ -42,6 +46,7 @@ struct AuthenticationView: View {
                             .foregroundColor(Color("ButtonColor"))
                             .font(.caption)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .accessibilityLabel("Erreur : l'adresse e-mail est obligatoire")
                     }
                 }
                 VStack {
@@ -52,6 +57,7 @@ struct AuthenticationView: View {
                             .padding(.top, 10)
                             .padding(.leading, 15)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .accessibilityHidden(true)
                         
                         VStack {
                             ZStack(alignment: .leading) {
@@ -60,6 +66,7 @@ struct AuthenticationView: View {
                                         .font(.custom("Inter28pt-Regular", size: 16))
                                         .foregroundColor(.gray)
                                         .padding(.leading, 15)
+                                        .accessibilityHidden(true)
                                 }
                                 
                                 SecureField("", text: $authVM.password)
@@ -68,6 +75,8 @@ struct AuthenticationView: View {
                                     .font(.custom("Inter28pt-Regular", size: 16))
                                     .foregroundColor(.white)
                                     .cornerRadius(8)
+                                    .accessibilityLabel("Mot de passe")
+                                    .accessibilityIdentifier("passwordField")
                             }
                             .background(Color("TextfieldColor"))
                         }
@@ -82,6 +91,7 @@ struct AuthenticationView: View {
                             .foregroundColor(Color("ButtonColor"))
                             .font(.caption)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .accessibilityLabel("Erreur : le mot de passe est obligatoire")
                     }
                 }
             }
@@ -108,6 +118,7 @@ struct AuthenticationView: View {
             }
             .padding(.horizontal)
             .padding(.top, 100)
+            .accessibilityLabel("Se connecter")
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black)
@@ -118,6 +129,8 @@ struct AuthenticationView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Formulaire de connexion")
     }
 }
 

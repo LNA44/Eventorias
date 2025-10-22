@@ -23,6 +23,7 @@ struct ListView: View {
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.white)
                         .padding(.leading, 8)
+                        .accessibilityHidden(true)
 
                     TextField(
                         text: $eventsVM.searchText,
@@ -32,6 +33,7 @@ struct ListView: View {
                     ) {}
                     .foregroundColor(.white)
                     .padding(.vertical, 8)
+                    .accessibilityLabel("Recherche d'événements")
                 }
             }
             .padding(.vertical, 8)
@@ -66,6 +68,7 @@ struct ListView: View {
                     .background(Color("TextfieldColor"))
                     .cornerRadius(16)
                 }
+                .accessibilityLabel("Menu de tri")
                 
                 Spacer()
             }
@@ -91,6 +94,7 @@ struct ListView: View {
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                         .padding()
+                        .accessibilityLabel("Message d'erreur")
                     
                     Button("Try again") {
                         Task {
@@ -103,6 +107,7 @@ struct ListView: View {
                     .padding(.vertical, 8)
                     .background(Color("ButtonColor"))
                     .cornerRadius(12)
+                    .accessibilityLabel("Réessayer")
                 }
                 .frame(maxHeight: .infinity)
                 
@@ -111,9 +116,11 @@ struct ListView: View {
                     Image(systemName: "calendar.badge.exclamationmark")
                         .font(.system(size: 40))
                         .foregroundColor(.white.opacity(0.7))
+                        .accessibilityHidden(true)
                     Text("No events found")
                         .foregroundColor(.white.opacity(0.8))
                         .font(.subheadline)
+                        .accessibilityLabel("Aucun événement trouvé")
                 }
                 .frame(maxHeight: .infinity)
                 
@@ -125,6 +132,9 @@ struct ListView: View {
                     ForEach(eventsVM.events) { event in
                         ZStack {
                             RowView(event: event, eventsVM: eventsVM)
+                                .accessibilityElement(children: .combine)
+                                .accessibilityLabel("\(event.name), \(event.category), \(event.date.formatted())")
+                            
                             NavigationLink(destination: EventDetailsView(eventsVM: eventsVM, event: event, googleMapsVM: googleMapsVM)) {
                             }
                             .opacity(0)
@@ -148,6 +158,8 @@ struct ListView: View {
                 await eventsVM.loadAvatars()
             }
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Liste des événements")
     }
 }
 

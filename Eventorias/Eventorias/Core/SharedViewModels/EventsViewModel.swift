@@ -10,6 +10,7 @@ import FirebaseAuth
 import UIKit
 
 @Observable class EventsViewModel {
+    //MARK: -Public properties
     var events: [Event] = []
     var notFoundEmails: [String] = []
     var errorMessage: String = ""
@@ -23,9 +24,10 @@ import UIKit
             }
         }
     }
-    private let firestoreService: FirestoreServicing
-    private let authService: FirebaseAuthServicing
+    let firestoreService: FirestoreServicing
+    let authService: FirebaseAuthServicing
     
+    //MARK: -Initialization
     init(
         firestoreService: FirestoreServicing = FirestoreService.shared,
         authService: FirebaseAuthServicing = FirebaseAuthService.shared
@@ -34,7 +36,7 @@ import UIKit
         self.authService = authService
     }
     
-    @MainActor
+    //MARK: -Methods
     func fetchEvents(search: String = "") async {
         do {
             var fetchedEvents = try await firestoreService.fetchEvents(search: search)
@@ -61,7 +63,6 @@ import UIKit
         }
     }
     
-    @MainActor
     func addEvent(name: String, description: String, date: Date, time: Date,
                   location: String, category: String, guests: String,
                 imageURL: String?) async {
@@ -110,7 +111,7 @@ import UIKit
         }
     }
     
-    private func combine(date: Date, time: Date) -> Date {
+    func combine(date: Date, time: Date) -> Date {
         let calendar = Calendar.current
         let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
         let timeComponents = calendar.dateComponents([.hour, .minute, .second], from: time)
@@ -156,7 +157,6 @@ import UIKit
         return avatars[userID]
     }
     
-    @MainActor
     func uploadEventImage(_ image: UIImage) async -> String? {
         do {
             let url = try await firestoreService.uploadImage(image)

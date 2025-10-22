@@ -57,6 +57,8 @@ struct RowView: View {
                             .frame(width: 40, height: 40)
                     }
                 }
+                .accessibilityLabel("Avatar de l'utilisateur")
+                .accessibilityHint(event.isUserInvited ? "Cet utilisateur est invité" : "Pas invité")
                 
                 VStack(alignment: .leading, spacing: 5) {
                     HStack {
@@ -83,6 +85,8 @@ struct RowView: View {
                         .font(.custom("Inter28pt-Regular", size: 14))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("\(event.name), catégorie \(event.category), date \(formatter.string(from: event.date))")
             }
                         
             if let imageURL = event.imageURL, let url = URL(string: imageURL) {
@@ -113,6 +117,7 @@ struct RowView: View {
                         }
                     }
                 }
+                .accessibilityLabel("Image de l'événement")
             } else {
                 Rectangle()
                     .fill(Color.gray.opacity(0.3))

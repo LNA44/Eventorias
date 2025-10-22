@@ -37,6 +37,7 @@ final class AuthenticationViewModelTests: XCTestCase {
 
     func testSignInSuccess() async {
         //Given
+        mockAuth.mockCurrentUserID = nil
         viewModel.email = "test@email.com"
         viewModel.password = "Abcdef1!"
 
@@ -52,6 +53,7 @@ final class AuthenticationViewModelTests: XCTestCase {
 
     func testSignInEmptyEmailOrPassword() async {
         //Given
+        mockAuth.mockCurrentUserID = nil
         viewModel.email = ""
         viewModel.password = ""
 
@@ -61,11 +63,12 @@ final class AuthenticationViewModelTests: XCTestCase {
         //Then
         XCTAssertFalse(mockAuth.didSignIn)
         XCTAssertTrue(viewModel.isShowingAlert)
-        XCTAssertEqual(viewModel.errorMessage, "Email et mot de passe requis")
+        XCTAssertEqual(viewModel.errorMessage, "Email and password required")
     }
 
     func testSignInInvalidEmail() async {
         //Given
+        mockAuth.mockCurrentUserID = nil
         viewModel.email = "invalid-email"
         viewModel.password = "Abcdef1!"
 
@@ -75,11 +78,12 @@ final class AuthenticationViewModelTests: XCTestCase {
         //Then
         XCTAssertFalse(mockAuth.didSignIn)
         XCTAssertTrue(viewModel.isShowingAlert)
-        XCTAssertEqual(viewModel.errorMessage, "Email non valide")
+        XCTAssertEqual(viewModel.errorMessage, "Invalid email")
     }
 
     func testSignInInvalidPassword() async {
         //Given
+        mockAuth.mockCurrentUserID = nil
         viewModel.email = "test@email.com"
         viewModel.password = "abcdefg"
 
@@ -89,11 +93,12 @@ final class AuthenticationViewModelTests: XCTestCase {
         //Then
         XCTAssertFalse(mockAuth.didSignIn)
         XCTAssertTrue(viewModel.isShowingAlert)
-        XCTAssertEqual(viewModel.errorMessage, "Mot de passe non valide")
+        XCTAssertEqual(viewModel.errorMessage, "Invalid password")
     }
 
     func testSignInAuthError() async {
         //Given
+        mockAuth.mockCurrentUserID = nil
         viewModel.email = "test@email.com"
         viewModel.password = "Abcdef1!"
         mockAuth.shouldThrowSignInError = true
@@ -108,6 +113,7 @@ final class AuthenticationViewModelTests: XCTestCase {
 
     func testSignInGenericError() async {
         //Given
+        mockAuth.mockCurrentUserID = nil
         viewModel = AuthenticationViewModel(service: FailingAuth())
         viewModel.email = "test@email.com"
         viewModel.password = "Abcdef1!"
@@ -118,6 +124,33 @@ final class AuthenticationViewModelTests: XCTestCase {
         //Then
         XCTAssertTrue(viewModel.isShowingAlert)
         XCTAssertEqual(viewModel.errorMessage, NSError(domain: "Test", code: 123).localizedDescription)
+    }
+    
+    func testSignIn_WhenUserAlreadyConnected_ShouldCallSignOutFirst() async {
+        mockAuth.mockCurrentUserID = "user123" // 👈 utilisateur déjà connecté
+        viewModel.email = "test@example.com"
+        viewModel.password = "Password1!"
+        
+        await viewModel.signIn(flow: .constant(.signIn))
+        
+        XCTAssertTrue(mockAuth.didSignOut, "SignOut doit être appelé quand un utilisateur est déjà connecté.")
+        XCTAssertTrue(mockAuth.didSignIn, "SignIn doit être appelé ensuite.")
+    }
+    
+    func testSignIn_WhenSignOutFails_ShowsAlertAndErrorMessage() async {
+        // GIVEN
+        mockAuth.mockCurrentUserID = "user123" // Simule qu’un utilisateur est déjà connecté
+        mockAuth.shouldThrowSignOutError = true      // Simule l’échec de signOut
+        viewModel.email = "test@example.com"
+        viewModel.password = "Password1!"
+        
+        // WHEN
+        await viewModel.signIn(flow: .constant(.signIn))
+        
+        // THEN
+        XCTAssertTrue(viewModel.isShowingAlert)
+        XCTAssertTrue(viewModel.errorMessage?.contains("Impossible to sign out precedent user") ?? false)
+        XCTAssertFalse(mockAuth.didSignIn) 
     }
     
     func testSignOutSuccess() async throws {

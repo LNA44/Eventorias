@@ -16,6 +16,8 @@ class MockAuthServiceForAuthVM: FirebaseAuthServicing {
     var shouldThrowSignInError = false
     var shouldThrowSignOutError = false
     
+    var mockCurrentUserID: String? = nil
+    
     func signUp(email: String, password: String) async throws -> User {
         didSignUp = true
         return User(id: "mock-uid", email: email, avatarURL: nil, name: "Mock User")
@@ -36,7 +38,7 @@ class MockAuthServiceForAuthVM: FirebaseAuthServicing {
     }
     
     func getCurrentUserID() -> String? {
-        return nil
+        return mockCurrentUserID
     }
     
     func getCurrentUserEmail() -> String? {

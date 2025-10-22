@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import FirebaseCore
-import FirebaseAuth
 
 struct WelcomeView: View {
     @Binding var flow: RootView.AuthFlow
@@ -20,6 +18,9 @@ struct WelcomeView: View {
                     .scaledToFit()
                     .frame(width: 240, height: 110)
                     .padding(.bottom, 50)
+                    .accessibilityLabel("Logo de l'application Eventorias")
+                    .accessibilityAddTraits(.isImage)
+                    .accessibilityIdentifier("appLogo")
                 
                 Button(action: {
                     flow = .signUp
@@ -27,6 +28,8 @@ struct WelcomeView: View {
                     HStack(spacing: 20) {
                         Image(systemName: "envelope.fill")
                             .foregroundColor(.white)
+                            .accessibilityHidden(true)
+                        
                         Text("Sign up with email")
                             .font(.custom("Inter24pt-SemiBold", size: 16))
                             .foregroundColor(.white)
@@ -36,8 +39,9 @@ struct WelcomeView: View {
                     .frame(width: 230)
                     .background(Color("ButtonColor"))
                     .cornerRadius(4)
-                    
                 }
+                .accessibilityLabel("S'inscrire avec une adresse e-mail")
+                .accessibilityIdentifier("signUpButton")
                 
                 Button(action: {
                     flow = .signIn
@@ -45,6 +49,8 @@ struct WelcomeView: View {
                     HStack(spacing: 20) {
                         Image(systemName: "envelope.fill")
                             .foregroundColor(.white)
+                            .accessibilityHidden(true)
+                        
                         Text("Sign in with email")
                             .font(.custom("Inter24pt-SemiBold", size: 16))
                             .foregroundColor(.white)
@@ -56,12 +62,18 @@ struct WelcomeView: View {
                     .cornerRadius(4)
                     
                 }
+                .accessibilityLabel("Se connecter avec une adresse e-mail")
+                .accessibilityIdentifier("signInButton")
+                
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.top, 150)
         }
         .background(Color.black)
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Écran d’accueil de l’application Eventorias")
+        .accessibilityHint("Choisissez de vous inscrire ou de vous connecter")
 	}
 }
 

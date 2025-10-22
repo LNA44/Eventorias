@@ -54,12 +54,15 @@ struct CreateEventView: View {
                                 .scaledToFit()
                                 .frame(width: 18, height: 18)
                                 .foregroundColor(.white)
+                                .accessibilityLabel("Retour")
                         }
                         Text("Creation of an event")
                             .font(.custom("Inter24pt-SemiBold", size: 20))
                             .foregroundColor(.white)
                             .lineLimit(1)
                             .truncationMode(.tail)
+                            .accessibilityAddTraits(.isHeader)
+                        
                         Spacer()
                     }
                     .padding()
@@ -76,6 +79,7 @@ struct CreateEventView: View {
                             
                             CustomTextField(placeholder: "New event", text: $name)
                                 .padding(.bottom, 5)
+                                .accessibilityLabel("Title")
                         }
                         .background(Color("TextfieldColor"))
                         .cornerRadius(5)
@@ -88,6 +92,7 @@ struct CreateEventView: View {
                                 .font(.caption)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.bottom, 20)
+                                .accessibilityLabel("The name of the event is required")
                         }
                         
                         VStack(spacing: 0) {
@@ -100,6 +105,7 @@ struct CreateEventView: View {
                             
                             CustomTextField(placeholder: "Tap here to enter your description", text: $description)
                                 .padding(.bottom, 5)
+                                .accessibilityLabel("Description")
                         }
                         .background(Color("TextfieldColor"))
                         .cornerRadius(5)
@@ -112,6 +118,7 @@ struct CreateEventView: View {
                                 .font(.caption)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.bottom, 20)
+                                .accessibilityLabel("The description of the event is required")
                         }
                         
                         HStack(alignment: .top, spacing: 15) {
@@ -134,6 +141,7 @@ struct CreateEventView: View {
                                             }
                                         }
                                         .padding(.bottom, 5)
+                                        .accessibilityLabel("Date")
                                 }
                                 .background(Color("TextfieldColor"))
                                 .cornerRadius(5)
@@ -170,6 +178,7 @@ struct CreateEventView: View {
                                             }
                                         }
                                         .padding(.bottom, 5)
+                                        .accessibilityLabel("Time")
                                 }
                                 .background(Color("TextfieldColor"))
                                 .cornerRadius(5)
@@ -198,6 +207,7 @@ struct CreateEventView: View {
                             
                             CustomTextField(placeholder: "Enter full address", text: $location)
                                 .padding(.bottom, 5)
+                                .accessibilityLabel("Address")
                         }
                         .background(Color("TextfieldColor"))
                         .cornerRadius(5)
@@ -210,6 +220,7 @@ struct CreateEventView: View {
                                 .font(.caption)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.bottom, 20)
+                                .accessibilityLabel("The address of the event is required")
                         }
                         
                         VStack(spacing: 0) {
@@ -224,6 +235,7 @@ struct CreateEventView: View {
                                 .padding(.bottom, 5)
                                 .autocapitalization(.none)
                                 .keyboardType(.emailAddress)
+                                .accessibilityLabel("Guests")
                         }
                         .background(Color("TextfieldColor"))
                         .cornerRadius(5)
@@ -236,6 +248,7 @@ struct CreateEventView: View {
                                 .font(.caption)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.bottom, 20)
+                                .accessibilityLabel("The guests list is required")
                         }
                         
                         VStack(spacing: 0) {
@@ -267,6 +280,7 @@ struct CreateEventView: View {
                                 .padding(.leading, 15)
                                 .padding(.top, 5)
                                 .padding(.bottom, 8)
+                                .accessibilityLabel("Category")
                             }
                         }
                         .background(Color("TextfieldColor"))
