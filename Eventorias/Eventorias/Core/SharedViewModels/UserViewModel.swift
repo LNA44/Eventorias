@@ -40,16 +40,16 @@ import UIKit
             self.userID = uid
         } else {
             showError = true
-            errorMessage = "Impossible to get the current user ID. Please try again."
+            errorMessage = "Impossible to get current user ID. Please try again."
         }
     }
     
     func loadUserProfile() {
-            guard !userID.isEmpty else {
-                showError = true
-                errorMessage = "Impossible to load the user profile. Please try again."
-                return
-            }
+        guard !userID.isEmpty else {
+            showError = true
+            errorMessage = "Impossible to load user profile. Please try again."
+            return
+        }
 
         firestoreService.getUserProfile(for: userID) { [weak self] userResult in
             DispatchQueue.main.async {
@@ -61,7 +61,7 @@ import UIKit
                     self.email = userResult.email
                 } else {
                     self.showError = true
-                    self.errorMessage = "Impossible to load the user profile. Please try again."
+                    self.errorMessage = "Impossible to load user profile. Please try again."
                 }
             }
         }

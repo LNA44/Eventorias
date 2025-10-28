@@ -25,14 +25,17 @@ import UIKit
         }
     }
     let firestoreService: FirestoreServicing
+    let firebaseStorageService: FirebaseStorageServicing
     let authService: FirebaseAuthServicing
     
     //MARK: -Initialization
     init(
         firestoreService: FirestoreServicing = FirestoreService.shared,
+        firebaseStorageService: FirebaseStorageServicing = FirebaseStorageService.shared,
         authService: FirebaseAuthServicing = FirebaseAuthService.shared
     ) {
         self.firestoreService = firestoreService
+        self.firebaseStorageService = firebaseStorageService
         self.authService = authService
     }
     
@@ -42,7 +45,7 @@ import UIKit
             var fetchedEvents = try await firestoreService.fetchEvents(search: search)
             print("Fetched events: \(events)")
             
-            if let currentUserID = Auth.auth().currentUser?.uid {
+            if let currentUserID = authService.getCurrentUserID() { //modifié
                 // 1) mettre à jour isUserInvited pour chaque event
                 for i in fetchedEvents.indices {
                     let invited = fetchedEvents[i].guests.contains(currentUserID)
@@ -75,7 +78,10 @@ import UIKit
         do {
             let result = try await firestoreService.convertEmailsToUIDs(emails: emails)
             let guestUIDs = result.uids
-            notFoundEmails = result.notFound
+            if !result.notFound.isEmpty {
+                notFoundEmails = result.notFound
+                return
+            }
             print("🟡 Checking current user ID")
             guard let currentUserID = authService.getCurrentUserID() else {
                 print("⚠️ Current user ID is nil")
@@ -83,7 +89,11 @@ import UIKit
                 errorMessage = "Impossible to get current user"
                 return
             }
-            
+            guard let combinedDateTime = combinedDateTime else {
+                showError = true
+                errorMessage = "Impossible to combine date and time"
+                return
+            }
             let newEvent = Event(
                 id: UUID().uuidString,
                 name: name,
@@ -102,16 +112,12 @@ import UIKit
             print("✅ Event added successfully")
             events.append(newEvent)
         } catch {
-            print("🔥 Firestore addEvent error:", error.localizedDescription)
-            if let nsError = error as NSError? { //a retirer
-                print("🔥 Code:", nsError.code, "| Domain:", nsError.domain)//a retirer
-            }//a retirer
             showError = true
             errorMessage = error.localizedDescription
         }
     }
     
-    func combine(date: Date, time: Date) -> Date {
+    func combine(date: Date, time: Date) -> Date? {
         let calendar = Calendar.current
         let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
         let timeComponents = calendar.dateComponents([.hour, .minute, .second], from: time)
@@ -124,7 +130,7 @@ import UIKit
         combinedComponents.minute = timeComponents.minute
         combinedComponents.second = timeComponents.second
         
-        return calendar.date(from: combinedComponents) ?? date
+        return calendar.date(from: combinedComponents)
     }
     
     func sortByDate(ascending: Bool = true) {
@@ -159,7 +165,7 @@ import UIKit
     
     func uploadEventImage(_ image: UIImage) async -> String? {
         do {
-            let url = try await firestoreService.uploadImage(image)
+            let url = try await firebaseStorageService.uploadImage(image)
             return url
         } catch {
             self.errorMessage = error.localizedDescription
@@ -168,4 +174,3 @@ import UIKit
         }
     }
 }
-

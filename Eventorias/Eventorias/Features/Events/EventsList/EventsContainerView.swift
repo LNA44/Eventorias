@@ -86,12 +86,11 @@ struct EventsContainerView: View {
 }
 
 struct EventsContainerView_Previews: PreviewProvider {
-    @State static var eventsVM = MockEventsViewModel()
     static var googleMapsVM = GoogleMapsViewModel()
     
     static var previews: some View {
         NavigationView {
-            EventsContainerView(eventsVM: eventsVM, googleMapsVM: googleMapsVM)
+            EventsContainerView(eventsVM: EventsViewModel(), googleMapsVM: googleMapsVM)
                 .preferredColorScheme(.dark)
         }
         .previewDisplayName("Écran principal des événements")

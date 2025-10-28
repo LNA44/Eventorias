@@ -24,17 +24,17 @@ class FirestoreService: FirestoreServicing {
         if !search.isEmpty { //filtrage coté serveur
             let lowercasedSearch = search.lowercased()
             query = query
-                .whereField("name_lowercased", isGreaterThanOrEqualTo: lowercasedSearch)
+                .whereField("name_lowercased", isGreaterThanOrEqualTo: lowercasedSearch) //filtres firestore
                 .whereField("name_lowercased", isLessThanOrEqualTo: lowercasedSearch + "\u{f8ff}")
         }
         
         let snapshot = try await query.getDocuments()
         print("Documents trouvés:", snapshot.documents.count)
         
-        let events = snapshot.documents.compactMap { doc -> Event? in
-            let data = doc.data()
+        let events = snapshot.documents.compactMap { doc -> Event? in //transforme tableau firestore en tableau de Event, compactMap ignore les doc mal formés
+            let data = doc.data() //récupère le dico [String: Any] du document
             
-            guard let name = data["name"] as? String,
+            guard let name = data["name"] as? String, //Vérif que tous les champs essentiels existent et st du bon type
                   let description = data["description"] as? String,
                   let dateTimestamp = data["date"] as? Timestamp,
                   let location = data["location"] as? String,
@@ -46,7 +46,7 @@ class FirestoreService: FirestoreServicing {
             
             let guests = data["guests"] as? [String] ?? []
             let imageURL = data["imageURL"] as? String
-            let date = dateTimestamp.dateValue() // conversion Timestamp → Date
+            let date = dateTimestamp.dateValue() // conversion Timestamp firestore → Date
 
             return Event(
                 id: doc.documentID,
@@ -68,7 +68,7 @@ class FirestoreService: FirestoreServicing {
     func addEvent(_ event: Event) async throws {
         try await db.collection("Event").document(event.id).setData([
             "name": event.name,
-            "name_lowercased": event.name.lowercased(),
+            "name_lowercased": event.name.lowercased(), //utile pour recherches sensibles a la casse
             "description": event.description,
             "date": Timestamp(date: event.date),
             "location": event.location,
@@ -96,14 +96,14 @@ class FirestoreService: FirestoreServicing {
         return ConvertEmailsResult(uids: uids, notFound: notFound)
     }
     
-    func uploadImage(_ image: UIImage) async throws -> String {
+    /*func uploadImage(_ image: UIImage) async throws -> String {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             throw AppError.FirestoreError.imageError("Impossible to convert image to JPEG")
         }
-        let storageRef = Storage.storage().reference().child("eventImages/\(UUID().uuidString).jpg")
-        _ = try await storageRef.putDataAsync(imageData)
-        return try await storageRef.downloadURL().absoluteString
-    }
+        let storageRef = Storage.storage().reference().child("eventImages/\(UUID().uuidString).jpg") //cree un sous dossier eventImages
+        _ = try await storageRef.putDataAsync(imageData) //envoie les donnees vers firebaseStorage
+        return try await storageRef.downloadURL().absoluteString //url publique de l'image stockee, sous forme de string
+    }*/
     
     func getUserProfile(for uid: String, completion: @escaping (User?) -> Void) {
         db.collection("users").document(uid).getDocument { snapshot, error in
@@ -117,7 +117,7 @@ class FirestoreService: FirestoreServicing {
                 return
             }
             
-            let name = data["name"] as? String ?? "Utilisateur"
+            let name = data["name"] as? String ?? ""
             let email = data["email"] as? String ?? ""
             let avatarURL = data["avatarURL"] as? String
             
@@ -148,7 +148,7 @@ class FirestoreService: FirestoreServicing {
         let userRef = db.collection("users").document(uid)
         let user = User(id: uid, email: email, avatarURL: avatarURL, name: name)
         do {
-            try userRef.setData(from: user, merge: true)
+            try userRef.setData(from: user, merge: true) //permet de mettre à jour le user ds firestore au lieu de tout écraser s'il existe déjà
         } catch {
             throw AppError.FirestoreError.saveUserFailed(underlying: error)
         }

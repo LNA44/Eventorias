@@ -343,33 +343,40 @@ struct CreateEventView: View {
                         Button(action: {
                             isSaving = true
                             guard let selectedImage else {
+                                isSaving = false
                                 return
                             }
                             
-                            Task {
-                                let imageURL = await eventsVM.uploadEventImage(selectedImage)
-                                
-                                await eventsVM.addEvent(
-                                    name: name,
-                                    description: description,
-                                    date: date,
-                                    time: time,
-                                    location: location,
-                                    category: selectedCategory,
-                                    guests: guests,
-                                    imageURL: imageURL
-                                )
+                            if guests.isEmpty || name.isEmpty || description.isEmpty || location.isEmpty || selectedCategory == "" || dateString == "" || timeString == "" {
                                 isSaving = false
-                                
-                                if !eventsVM.notFoundEmails.isEmpty {
-                                    alertMessage = "Coudn't find those emails : \(eventsVM.notFoundEmails.joined(separator: ", "))"
-                                    showAlert = true
-                                } else if eventsVM.showError {
-                                    alertMessage = eventsVM.errorMessage
-                                    showAlert = true
-                                    eventsVM.showError = false
-                                } else {
-                                    // tout est ok → fermer la vue
+                                return
+                            } else if eventsVM.showError {
+                                alertMessage = eventsVM.errorMessage
+                                showAlert = true
+                                eventsVM.showError = false
+                                isSaving = false
+                                return
+                            } else {
+                                Task {
+                                    let imageURL = await eventsVM.uploadEventImage(selectedImage)
+                                    await eventsVM.addEvent(
+                                        name: name,
+                                        description: description,
+                                        date: date,
+                                        time: time,
+                                        location: location,
+                                        category: selectedCategory,
+                                        guests: guests,
+                                        imageURL: imageURL
+                                    )
+                                    isSaving = false
+                                    
+                                    if !eventsVM.notFoundEmails.isEmpty {
+                                        alertMessage = "Coudn't find those emails : \(eventsVM.notFoundEmails.joined(separator: ", "))"
+                                        showAlert = true
+                                        isSaving = false
+                                        return
+                                    }
                                     dismiss()
                                 }
                             }

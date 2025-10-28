@@ -12,6 +12,13 @@ import UIKit
 //MARK: -MockFirestoreServiceForEventsVM
 final class MockFirestoreServiceForEventsVM: FirestoreServicing {
     
+    enum Scenario {
+        case allFound
+        case someNotFound
+    }
+    
+    var scenario: Scenario = .allFound
+    
     // MARK: - Contrôle du comportement
     var shouldThrowFetchError = false
     var shouldThrowAddError = false
@@ -20,8 +27,6 @@ final class MockFirestoreServiceForEventsVM: FirestoreServicing {
     
     // MARK: - Données à retourner
     var eventsToReturn: [Event] = []
-    var convertEmailsResult: ConvertEmailsResult = ConvertEmailsResult(uids: [], notFound: [])
-    var imageUploadURL: String?
     var avatarURLToReturn: String?
     
     // MARK: - Suivi des appels
@@ -48,15 +53,20 @@ final class MockFirestoreServiceForEventsVM: FirestoreServicing {
     }
     
     func convertEmailsToUIDs(emails: [String]) async throws -> ConvertEmailsResult {
-        return convertEmailsResult
-    }
-    
-    func uploadImage(_ image: UIImage) async throws -> String {
-        didUploadImage = true
-        if shouldThrowUploadError {
-            throw NSError(domain: "UploadError", code: -1)
+        switch scenario {
+        case .allFound:
+            return ConvertEmailsResult(
+                uids: emails.map { "\($0)_uid" },
+                notFound: []
+            )
+        case .someNotFound:
+            let found = emails.filter { $0 != "missing@example.com" }
+            let notFound = emails.filter { $0 == "missing@example.com" }
+            return ConvertEmailsResult(
+                uids: found.map { "\($0)_uid" },
+                notFound: notFound
+            )
         }
-        return imageUploadURL ?? "https://mock.com/image.png"
     }
     
     func getUserProfile(for uid: String, completion: @escaping (User?) -> Void) {
@@ -105,5 +115,63 @@ final class MockAuthServiceForEventsVM: FirebaseAuthServicing {
     
     func getCurrentUserEmail() -> String? {
         return currentUserEmail
+    }
+}
+
+final class FirebaseAuthServiceMock_WithCurrentUserForEventsVM: FirebaseAuthServicing {
+    let userID: String
+    var currentUserEmail: String? = "mockuser@example.com"
+    var shouldThrowError = false
+    
+    init(userID: String)
+    { self.userID = userID }
+    
+    func signUp(email: String, password: String) async throws -> User {
+        if shouldThrowError { throw URLError(.badServerResponse) }
+        return User(id: "mockUser123", email: email, avatarURL: nil, name: "Mock User")
+    }
+    
+    func signIn(email: String, password: String) async throws {
+        if shouldThrowError { throw URLError(.badServerResponse) }
+    }
+    
+    func signOut() throws {
+        if shouldThrowError { throw URLError(.badServerResponse) }
+    }
+    
+    func getCurrentUserID() -> String? { userID }
+    
+    func getCurrentUserEmail() -> String? {
+        return currentUserEmail
+    }
+}
+
+//MARK: -MockFirebaseStorageServiceForEventsVM
+final class MockFirebaseStorageServiceForEventsVM: FirebaseStorageServicing {
+    var uploadAvatarImageCalled = false
+    var uploadImageCalled = false
+    var imageUploadURL: String = "https://mock.com/default.png"
+    var shouldThrowError = false
+
+    func uploadAvatarImage(userId: String, image: UIImage) async throws -> String {
+        uploadAvatarImageCalled = true
+        if shouldThrowError {
+            throw NSError(domain: "TestError", code: 1)
+        }
+        return "https://mock.com/avatar.png"
+    }
+    
+    func uploadImage(_ image: UIImage) async throws -> String {
+        uploadImageCalled = true
+        if shouldThrowError {
+            throw NSError(domain: "TestError", code: 1)
+        }
+        return imageUploadURL
+    }
+}
+
+final class BrokenCombineVM: EventsViewModel {
+    override func combine(date: Date, time: Date) -> Date? {
+        return nil
     }
 }

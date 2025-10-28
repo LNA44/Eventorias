@@ -40,13 +40,11 @@ class MockFirebaseAuthServiceForUserVM: FirebaseAuthServicing {
 class MockFirestoreServiceForUserVM: FirestoreServicing {
     var userProfileToReturn: User?
     var shouldThrowError = false
-
     func fetchEvents(search: String) async throws -> [Event] { [] }
     func addEvent(_ event: Event) async throws { }
     func convertEmailsToUIDs(emails: [String]) async throws -> ConvertEmailsResult {
         return ConvertEmailsResult(uids: [], notFound: [])
     }
-    func uploadImage(_ image: UIImage) async throws -> String { "" }
 
     func getUserProfile(for uid: String, completion: @escaping (User?) -> Void) {
         completion(userProfileToReturn)
@@ -70,4 +68,7 @@ class MockFirebaseStorageServiceForUserVM: FirebaseStorageServicing {
     func uploadAvatarImage(userId: String, image: UIImage) async throws -> String {
         return uploadedURL
     }
+    
+    func uploadImage(_ image: UIImage) async throws -> String { "" }
+
 }

@@ -14,21 +14,25 @@ final class EventsViewModelTests: XCTestCase {
     var viewModel: EventsViewModel!
     var mockFirestoreService: MockFirestoreServiceForEventsVM!
     var mockAuthService: MockAuthServiceForEventsVM!
+    var mockFirebaseStorageService: MockFirebaseStorageServiceForEventsVM!
     
     override func setUp() {
         super.setUp()
         mockFirestoreService = MockFirestoreServiceForEventsVM()
         mockAuthService = MockAuthServiceForEventsVM()
-        viewModel = EventsViewModel(firestoreService: mockFirestoreService, authService: mockAuthService)
+        mockFirebaseStorageService = MockFirebaseStorageServiceForEventsVM()
+        viewModel = EventsViewModel(firestoreService: mockFirestoreService, firebaseStorageService: mockFirebaseStorageService, authService: mockAuthService)
     }
     
     override func tearDown() {
         viewModel = nil
         mockFirestoreService = nil
         mockAuthService = nil
+        mockFirebaseStorageService = nil
         super.tearDown()
     }
     
+    //MARK: -fetchEvents()
     func testFetchEvents_Success() async {
         // Given
         mockFirestoreService.eventsToReturn = [
@@ -45,6 +49,37 @@ final class EventsViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.errorMessage, "")
     }
     
+    func test_fetchEvents_shouldSortEventsWithInvitedFirst() async {
+        // GIVEN
+        let mockAuthWithCurrentUserId = FirebaseAuthServiceMock_WithCurrentUserForEventsVM(userID: "user123")
+        
+        let viewModel = EventsViewModel(
+                firestoreService: mockFirestoreService,
+                firebaseStorageService: mockFirebaseStorageService,
+                authService: mockAuthWithCurrentUserId
+            )
+        
+        mockFirestoreService.eventsToReturn = [
+            Event(id: "1", name: "Event 1", description: "", date: Date(), location: "", category: "", guests: ["user123"], userID: "a", imageURL: nil, isUserInvited: false),
+            Event(id: "2", name: "Event 2", description: "", date: Date(), location: "", category: "", guests: ["otherUser"], userID: "b", imageURL: nil, isUserInvited: false),
+            Event(id: "3", name: "Event 3", description: "", date: Date(), location: "", category: "", guests: ["user123", "otherUser"], userID: "c", imageURL: nil, isUserInvited: false)
+        ]
+        
+        // WHEN
+        await viewModel.fetchEvents()
+        
+        let events = viewModel.events
+        // THEN
+        var foundNonInvited = false
+            for event in events {
+                if !event.isUserInvited {
+                    foundNonInvited = true
+                } else if foundNonInvited {
+                    XCTFail("Un event invité est apparu après un non-invité : \(event.name)")
+                }
+            }
+    }
+    
     func testFetchEvents_Failure() async {
         // Given
         mockFirestoreService.shouldThrowFetchError = true
@@ -56,8 +91,7 @@ final class EventsViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.errorMessage.contains("An error has occurred"))
     }
     
-    // MARK: - addEvent()
-    
+    // MARK: -addEvent()
     func testAddEvent_Success() async {
         // Given
         let name = "Apéro Dev"
@@ -67,7 +101,6 @@ final class EventsViewModelTests: XCTestCase {
         let location = "Lyon"
         let category = "Meetup"
         let guests = "john@example.com"
-        mockFirestoreService.convertEmailsResult = ConvertEmailsResult(uids: ["guest123"], notFound: [])
         
         // When
         await viewModel.addEvent(
@@ -87,6 +120,66 @@ final class EventsViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.showError)
         XCTAssertTrue(viewModel.notFoundEmails.isEmpty)
     }
+    
+    func test_addEvent_whenCombineReturnsNil_shouldSetError() async {
+        // GIVEN
+        let brokenVM = BrokenCombineVM(
+            firestoreService: mockFirestoreService,
+            firebaseStorageService: mockFirebaseStorageService,
+            authService: mockAuthService
+        )
+        
+        // WHEN
+        await brokenVM.addEvent(
+            name: "Test Event",
+            description: "Description",
+            date: Date(),
+            time: Date(),
+            location: "Paris",
+            category: "Work",
+            guests: "test@example.com",
+            imageURL: nil
+        )
+        
+        // THEN
+        XCTAssertTrue(brokenVM.showError)
+        XCTAssertEqual(brokenVM.errorMessage, "Impossible to combine date and time")
+        XCTAssertTrue(brokenVM.events.isEmpty)
+    }
+    
+    func test_addEvent_whenSomeEmailsNotFound_shouldSetNotFoundEmailsAndReturn() async {
+        //GIVEN
+        mockFirestoreService.scenario = .someNotFound
+           let viewModel = EventsViewModel(
+               firestoreService: mockFirestoreService,
+               firebaseStorageService: mockFirebaseStorageService,
+               authService: mockAuthService
+           )
+        
+        // WHEN
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd-yyy"
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm"
+        
+        let date = dateFormatter.date(from: "10-28-2025")!
+        let time = timeFormatter.date(from: "11:00")!
+        
+        await viewModel.addEvent(
+            name: "Event test",
+            description: "Desc",
+            date: date,
+            time: time,
+            location: "Paris",
+            category: "Other",
+            guests: "user1@example.com,missing@example.com",
+            imageURL: nil
+        )
+        
+        XCTAssertEqual(viewModel.notFoundEmails, ["missing@example.com"])
+        XCTAssertTrue(viewModel.events.isEmpty)
+    }
+
     
     func testAddEvent_Failure_WhenAddThrows() async {
         // Given
@@ -133,9 +226,8 @@ final class EventsViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel.showError)
         XCTAssertEqual(viewModel.errorMessage, "Impossible to get current user")
     }
-    
-    // MARK: - sortByDate()
-    
+
+    // MARK: -sortByDate()
     func testSortByDateAscending() {
         // Given
         let now = Date()
@@ -168,12 +260,27 @@ final class EventsViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.events.first?.name, "Later")
     }
     
-    // MARK: - uploadEventImage()
+    //MARK: -sortByCategory()
+    func testSortByCategory() {
+            // Given
+            let event1 = Event(id: "1", name: "Event 1", description: "", date: Date(), location: "", category: "B", guests: [], userID: "uid1", imageURL: nil, isUserInvited: false)
+            let event2 = Event(id: "2", name: "Event 2", description: "", date: Date(), location: "", category: "A", guests: [], userID: "uid2", imageURL: nil, isUserInvited: false)
+            let event3 = Event(id: "3", name: "Event 3", description: "", date: Date(), location: "", category: "C", guests: [], userID: "uid3", imageURL: nil, isUserInvited: false)
+            
+            viewModel.events = [event1, event2, event3]
+        
+            //When
+            viewModel.sortByCategory()
+            
+            //Then
+            XCTAssertEqual(viewModel.events.map { $0.category }, ["A", "B", "C"])
+        }
     
+    // MARK: -uploadEventImage()
     func testUploadEventImage_Success() async {
         // Given
+        mockFirebaseStorageService.imageUploadURL = "https://mock.com/uploaded.png"
         let image = UIImage()
-        mockFirestoreService.imageUploadURL = "https://mock.com/uploaded.png"
         
         // When
         let result = await viewModel.uploadEventImage(image)
@@ -181,11 +288,12 @@ final class EventsViewModelTests: XCTestCase {
         // Then
         XCTAssertEqual(result, "https://mock.com/uploaded.png")
         XCTAssertFalse(viewModel.showError)
+        XCTAssertTrue(mockFirebaseStorageService.uploadImageCalled)
     }
     
     func testUploadEventImage_Failure() async {
         // Given
-        mockFirestoreService.shouldThrowUploadError = true
+        mockFirebaseStorageService.shouldThrowError = true
         let image = UIImage()
         
         // When
@@ -197,7 +305,7 @@ final class EventsViewModelTests: XCTestCase {
         XCTAssertFalse(viewModel.errorMessage.isEmpty)
     }
     
-    // MARK: - loadAvatars()
+    // MARK: -loadAvatars()
     
     func testLoadAvatars_Success() async {
         // Given

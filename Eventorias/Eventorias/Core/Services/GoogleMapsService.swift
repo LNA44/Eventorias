@@ -11,9 +11,9 @@ struct GoogleMapsService: GoogleMapsServicing {
     static let shared = GoogleMapsService()
     private var apiKey: String {
         get throws { 
-                guard let path = Bundle.main.path(forResource: "Key", ofType: "plist"),
-                      let dict = NSDictionary(contentsOfFile: path),
-                      let key = dict["GoogleApiKey"] as? String else {
+                guard let path = Bundle.main.path(forResource: "Key", ofType: "plist"), //cherche le chemin du fichier
+                      let dict = NSDictionary(contentsOfFile: path), //met ses données dans un dico
+                      let key = dict["GoogleApiKey"] as? String else { //cherche cette clé
                     throw AppError.GoogleMapsError.keyNotFound
                 }
                 return key
@@ -23,9 +23,9 @@ struct GoogleMapsService: GoogleMapsServicing {
     private init() {}
 
     func createMapURL(for address: String) throws -> URL? {
-        let encodedAddress = address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let encodedPipe = "%7C"
-        let key = try self.apiKey //a supprimer aprs vérif
+        let encodedAddress = address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "" //encode l'adresse pr quelle soit compatible avec une url (par ex espaces remplacés par %20"
+        let encodedPipe = "%7C" //encode le caractère "barre verticale" pr séparer les paramètres des marqueurs
+        let key = try self.apiKey
         let urlString = "https://maps.googleapis.com/maps/api/staticmap?center=\(encodedAddress)&zoom=15&size=180x90&markers=color:red\(encodedPipe)\(encodedAddress)&key=\(key)"
         guard let url = URL(string: urlString) else {
             throw AppError.GoogleMapsError.invalidURL

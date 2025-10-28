@@ -45,7 +45,6 @@ class MockFirestoreService: FirestoreServicing {
     var fetchEventsCalled = false
     var addEventCalled = false
     var convertEmailsCalled = false
-    var uploadImageCalled = false
     var getUserProfileCalled = false
     var updateUserAvatarURLCalled = false
     var getAvatarURLCalled = false
@@ -65,10 +64,6 @@ class MockFirestoreService: FirestoreServicing {
         return ConvertEmailsResult(uids: [], notFound: emails)
     }
     
-    func uploadImage(_ image: UIImage) async throws -> String {
-        uploadImageCalled = true
-        return "https://mock.url/image.jpg"
-    }
     
     func getUserProfile(for uid: String, completion: @escaping (Eventorias.User?) -> Void) { //eventorias.User car sinon swift confond entre struct User et celui de FirebaseAuth
         getUserProfileCalled = true
@@ -102,7 +97,15 @@ class FailingFirestoreService: MockFirestoreService {
 
 //MARK: -MockStorageService
 final class MockStorageService: FirebaseStorageServicing {
+    var uploadImageCalled = false
+
     func uploadAvatarImage(userId: String, image: UIImage) async throws -> String {
         return "https://fakeurl.com/avatar.jpg"
     }
+    
+    func uploadImage(_ image: UIImage) async throws -> String {
+            uploadImageCalled = true
+            return "https://mock.url/image.jpg"
+        }
+        
 }

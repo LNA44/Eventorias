@@ -57,7 +57,7 @@ final class UserViewModelTests: XCTestCase {
 
         // Then
         XCTAssertTrue(viewModel.showError)
-        XCTAssertEqual(viewModel.errorMessage, "Impossible to get the current user ID. Please try again.")
+        XCTAssertEqual(viewModel.errorMessage, "Impossible to get current user ID. Please try again.")
     }
 
     func testLoadUserProfile_Success() {
@@ -91,7 +91,7 @@ final class UserViewModelTests: XCTestCase {
 
         // Then
         XCTAssertTrue(viewModel.showError)
-        XCTAssertEqual(viewModel.errorMessage, "Impossible to load the user profile. Please try again.")
+        XCTAssertEqual(viewModel.errorMessage, "Impossible to load user profile. Please try again.")
     }
 
     func testLoadUserProfile_Failure_ProfileNotFound() {
@@ -107,7 +107,7 @@ final class UserViewModelTests: XCTestCase {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             // Then
             XCTAssertTrue(self.viewModel.showError)
-            XCTAssertEqual(self.viewModel.errorMessage, "Impossible to load the user profile. Please try again.")
+            XCTAssertEqual(self.viewModel.errorMessage, "Impossible to load user profile. Please try again.")
             expectation.fulfill()
         }
 
