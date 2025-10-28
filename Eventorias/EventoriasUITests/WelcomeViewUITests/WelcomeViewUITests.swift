@@ -19,7 +19,6 @@ final class WelcomeViewUITests: XCTestCase {
     }
     
     func testWelcomeView_UIElementsExist() {
-        // Vérifie que les éléments sont bien présents
         XCTAssertTrue(app.images["appLogo"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["signUpButton"].exists)
         XCTAssertTrue(app.buttons["signInButton"].exists)
@@ -30,7 +29,6 @@ final class WelcomeViewUITests: XCTestCase {
         XCTAssertTrue(signUpButton.waitForExistence(timeout: 2))
         signUpButton.tap()
         
-        // Exemple : vérifier que l’écran suivant contient un champ email
         let emailField = app.textFields["emailField"]
         XCTAssertTrue(emailField.waitForExistence(timeout: 3))
     }

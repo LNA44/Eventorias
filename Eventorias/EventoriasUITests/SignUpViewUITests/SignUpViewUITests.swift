@@ -21,7 +21,6 @@ final class SignUpViewUITests: XCTestCase {
     func testSignUpView_ElementsExist() {
         let signUpButton = app.buttons["signUpButton"]
         signUpButton.tap()
-        // Vérifie que tous les éléments clés sont présents
         XCTAssertTrue(app.textFields["emailField"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.secureTextFields["passwordField"].exists)
         XCTAssertTrue(app.textFields["nameField"].exists)
@@ -33,19 +32,16 @@ final class SignUpViewUITests: XCTestCase {
     func testSignUpView_ValidationErrors() {
         let signUpButton = app.buttons["signUpButton"]
         signUpButton.tap()
-        
-        // Vérifie que les messages d'erreur apparaissent
         XCTAssertTrue(app.staticTexts["emailErrorLabel"].exists)
         XCTAssertTrue(app.staticTexts["passwordErrorLabel"].exists)
         XCTAssertTrue(app.staticTexts["nameErrorLabel"].exists)
-        XCTAssertFalse(app.staticTexts["avatarErrorLabel"].exists) //car le VM a déjà initialisé selectedImage
+        XCTAssertFalse(app.staticTexts["avatarErrorLabel"].exists)
     }
     
     func testSignUpView_FillFormAndTapSignUp() {
         let signUpButton = app.buttons["signUpButton"]
         signUpButton.tap()
         
-        // Remplissage des champs
         let emailField = app.textFields["emailField"]
         emailField.tap()
         emailField.typeText("test@example.com")
@@ -60,7 +56,6 @@ final class SignUpViewUITests: XCTestCase {
         
         // Interactions avec les boutons pour l'image inutile car le VM fournit déjà selectedImage en debug car impossible d'aller ds galerie photos dans UITests
         
-        // Validation du formulaire
         let createAccountButton = app.buttons["createAccountButton"]
         XCTAssertTrue(createAccountButton.exists)
         createAccountButton.tap()

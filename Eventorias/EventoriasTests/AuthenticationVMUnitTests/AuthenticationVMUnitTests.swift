@@ -127,7 +127,7 @@ final class AuthenticationViewModelTests: XCTestCase {
     }
     
     func testSignIn_WhenUserAlreadyConnected_ShouldCallSignOutFirst() async {
-        mockAuth.mockCurrentUserID = "user123" // 👈 utilisateur déjà connecté
+        mockAuth.mockCurrentUserID = "user123"
         viewModel.email = "test@example.com"
         viewModel.password = "Password1!"
         
@@ -139,8 +139,8 @@ final class AuthenticationViewModelTests: XCTestCase {
     
     func testSignIn_WhenSignOutFails_ShowsAlertAndErrorMessage() async {
         // GIVEN
-        mockAuth.mockCurrentUserID = "user123" // Simule qu’un utilisateur est déjà connecté
-        mockAuth.shouldThrowSignOutError = true      // Simule l’échec de signOut
+        mockAuth.mockCurrentUserID = "user123"
+        mockAuth.shouldThrowSignOutError = true
         viewModel.email = "test@example.com"
         viewModel.password = "Password1!"
         

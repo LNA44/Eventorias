@@ -96,15 +96,6 @@ class FirestoreService: FirestoreServicing {
         return ConvertEmailsResult(uids: uids, notFound: notFound)
     }
     
-    /*func uploadImage(_ image: UIImage) async throws -> String {
-        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-            throw AppError.FirestoreError.imageError("Impossible to convert image to JPEG")
-        }
-        let storageRef = Storage.storage().reference().child("eventImages/\(UUID().uuidString).jpg") //cree un sous dossier eventImages
-        _ = try await storageRef.putDataAsync(imageData) //envoie les donnees vers firebaseStorage
-        return try await storageRef.downloadURL().absoluteString //url publique de l'image stockee, sous forme de string
-    }*/
-    
     func getUserProfile(for uid: String, completion: @escaping (User?) -> Void) {
         db.collection("users").document(uid).getDocument { snapshot, error in
             if error != nil {

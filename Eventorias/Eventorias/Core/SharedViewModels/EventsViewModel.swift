@@ -43,16 +43,11 @@ import UIKit
     func fetchEvents(search: String = "") async {
         do {
             var fetchedEvents = try await firestoreService.fetchEvents(search: search)
-            print("Fetched events: \(events)")
             
-            if let currentUserID = authService.getCurrentUserID() { //modifié
+            if let currentUserID = authService.getCurrentUserID() { 
                 // 1) mettre à jour isUserInvited pour chaque event
                 for i in fetchedEvents.indices {
                     let invited = fetchedEvents[i].guests.contains(currentUserID)
-                            print("🔍 Event: \(fetchedEvents[i].name)")
-                            print("Guests:", fetchedEvents[i].guests)
-                            print("CurrentUserID:", currentUserID)
-                            print("Is invited:", invited)
                             fetchedEvents[i].isUserInvited = invited
                 }
                 

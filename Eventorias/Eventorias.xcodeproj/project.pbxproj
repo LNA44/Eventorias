@@ -167,6 +167,20 @@
 			);
 			target = F37172BA2E8C1CF700FF8C0F /* EventoriasUITests */;
 		};
+		F377B66E2EB116AE008DEB94 /* Exceptions for "FirebaseTests" folder in "Eventorias" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"GoogleService-Info-Test.plist",
+			);
+			target = F37172A32E8C1CF600FF8C0F /* Eventorias */;
+		};
+		F377B66F2EB116AE008DEB94 /* Exceptions for "FirebaseTests" folder in "EventoriasUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"GoogleService-Info-Test.plist",
+			);
+			target = F37172BA2E8C1CF700FF8C0F /* EventoriasUITests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -182,6 +196,15 @@
 		F37172BE2E8C1CF700FF8C0F /* EventoriasUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = EventoriasUITests;
+			sourceTree = "<group>";
+		};
+		F377B6412EB11204008DEB94 /* FirebaseTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				F377B66E2EB116AE008DEB94 /* Exceptions for "FirebaseTests" folder in "Eventorias" target */,
+				F377B66F2EB116AE008DEB94 /* Exceptions for "FirebaseTests" folder in "EventoriasUITests" target */,
+			);
+			path = FirebaseTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -248,6 +271,7 @@
 		F349ECD82EA9148400FD34FE /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				F377B6412EB11204008DEB94 /* FirebaseTests */,
 				F36F84E82E96AD0700D4ACA1 /* Key.plist */,
 				F39B0EE62E8D645C00416D67 /* GoogleService-Info.plist */,
 				F37C03662E97CA9E00647D3A /* Info.plist */,
@@ -433,8 +457,8 @@
 				F361B9A72E8EC5400088C136 /* Eventorias */,
 				F349ECCB2EA8DAB300FD34FE /* Frameworks */,
 				F37172A52E8C1CF600FF8C0F /* Products */,
-				F37172BE2E8C1CF700FF8C0F /* EventoriasUITests */,
 				F3578EEA2EA3ACD40065FBF1 /* EventoriasTests */,
+				F37172BE2E8C1CF700FF8C0F /* EventoriasUITests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -510,6 +534,7 @@
 			fileSystemSynchronizedGroups = (
 				F3578EEA2EA3ACD40065FBF1 /* EventoriasTests */,
 				F37172BE2E8C1CF700FF8C0F /* EventoriasUITests */,
+				F377B6412EB11204008DEB94 /* FirebaseTests */,
 			);
 			name = EventoriasUITests;
 			productName = EventoriasUITests;

@@ -18,6 +18,7 @@ Packages/
 Package.resolved
 
 GoogleService-Info.plist
+GoogleService-Info*.plist
 Key.plist
 *.plist
 

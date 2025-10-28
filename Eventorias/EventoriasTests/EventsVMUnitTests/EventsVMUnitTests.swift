@@ -50,7 +50,7 @@ final class EventsViewModelTests: XCTestCase {
     }
     
     func test_fetchEvents_shouldSortEventsWithInvitedFirst() async {
-        // GIVEN
+        // Given
         let mockAuthWithCurrentUserId = FirebaseAuthServiceMock_WithCurrentUserForEventsVM(userID: "user123")
         
         let viewModel = EventsViewModel(
@@ -65,11 +65,11 @@ final class EventsViewModelTests: XCTestCase {
             Event(id: "3", name: "Event 3", description: "", date: Date(), location: "", category: "", guests: ["user123", "otherUser"], userID: "c", imageURL: nil, isUserInvited: false)
         ]
         
-        // WHEN
+        // When
         await viewModel.fetchEvents()
         
         let events = viewModel.events
-        // THEN
+        // Then
         var foundNonInvited = false
             for event in events {
                 if !event.isUserInvited {
@@ -122,14 +122,14 @@ final class EventsViewModelTests: XCTestCase {
     }
     
     func test_addEvent_whenCombineReturnsNil_shouldSetError() async {
-        // GIVEN
+        // Given
         let brokenVM = BrokenCombineVM(
             firestoreService: mockFirestoreService,
             firebaseStorageService: mockFirebaseStorageService,
             authService: mockAuthService
         )
         
-        // WHEN
+        // When
         await brokenVM.addEvent(
             name: "Test Event",
             description: "Description",
@@ -141,14 +141,14 @@ final class EventsViewModelTests: XCTestCase {
             imageURL: nil
         )
         
-        // THEN
+        // Then
         XCTAssertTrue(brokenVM.showError)
         XCTAssertEqual(brokenVM.errorMessage, "Impossible to combine date and time")
         XCTAssertTrue(brokenVM.events.isEmpty)
     }
     
     func test_addEvent_whenSomeEmailsNotFound_shouldSetNotFoundEmailsAndReturn() async {
-        //GIVEN
+        //Given
         mockFirestoreService.scenario = .someNotFound
            let viewModel = EventsViewModel(
                firestoreService: mockFirestoreService,
@@ -156,7 +156,7 @@ final class EventsViewModelTests: XCTestCase {
                authService: mockAuthService
            )
         
-        // WHEN
+        // When
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM-dd-yyy"
         let timeFormatter = DateFormatter()
@@ -176,6 +176,7 @@ final class EventsViewModelTests: XCTestCase {
             imageURL: nil
         )
         
+        //Then
         XCTAssertEqual(viewModel.notFoundEmails, ["missing@example.com"])
         XCTAssertTrue(viewModel.events.isEmpty)
     }
@@ -262,19 +263,19 @@ final class EventsViewModelTests: XCTestCase {
     
     //MARK: -sortByCategory()
     func testSortByCategory() {
-            // Given
-            let event1 = Event(id: "1", name: "Event 1", description: "", date: Date(), location: "", category: "B", guests: [], userID: "uid1", imageURL: nil, isUserInvited: false)
-            let event2 = Event(id: "2", name: "Event 2", description: "", date: Date(), location: "", category: "A", guests: [], userID: "uid2", imageURL: nil, isUserInvited: false)
-            let event3 = Event(id: "3", name: "Event 3", description: "", date: Date(), location: "", category: "C", guests: [], userID: "uid3", imageURL: nil, isUserInvited: false)
-            
-            viewModel.events = [event1, event2, event3]
+        // Given
+        let event1 = Event(id: "1", name: "Event 1", description: "", date: Date(), location: "", category: "B", guests: [], userID: "uid1", imageURL: nil, isUserInvited: false)
+        let event2 = Event(id: "2", name: "Event 2", description: "", date: Date(), location: "", category: "A", guests: [], userID: "uid2", imageURL: nil, isUserInvited: false)
+        let event3 = Event(id: "3", name: "Event 3", description: "", date: Date(), location: "", category: "C", guests: [], userID: "uid3", imageURL: nil, isUserInvited: false)
         
-            //When
-            viewModel.sortByCategory()
-            
-            //Then
-            XCTAssertEqual(viewModel.events.map { $0.category }, ["A", "B", "C"])
-        }
+        viewModel.events = [event1, event2, event3]
+        
+        //When
+        viewModel.sortByCategory()
+        
+        //Then
+        XCTAssertEqual(viewModel.events.map { $0.category }, ["A", "B", "C"])
+    }
     
     // MARK: -uploadEventImage()
     func testUploadEventImage_Success() async {
