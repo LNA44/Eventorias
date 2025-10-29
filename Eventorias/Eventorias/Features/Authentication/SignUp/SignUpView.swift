@@ -22,7 +22,7 @@ struct SignUpView: View {
     
     var body: some View {
         VStack {
-            Text("SignUp")
+            Text("Sign Up")
                 .font(.custom("Inter24pt-SemiBold", size: 20))
                 .foregroundColor(.white)
                 .padding(.bottom, 40)
