@@ -8,7 +8,7 @@
 import Foundation
 
 struct User: Identifiable, Codable {
-    let id: String // le même que l'uid Firebase Auth
+    let id: String 
     let email: String
     var avatarURL: String?
     let name: String

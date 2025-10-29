@@ -45,13 +45,13 @@ import UIKit
             var fetchedEvents = try await firestoreService.fetchEvents(search: search)
             
             if let currentUserID = authService.getCurrentUserID() { 
-                // 1) mettre à jour isUserInvited pour chaque event
+                //mettre à jour isUserInvited pour chaque event
                 for i in fetchedEvents.indices {
                     let invited = fetchedEvents[i].guests.contains(currentUserID)
                             fetchedEvents[i].isUserInvited = invited
                 }
                 
-                // 2) trier pour que les événements invités remontent en haut
+                //trier pour que les événements invités remontent en haut
                 fetchedEvents.sort { $0.isUserInvited && !$1.isUserInvited }
             }
             self.events = fetchedEvents
@@ -64,9 +64,7 @@ import UIKit
     func addEvent(name: String, description: String, date: Date, time: Date,
                   location: String, category: String, guests: String,
                 imageURL: String?) async {
-        print("🟡 addEvent VM called")
         let combinedDateTime = combine(date: date, time: time)
-        print("🟡 About to convert emails")
         let emails = guests
                 .split(separator: ",")
                 .map { $0.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }
@@ -77,9 +75,7 @@ import UIKit
                 notFoundEmails = result.notFound
                 return
             }
-            print("🟡 Checking current user ID")
             guard let currentUserID = authService.getCurrentUserID() else {
-                print("⚠️ Current user ID is nil")
                 showError = true
                 errorMessage = "Impossible to get current user"
                 return
@@ -101,10 +97,7 @@ import UIKit
                 imageURL: imageURL,
                 isUserInvited: false
             )
-            print("location avant enregistrement : \(newEvent.location)")
-            print("🟡 Adding event to Firestore: \(newEvent)")
             try await firestoreService.addEvent(newEvent)
-            print("✅ Event added successfully")
             events.append(newEvent)
         } catch {
             showError = true

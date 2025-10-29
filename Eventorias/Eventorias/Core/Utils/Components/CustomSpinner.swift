@@ -16,13 +16,11 @@ struct CustomSpinner: View {
 
     var body: some View {
         ZStack {
-            // Arc blanc
             Circle()
                 .trim(from: 0.03, to: 0.68)
                 .stroke(colorLong, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
                 .rotationEffect(.degrees(-90))
 
-            // Arc gris, quasi collé
             Circle()
                 .trim(from: 0.73, to: 0.98)
                 .stroke(colorShort, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))

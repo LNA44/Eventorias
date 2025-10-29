@@ -66,7 +66,7 @@ final class SignUpVMUnitTests: XCTestCase {
         viewModel.email = "user@test.com"
         viewModel.password = "Abcdef1!"
         viewModel.name = "Jean"
-        viewModel.selectedImage = UIImage() // on peut mettre une UIImage vide pour le test
+        viewModel.selectedImage = UIImage() 
         
         //When
         await viewModel.createUser(
@@ -78,7 +78,6 @@ final class SignUpVMUnitTests: XCTestCase {
         
         //Then
         XCTAssertTrue(mockAuth.didSignUp)
-        XCTAssertTrue(mockAuth.didSignOut)
         XCTAssertTrue(mockFirestore.saveUserCalled)
         XCTAssertTrue(mockFirestore.updateUserAvatarURLCalled)
         
@@ -105,7 +104,6 @@ final class SignUpVMUnitTests: XCTestCase {
         
         //Then
         XCTAssertFalse(mockAuth.didSignUp)
-        XCTAssertFalse(mockAuth.didSignOut)
         XCTAssertFalse(mockFirestore.saveUserCalled)
         XCTAssertFalse(mockFirestore.updateUserAvatarURLCalled)
     }

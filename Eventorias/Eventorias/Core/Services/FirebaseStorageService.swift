@@ -11,8 +11,11 @@ import UIKit
 
 class FirebaseStorageService: FirebaseStorageServicing {
     static let shared = FirebaseStorageService()
+    private let storage: Storage
     
-    private init() {}
+    private init() {
+        storage = Storage.storage()
+    }
    
     func uploadAvatarImage(userId: String, image: UIImage) async throws -> String {
         // Conversion de l'image en Data
@@ -20,7 +23,7 @@ class FirebaseStorageService: FirebaseStorageServicing {
             throw AppError.StorageError.imageConversionFailed
         }
         
-        let storageRef = Storage.storage().reference().child("avatars/\(userId).jpg")
+        let storageRef = storage.reference().child("avatars/\(userId).jpg")
         
         // Upload de l'image
         _ = try await storageRef.putDataAsync(imageData, metadata: nil)
@@ -34,7 +37,7 @@ class FirebaseStorageService: FirebaseStorageServicing {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             throw AppError.FirestoreError.imageError("Impossible to convert image to JPEG")
         }
-        let storageRef = Storage.storage().reference().child("eventImages/\(UUID().uuidString).jpg") //cree un sous dossier eventImages
+        let storageRef = storage.reference().child("eventImages/\(UUID().uuidString).jpg") //cree un sous dossier eventImages
         _ = try await storageRef.putDataAsync(imageData) //envoie les donnees vers firebaseStorage
         return try await storageRef.downloadURL().absoluteString //url publique de l'image stockee, sous forme de string
     }

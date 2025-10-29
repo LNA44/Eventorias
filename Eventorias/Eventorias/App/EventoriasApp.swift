@@ -28,7 +28,6 @@ struct EventoriasApp: App {
     @State private var signUpVM: SignUpViewModel?
     
     init() {
-            // 1️⃣ Configurer Firebase en premier
             let isUITestMode = ProcessInfo.processInfo.arguments.contains("-UITestMode")
             if isUITestMode {
                 if let filePath = Bundle.main.path(forResource: "GoogleService-Info-Test", ofType: "plist"),
@@ -41,7 +40,6 @@ struct EventoriasApp: App {
                 FirebaseApp.configure()
             }
 
-            // 2️⃣ Créer les ViewModels après Firebase
             _authVM = State(initialValue: AuthenticationViewModel())
             _eventsVM = State(initialValue: EventsViewModel())
             _userVM = State(initialValue: UserViewModel())
@@ -54,14 +52,6 @@ struct EventoriasApp: App {
                 RootView(authVM: authVM, eventsVM: eventsVM, userVM: userVM, signUpVM: signUpVM, googleMapsVM: googleMapsVM)
             } else {
                 ProgressView("Loading...")
-                    /*.onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {     //on initialise les VM après que firebaseApp.Configure() ait été init
-                            self.authVM = AuthenticationViewModel()
-                            self.eventsVM = EventsViewModel()
-                            self.userVM = UserViewModel()
-                            self.signUpVM = SignUpViewModel()
-                        }
-                    }*/
             }
          }
     }

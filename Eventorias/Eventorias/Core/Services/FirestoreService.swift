@@ -29,7 +29,6 @@ class FirestoreService: FirestoreServicing {
         }
         
         let snapshot = try await query.getDocuments()
-        print("Documents trouvés:", snapshot.documents.count)
         
         let events = snapshot.documents.compactMap { doc -> Event? in //transforme tableau firestore en tableau de Event, compactMap ignore les doc mal formés
             let data = doc.data() //récupère le dico [String: Any] du document
@@ -61,7 +60,6 @@ class FirestoreService: FirestoreServicing {
                 isUserInvited: false
             )
         }
-        print("Events: \(events)")
         return events
     }
     

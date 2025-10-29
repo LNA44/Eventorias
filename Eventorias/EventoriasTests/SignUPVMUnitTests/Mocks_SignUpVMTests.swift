@@ -14,7 +14,6 @@ import FirebaseAuth
 
 class MockAuthService: FirebaseAuthServicing {
     var didSignUp = false
-    var didSignOut = false
     
     // Valeurs simulées pour tests
     var mockUserID: String = "mock-user-id"
@@ -28,7 +27,7 @@ class MockAuthService: FirebaseAuthServicing {
     }
     
     func signIn(email: String, password: String) async throws {}
-    func signOut() throws { didSignOut = true }
+    func signOut() throws { }
     func getCurrentUserID() -> String? { "mock-uid" }
     func getCurrentUserEmail() -> String? { "mock@email.com" }
 }
@@ -73,7 +72,7 @@ class MockFirestoreService: FirestoreServicing {
     
     func updateUserAvatarURL(for userId: String, url: String, completion: @escaping (Error?) -> Void) {
         updateUserAvatarURLCalled = true
-        completion(nil) // pas d'erreur simulée
+        completion(nil) 
     }
     
     func getAvatarURL(for userID: String) async throws -> String? {
@@ -91,7 +90,7 @@ class MockFirestoreService: FirestoreServicing {
 }
 class FailingFirestoreService: MockFirestoreService {
         override func saveUserToFirestore(uid: String, email: String, name: String, avatarURL: String?) async throws {
-            throw NSError(domain: "TestError", code: 1) // Erreur générique
+            throw NSError(domain: "TestError", code: 1)
         }
     }
 

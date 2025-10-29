@@ -32,6 +32,8 @@ import FirebaseAuth
     
     func createUser(email: String, password: String, name: String, avatarImage: UIImage?) async {
         isLoading = true
+        showError = false
+        errorMessage = ""
         defer { isLoading = false } //meme si ce qui suit échoue, on fera quand meme isLoading = false
         if self.name == "" || self.selectedImage == nil {
             return
@@ -39,23 +41,16 @@ import FirebaseAuth
         do {
             
             let user = try await authService.signUp(email: email, password: password)
-            print("🎉 Compte Auth créé : \(email)")
             
-            // 1️⃣ Crée le document Firestore immédiatement
             try await firestoreService.saveUserToFirestore(uid: user.id, email: email, name: name, avatarURL: nil)
             
-            // 2️⃣ Upload de l'avatar
             if let image = avatarImage {
                 let avatarURL = try await firebaseStorageService.uploadAvatarImage(userId: user.id, image: image)
                 try await firestoreService.updateUserAvatarURL(userId: user.id, url: avatarURL)
                 
-                // 3️⃣ Mise à jour de l'avatarURL
                 try await firestoreService.saveUserToFirestore(uid: user.id, email: email, name: name, avatarURL: avatarURL)
             }
             
-            // 4️⃣ Déconnexion
-            try authService.signOut()
-            print("✅ Déconnecté avec succès")
         } catch let error as AppError.AuthError {
             showError = true
             errorMessage = error.errorDescription
