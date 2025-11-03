@@ -16,7 +16,7 @@ class FirebaseAuthService: FirebaseAuthServicing {
         auth = Auth.auth()
     }
 
-    func signUp(email: String, password: String) async throws -> User { //user renvoyé utile pour le stocker ensuite dans firestore
+    func signUp(email: String, password: String) async throws -> User {
         let result = try await auth.createUser(withEmail: email, password: password)
         let firebaseUser = result.user
         return User(

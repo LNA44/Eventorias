@@ -15,7 +15,7 @@ struct Event: Identifiable, Decodable, Hashable {
     var date: Date
     var location: String
     var category: String
-    var guests: [String] // emails 
+    var guests: [String] 
     var userID: String
     var imageURL: String?
     var isUserInvited: Bool = false

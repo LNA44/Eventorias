@@ -30,7 +30,7 @@ struct CustomTextField: View {
                 .font(font)
                 .foregroundColor(foregroundColor)
                 .padding(.horizontal, paddingValue)
-                .frame(height: 30) // fixe la hauteur
+                .frame(height: 30)
         }
         .background(backgroundColor)
         .cornerRadius(cornerRadius)

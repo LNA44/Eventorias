@@ -45,13 +45,11 @@ import UIKit
             var fetchedEvents = try await firestoreService.fetchEvents(search: search)
             
             if let currentUserID = authService.getCurrentUserID() { 
-                //mettre à jour isUserInvited pour chaque event
                 for i in fetchedEvents.indices {
                     let invited = fetchedEvents[i].guests.contains(currentUserID)
                             fetchedEvents[i].isUserInvited = invited
                 }
                 
-                //trier pour que les événements invités remontent en haut
                 fetchedEvents.sort { $0.isUserInvited && !$1.isUserInvited }
             }
             self.events = fetchedEvents

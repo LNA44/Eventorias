@@ -35,7 +35,6 @@ struct EventsContainerView: View {
                         .background(Color("ButtonColor"))
                         .zIndex(1)
                         
-                        // Scrollable content
                         ZStack {
                             if showCalendar {
                                 CalendarView(events: $eventsVM.events)
@@ -52,7 +51,6 @@ struct EventsContainerView: View {
                     }
                     .background(Color.black.ignoresSafeArea())
                     
-                    // ✅ Bouton flottant par-dessus
                     NavigationLink(destination: CreateEventView(eventsVM: eventsVM)) {
                         ZStack {
                             Color("ButtonColor")

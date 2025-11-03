@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WhitePicker: UIViewRepresentable {
     @Binding var date: Date
-    var mode: UIDatePicker.Mode // .date, .time, ou .dateAndTime
+    var mode: UIDatePicker.Mode
 
     func makeUIView(context: Context) -> UIDatePicker {
         let picker = UIDatePicker()
@@ -24,7 +24,7 @@ struct WhitePicker: UIViewRepresentable {
 
     func updateUIView(_ uiView: UIDatePicker, context: Context) {
         uiView.date = date
-        uiView.datePickerMode = mode // met à jour si besoin
+        uiView.datePickerMode = mode 
     }
 
     func makeCoordinator() -> Coordinator {

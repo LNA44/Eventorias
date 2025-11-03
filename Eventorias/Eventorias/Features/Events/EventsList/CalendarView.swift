@@ -19,7 +19,6 @@ struct CalendarView: View {
     
     var body: some View {
         VStack {
-            // Navigation mois
             HStack {
                 Button(action: {
                     currentDate = calendar.date(byAdding: .month, value: -1, to: currentDate)!
@@ -49,7 +48,6 @@ struct CalendarView: View {
             }
             .padding(.horizontal)
             
-            // Jours de la semaine
             let weekDays = calendar.shortWeekdaySymbols
             HStack {
                 ForEach(weekDays, id: \.self) { day in
@@ -63,12 +61,11 @@ struct CalendarView: View {
             
             let maxWeeks = 6
             let rowHeight: CGFloat = 40
-            // Grille des jours
             LazyVGrid(columns: columns) {
                 ForEach(daysInMonth(), id: \.id) { day in
                     VStack {
                         if day.number == 0 {
-                            Color.clear.frame(height: 30) // case vide
+                            Color.clear.frame(height: 30)
                         } else {
                             Text("\(day.number)")
                                 .font(.custom("Inter28pt-Medium", size: 16))
@@ -94,15 +91,15 @@ struct CalendarView: View {
         .background(Color.black.ignoresSafeArea())
         .sheet(isPresented: $showingEventsSheet) {
             ZStack {
-                Color.black.ignoresSafeArea() // fond de la sheet
+                Color.black.ignoresSafeArea()
 
                 List(selectedDayEvents) { event in
                     Text(event.name)
                         .font(.custom("Inter28pt-Medium", size: 16))
-                        .foregroundColor(.white) // texte blanc
-                        .listRowBackground(Color("TextfieldColor")) // fond cellule
+                        .foregroundColor(.white)
+                        .listRowBackground(Color("TextfieldColor"))
                 }
-                .scrollContentBackground(.hidden) // empêche le blanc par défaut derrière les cellules
+                .scrollContentBackground(.hidden)
             }
             .accessibilityElement(children: .contain)
             .accessibilityLabel("Événements du jour")
@@ -115,14 +112,12 @@ struct CalendarView: View {
         var days: [Day] = []
         
         let firstDayOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: currentDate))!
-        let weekdayOffset = calendar.component(.weekday, from: firstDayOfMonth) - 1 // jour de la semaine du 1er
+        let weekdayOffset = calendar.component(.weekday, from: firstDayOfMonth) - 1
         
-        // Ajouter des cases vides pour aligner le 1er du mois
         for _ in 0..<weekdayOffset {
-            days.append(Day(date: Date(), number: 0)) // number = 0 => case vide
+            days.append(Day(date: Date(), number: 0))
         }
         
-        // Jours du mois actuel
         for day in 1...range.count {
             if let date = calendar.date(byAdding: .day, value: day - 1, to: firstDayOfMonth) {
                 days.append(Day(date: date, number: day))

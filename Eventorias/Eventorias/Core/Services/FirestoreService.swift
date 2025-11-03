@@ -21,19 +21,19 @@ class FirestoreService: FirestoreServicing {
     func fetchEvents(search: String = "") async throws -> [Event] {
         var query: Query = db.collection("Event")
         
-        if !search.isEmpty { //filtrage coté serveur
+        if !search.isEmpty {
             let lowercasedSearch = search.lowercased()
             query = query
-                .whereField("name_lowercased", isGreaterThanOrEqualTo: lowercasedSearch) //filtres firestore
+                .whereField("name_lowercased", isGreaterThanOrEqualTo: lowercasedSearch)
                 .whereField("name_lowercased", isLessThanOrEqualTo: lowercasedSearch + "\u{f8ff}")
         }
         
         let snapshot = try await query.getDocuments()
         
-        let events = snapshot.documents.compactMap { doc -> Event? in //transforme tableau firestore en tableau de Event, compactMap ignore les doc mal formés
-            let data = doc.data() //récupère le dico [String: Any] du document
+        let events = snapshot.documents.compactMap { doc -> Event? in
+            let data = doc.data()
             
-            guard let name = data["name"] as? String, //Vérif que tous les champs essentiels existent et st du bon type
+            guard let name = data["name"] as? String,
                   let description = data["description"] as? String,
                   let dateTimestamp = data["date"] as? Timestamp,
                   let location = data["location"] as? String,
@@ -45,8 +45,7 @@ class FirestoreService: FirestoreServicing {
             
             let guests = data["guests"] as? [String] ?? []
             let imageURL = data["imageURL"] as? String
-            let date = dateTimestamp.dateValue() // conversion Timestamp firestore → Date
-
+            let date = dateTimestamp.dateValue()
             return Event(
                 id: doc.documentID,
                 name: name,
@@ -66,7 +65,7 @@ class FirestoreService: FirestoreServicing {
     func addEvent(_ event: Event) async throws {
         try await db.collection("Event").document(event.id).setData([
             "name": event.name,
-            "name_lowercased": event.name.lowercased(), //utile pour recherches sensibles a la casse
+            "name_lowercased": event.name.lowercased(),
             "description": event.description,
             "date": Timestamp(date: event.date),
             "location": event.location,
@@ -137,7 +136,7 @@ class FirestoreService: FirestoreServicing {
         let userRef = db.collection("users").document(uid)
         let user = User(id: uid, email: email, avatarURL: avatarURL, name: name)
         do {
-            try userRef.setData(from: user, merge: true) //permet de mettre à jour le user ds firestore au lieu de tout écraser s'il existe déjà
+            try userRef.setData(from: user, merge: true) 
         } catch {
             throw AppError.FirestoreError.saveUserFailed(underlying: error)
         }

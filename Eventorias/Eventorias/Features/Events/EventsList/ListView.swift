@@ -145,8 +145,8 @@ struct ListView: View {
                     }
                     .background(Color(.black))
                     .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets()) // supprime les marges par défaut
-                    .frame(maxWidth: .infinity)  // assure largeur max
+                    .listRowInsets(EdgeInsets())
+                    .frame(maxWidth: .infinity)  
                 }
                 .listStyle(PlainListStyle())
             }

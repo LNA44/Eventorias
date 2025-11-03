@@ -12,8 +12,8 @@ struct RowView: View {
     var eventsVM: EventsViewModel
     let formatter: DateFormatter = {
         let f = DateFormatter()
-        f.dateFormat = "MMMM d, yyyy" // Nom complet du mois, jour, année
-        f.locale = Locale(identifier: "en_US") // Pour avoir le mois en anglais
+        f.dateFormat = "MMMM d, yyyy"
+        f.locale = Locale(identifier: "en_US")
         return f
     }()
     
@@ -25,7 +25,6 @@ struct RowView: View {
                 HStack {
                     if let urlString = avatarURL, let url = URL(string: urlString) {
                         ZStack {
-                            // Fond gris ou image si déjà chargée
                             AsyncImage(url: url) { phase in
                                 switch phase {
                                 case .success(let image):
@@ -43,7 +42,6 @@ struct RowView: View {
                                 }
                             }
 
-                            // Spinner seulement pendant le chargement
                             AsyncImage(url: url) { phase in
                                 if case .empty = phase {
                                     CustomSpinner(size: 20, lineWidth: 2)
@@ -91,7 +89,6 @@ struct RowView: View {
                         
             if let imageURL = event.imageURL, let url = URL(string: imageURL) {
                 ZStack {
-                    // Fond ou placeholder gris
                     AsyncImage(url: url) { phase in
                         switch phase {
                         case .success(let image):
@@ -110,7 +107,6 @@ struct RowView: View {
                         }
                     }
 
-                    // Spinner pendant le téléchargement
                     AsyncImage(url: url) { phase in
                         if case .empty = phase {
                             CustomSpinner(size: 20, lineWidth: 2)

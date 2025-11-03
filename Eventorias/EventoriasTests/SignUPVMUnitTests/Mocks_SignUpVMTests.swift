@@ -15,7 +15,6 @@ import FirebaseAuth
 class MockAuthService: FirebaseAuthServicing {
     var didSignUp = false
     
-    // Valeurs simulées pour tests
     var mockUserID: String = "mock-user-id"
     var mockUserEmail: String = "mock@email.com"
     var mockUserName: String = "Jean"

@@ -34,7 +34,7 @@ import FirebaseAuth
         isLoading = true
         showError = false
         errorMessage = ""
-        defer { isLoading = false } //meme si ce qui suit échoue, on fera quand meme isLoading = false
+        defer { isLoading = false } 
         if self.name == "" || self.selectedImage == nil {
             return
         }

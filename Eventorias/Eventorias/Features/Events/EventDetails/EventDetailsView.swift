@@ -20,7 +20,6 @@ struct EventDetailsView: View {
                 .ignoresSafeArea()
             
             VStack(spacing: 0) {
-                // Barre custom en haut car IOS ne permet plus de mettre dans barre de navigation chevron + titre à gauche
                 HStack(spacing: 8) {
                     Button(action: {
                         dismiss()
@@ -50,7 +49,6 @@ struct EventDetailsView: View {
                     VStack {
                         if let imageURL = event.imageURL, let url = URL(string: imageURL) {
                             ZStack {
-                                // Fond / placeholder gris ou fallback
                                 AsyncImage(url: url) { phase in
                                     switch phase {
                                     case .success(let image):
@@ -121,7 +119,6 @@ struct EventDetailsView: View {
                                 
                                 if let urlString = avatarURL, let url = URL(string: urlString) {
                                     ZStack {
-                                        // Fond gris circulaire
                                         Circle()
                                             .fill(Color.gray.opacity(0.3))
                                             .frame(width: 70, height: 70)
@@ -211,15 +208,15 @@ struct EventDetailsView: View {
 extension Date {
     func formattedDate(from date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM d, yyyy" // Nom complet du mois, jour, année
-        formatter.locale = Locale(identifier: "en_US") // Anglais US
+        formatter.dateFormat = "MMMM d, yyyy"
+        formatter.locale = Locale(identifier: "en_US")
         return formatter.string(from: date)
     }
 
     func formattedTime(from date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a" // h pour 12h, mm pour minutes, a pour AM/PM
-        formatter.locale = Locale(identifier: "en_US_POSIX") // pour avoir AM/PM
+        formatter.dateFormat = "h:mm a"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter.string(from: date)
     }
 }

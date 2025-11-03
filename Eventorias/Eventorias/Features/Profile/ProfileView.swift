@@ -24,12 +24,10 @@ struct ProfileView: View {
                 
                 if let urlString = userVM.avatarURL, let url = URL(string: urlString) {
                     ZStack {
-                        // Cercle gris de fond
                         Circle()
                             .fill(Color.gray.opacity(0.3))
                             .frame(width: 40, height: 40)
                         
-                        // AsyncImage avec image et spinner
                         AsyncImage(url: url) { phase in
                             switch phase {
                             case .success(let image):
@@ -40,7 +38,6 @@ struct ProfileView: View {
                                     .clipShape(Circle())
                                     .accessibilityLabel("Avatar de l'utilisateur")
                             case .empty:
-                                // Spinner pendant le chargement
                                 CustomSpinner(size: 20, lineWidth: 2)
                                     .frame(width: 40, height: 40)
                                     .accessibilityHidden(true)

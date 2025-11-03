@@ -26,6 +26,9 @@ struct CreateEventView: View {
     @State private var selectedCategory: String = "Other"
     @State private var showAlert = false
     @State private var alertMessage = ""
+    @State private var dateError: String? = nil
+    @State private var hourError: String? = nil
+
     let dateFormatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "MM/dd/yyyy"
@@ -122,7 +125,6 @@ struct CreateEventView: View {
                         }
                         
                         HStack(alignment: .top, spacing: 15) {
-                            // Date field + message
                             VStack(spacing: 0) {
                                 VStack(spacing: 0) {
                                     Text("Date")
@@ -136,8 +138,9 @@ struct CreateEventView: View {
                                         .onChange(of: dateString) { _, newValue in
                                             if let newDate = dateFormatter.date(from: newValue) {
                                                 date = newDate
+                                                dateError = nil
                                             } else {
-                                                print("Date invalide")
+                                                dateError = "Invalid date"
                                             }
                                         }
                                         .padding(.bottom, 5)
@@ -145,7 +148,16 @@ struct CreateEventView: View {
                                 }
                                 .background(Color("TextfieldColor"))
                                 .cornerRadius(5)
-                                .padding(.bottom, 0) // padding interne
+                                .padding(.bottom, 0)
+                                
+                                if let dateError, !dateString.isEmpty {
+                                    Text(dateError)
+                                        .font(.caption)
+                                        .foregroundColor(Color("ButtonColor"))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.top, 5)
+                                        .padding(.bottom, 20)
+                                }
 
                                 if dateString.isEmpty {
                                     Text("The date of the event is required")
@@ -153,13 +165,12 @@ struct CreateEventView: View {
                                         .foregroundColor(Color("ButtonColor"))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .padding(.top, 5)
-                                        .padding(.bottom, 20) // espace sous le message
+                                        .padding(.bottom, 20)
                                 } else {
-                                    Spacer().frame(height: 20) // espace sous le champ même sans message
+                                    Spacer().frame(height: 20)
                                 }
                             }
 
-                            // Time field + message
                             VStack(spacing: 0) {
                                 VStack(spacing: 0) {
                                     Text("Time")
@@ -173,8 +184,9 @@ struct CreateEventView: View {
                                         .onChange(of: timeString) { _, newValue in
                                             if let newTime = timeFormatter.date(from: newValue) {
                                                 time = newTime
+                                                hourError = nil
                                             } else {
-                                                print("Heure invalide")
+                                                hourError = "Invalid time"
                                             }
                                         }
                                         .padding(.bottom, 5)
@@ -183,6 +195,15 @@ struct CreateEventView: View {
                                 .background(Color("TextfieldColor"))
                                 .cornerRadius(5)
                                 .padding(.bottom, 0)
+                                
+                                if let hourError, !timeString.isEmpty {
+                                    Text(hourError)
+                                        .font(.caption)
+                                        .foregroundColor(Color("ButtonColor"))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .padding(.top, 5)
+                                        .padding(.bottom, 20)
+                                }
 
                                 if timeString.isEmpty {
                                     Text("The time of the event is required")
